@@ -1,7 +1,7 @@
 #!/usr/bin/env coffee
 ###
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## Apache 2.0 License
+## GPL3
 ##
 ##  Runs a command
 ##  vala dies with 1 error, and there is no error text.

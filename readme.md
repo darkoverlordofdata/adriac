@@ -41,6 +41,11 @@ add to .bashrc
 
     export CPATH=$HOME/.local/include/
 
+or add to each compile command line
+
+    -X -I/home/bruce/.local/include/ 
+
+
 
 
 
