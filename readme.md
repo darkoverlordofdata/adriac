@@ -15,6 +15,12 @@ https://github.com/radare/posixvala shows how we can hack the runtime back to li
 I'm taking this hack further, re-fitting selected glib modules to work in emscripten. 
 There is also no GObject in Emscripten. This limits it to compact class. so I've added a preprocessing step to inject automatic reference counting into classes tagged by 'subclassing' Object.
 
+## examples
+
+https://github.com/darkoverlordofdata/vala-emscripten
+
+https://github.com/darkoverlordofdata/platformer-gs
+
 ## oop limitations
 
 * no regex
@@ -27,7 +33,23 @@ There is also no GObject in Emscripten. This limits it to compact class. so I've
 ## workarounds
 to replace interface, make a struct of delegates
 
+set HOME in bin/emvalac manually. there is no GLib.get_user_name() in valascript. WTF?
+
+	const static string HOME = "/home/bruce/";
+
+
+## install
+copy bin, include, and share/emvalac to ./local
+
+add to .bashrc
+
+    export CPATH=$HOME/.local/include/
+
+
+
 
 ## todo
 convert coffeescript to bash script
 finish glib port
+
+install script should set the HOME location.
