@@ -32,7 +32,7 @@ using GLib;
 
 class EmValac {
 
-	const static string HOME = "/home/bruce/";
+	//  const static string HOME = "/home/bruce/";
 
 	static StringBuilder valac;
 	static StringBuilder cc;
@@ -205,6 +205,7 @@ class EmValac {
 		}
 		build();
 		/** Call the back end to do the work  */
+		var HOME = getEnv("HOME");
 		//  var home = GLib.get_user_data_dir();
 		if (!spawn(@"cp -rf src $(builddir)")) return 1;
 		if (!spawn(@"$(HOME)/.local/share/emvalac/pre.coffee \"$(encodeURIComponent(vala_files.str))\"")) return 1;
@@ -483,6 +484,27 @@ class EmValac {
 		return (new Regex("\\-")).replace(result, result.length, 0, "%2D");
 	}
 
+	/**
+	 * get Environment variable
+	 */
+	public static string getEnv(string name) {
+		string stdout;
+		string stderr;
+		int status;
+		string result;
+		try {
+			Process.spawn_command_line_sync ("printenv", out stdout, out stderr, out status);
+			var env = stdout.split("\n");
+			foreach (var v in env) {
+				if (v.substring(0,5) == "HOME=") {
+					return v.substring(5);
+				}
+			}
+			return "";
+		} catch (SpawnError e) {
+			return null;
+		}	
+	}	
 	//  public static string readFile(string name) {
 	//  	string stdout;
 	//  	string stderr;

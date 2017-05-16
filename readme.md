@@ -33,10 +33,6 @@ https://github.com/darkoverlordofdata/platformer-gs
 ## workarounds
 to replace interface, make a struct of delegates
 
-set HOME in bin/emvalac manually. there is no GLib.get_user_name() in valascript. WTF?
-
-	const static string HOME = "/home/bruce/";
-
 
 ## install
 copy bin, include, and share/emvalac to ./local
@@ -52,4 +48,3 @@ add to .bashrc
 convert coffeescript to bash script
 finish glib port
 
-install script should set the HOME location.
