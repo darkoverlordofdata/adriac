@@ -491,13 +491,12 @@ class EmValac {
 		string stdout;
 		string stderr;
 		int status;
-		string result;
+		string match = name+"=";
 		try {
 			Process.spawn_command_line_sync ("printenv", out stdout, out stderr, out status);
-			var env = stdout.split("\n");
-			foreach (var v in env) {
-				if (v.substring(0,5) == "HOME=") {
-					return v.substring(5);
+			foreach (var v in stdout.split("\n")) {
+				if (v.substring(0,match.length) == match) {
+					return v.substring(match.length);
 				}
 			}
 			return "";
