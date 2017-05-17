@@ -47,9 +47,11 @@ or add to each compile command line
 
 
 
+## dependencies
 
+valac
+nodejs
 
 ## todo
-convert coffeescript to bash script
 finish glib port
 

@@ -223,10 +223,10 @@ class EmValac {
 		var HOME = getEnv("HOME");
 		//  var home = GLib.get_user_data_dir();
 		if (!spawn(@"cp -rf src $(builddir)")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/pre.coffee \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc.coffee \"$(encodeURIComponent(valac.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/post.coffee \"$(encodeURIComponent(c_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc.coffee \"$(encodeURIComponent(cc.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/pre \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/post \"$(encodeURIComponent(c_files.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
 		
 		stdout.printf("emvalac complete.\n");
 		return 0;
@@ -538,7 +538,7 @@ class EmValac {
 	//  	int status;
 	//  	string result;
 	//  	try {
-	//  		Process.spawn_command_line_sync (@"$(plugin)/write.coffee $(name) \"$(encodeURIComponent(content))\""); 
+	//  		Process.spawn_command_line_sync (@"$(plugin)/write $(name) \"$(encodeURIComponent(content))\""); 
 	//  			out stdout, out stderr, out status);
 	//  		return true;
 	//  	} catch (SpawnError e) {

@@ -1,5 +1,5 @@
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## Apache 2.0 License
+## GPL3
 ##
 
 module.exports = 
