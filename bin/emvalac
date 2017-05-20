@@ -232,7 +232,10 @@ class EmValac {
 		return 0;
 	}
 
-	/** mangle the flags so they pass thru unchanged  */
+	/** 
+	 * create the build commands - valac && emcc
+	 * split out the corresponding parameters for each
+	 */
 	static void build() {
 		valac = new StringBuilder("/usr/bin/valac ");
 		cc = new StringBuilder(@"$(cc_command) ");
