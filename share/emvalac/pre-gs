@@ -3,7 +3,7 @@
 
 /*
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  Phase I - preprocess for valac
 ##
@@ -14,15 +14,19 @@
  */
 
 (function() {
-  var file, files, fs, i, klass, len, name, namespace, options, path, ref;
+  var StringTokenizer, buildDir, file, files, fs, i, klass, len, name, namespace, options, path, ref;
 
   fs = require('fs');
 
   path = require('path');
 
+  StringTokenizer = require('./tokenizer');
+
   options = {};
 
-  files = decodeURIComponent(process.argv[2]);
+  buildDir = process.argv[2];
+
+  files = decodeURIComponent(process.argv[3]);
 
   if (files[0] === '"') {
     files = files.slice(1, -1);
@@ -39,19 +43,6 @@
           namespace = path.dirname(file).substring(10);
           require('./boilerplate').gs(file, {
             ext: 'gs',
-            "class": klass,
-            name: name,
-            namespace: namespace
-          });
-        }
-        break;
-      case '.vala':
-        klass = path.basename(file, '.vala');
-        if (klass[0] >= 'A' && klass[0] <= 'Z') {
-          name = klass.toLowerCase();
-          namespace = path.dirname(file).substring(10);
-          require('./boilerplate').vala(file, {
-            ext: 'vala',
             "class": klass,
             name: name,
             namespace: namespace

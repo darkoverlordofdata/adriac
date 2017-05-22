@@ -3,7 +3,7 @@
 
 /*
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  Phase II - preprocess for emcc
 ##
@@ -24,7 +24,7 @@
  */
 
 (function() {
-  var file, files, fixed, fs, i, inject, j, klass, lcfirst, len, len1, list, mangled, name, namespace, ns, options, path, ref, ref1, snakeCase;
+  var buildDir, file, files, fs, i, inject, lcfirst, len, list, merge, options, path, ref, snakeCase, symtbl;
 
   fs = require('fs');
 
@@ -45,24 +45,32 @@
   };
 
   inject = function(file, options) {
-    var dst, flag, i, len, line, mangled, name, src;
-    src = fs.readFileSync(file, 'utf8').split('\n');
+    var dst, flag, i, len, line, ref, src;
+    src = fs.readFileSync(file, 'utf8');
     dst = [];
-    for (i = 0, len = src.length; i < len; i++) {
-      line = src[i];
-      for (mangled in options) {
-        name = options[mangled];
-        if (line.indexOf(`#define _${mangled}_release0`) === 0) {
+    flag = false;
+    ref = src.split('\n');
+    for (i = 0, len = ref.length; i < len; i++) {
+      line = ref[i];
+      line.replace(/\#define\s+\_([_a-z0-9]+)_release0/, function($0, $1) {
+        var type;
+        type = symtbl[$1];
+        if (type != null) {
           flag = true;
-          dst.push(`void ${mangled}_release (${name}* self);`);
-          dst.push(`void ${mangled}_free (${name}* self);`);
-          dst.push(`${name}* ${mangled}_retain (${name}* self);`);
-        } else if (line.indexOf(`void ${mangled}_free (${name}* self);`) === 0) {
-          flag = true;
-          dst.push(`void ${mangled}_release (${name}* self);`);
-          dst.push(`${name}* ${mangled}_retain (${name}* self);`);
+          dst.push(`void ${$1}_release (${type}* self);`);
+          dst.push(`void ${$1}_free (${type}* self);`);
+          return dst.push(`${type}* ${$1}_retain (${type}* self);`);
         }
-      }
+      });
+      line.replace(/\void\s+([_a-z0-9]+)_release\s+\((\w+)* self\)/, function($0, $1, $2) {
+        var type;
+        type = symtbl[$1];
+        if (type != null) {
+          flag = true;
+          dst.push(`void ${$1}_release (${$2}* self);`);
+          return dst.push(`${$2}* ${$1}_retain (${$2}* self);`);
+        }
+      });
       dst.push(line);
     }
     if (flag) {
@@ -70,7 +78,27 @@
     }
   };
 
-  files = decodeURIComponent(process.argv[2]);
+  merge = function(a, b) {
+    var c, json_a, json_b, name, value;
+    c = {};
+    json_a = fs.existsSync(a) ? JSON.parse(fs.readFileSync(a)) : {};
+    json_b = fs.existsSync(b) ? JSON.parse(fs.readFileSync(b)) : {};
+    for (name in json_a) {
+      value = json_a[name];
+      c[name] = value;
+    }
+    for (name in json_b) {
+      value = json_b[name];
+      c[name] = value;
+    }
+    return c;
+  };
+
+  buildDir = process.argv[2];
+
+  symtbl = merge("./emvalac.json", `${buildDir}/emvalac.json`);
+
+  files = decodeURIComponent(process.argv[3]);
 
   if (files[0] === '"') {
     files = files.slice(1, -1);
@@ -79,23 +107,6 @@
   ref = files.split(" ");
   for (i = 0, len = ref.length; i < len; i++) {
     file = ref[i];
-    if (path.extname(file) === '.c') {
-      klass = path.basename(file, '.c');
-      if (klass[0] >= 'A' && klass[0] <= 'Z') {
-        name = klass.toLowerCase();
-        namespace = path.dirname(file).substring(10);
-        fixed = snakeCase(lcfirst(klass));
-        ns = namespace.replace(/\//g, "_");
-        mangled = ns === "" ? fixed : `${ns}_${fixed}`;
-        mangled = mangled.replace(/\//g, "_");
-        options[mangled] = (ns + klass).replace(/\_/g, "");
-      }
-    }
-  }
-
-  ref1 = files.split(" ");
-  for (j = 0, len1 = ref1.length; j < len1; j++) {
-    file = ref1[j];
     if (path.extname(file) === '.c') {
       inject(file, options);
     }

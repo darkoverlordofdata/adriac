@@ -1,7 +1,7 @@
 #!/usr/bin/env coffee
 ###
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  Phase I - preprocess for valac
 ##
@@ -12,10 +12,12 @@
 ###
 fs = require 'fs'
 path = require 'path'
+StringTokenizer = require './tokenizer'
 options = {}
 
-
-files = decodeURIComponent(process.argv[2])
+        
+buildDir = process.argv[2]
+files = decodeURIComponent(process.argv[3])
 files = files[1...-1] if files[0] is '"' 
 for file in files.split(" ")
     switch path.extname(file)
@@ -31,17 +33,17 @@ for file in files.split(" ")
                     namespace   : namespace
                 ) 
 
-        when '.vala' 
-            klass = path.basename(file, '.vala')
-            if klass[0] >='A' && klass[0] <= 'Z'
-                name = klass.toLowerCase()
-                namespace = path.dirname(file).substring(10)
-                require('./boilerplate').vala(file, 
-                    ext         :'vala'
-                    class       : klass
-                    name        : name
-                    namespace   : namespace
-                )
+        # when '.vala' 
+        #     klass = path.basename(file, '.vala')
+        #     if klass[0] >='A' && klass[0] <= 'Z'
+        #         name = klass.toLowerCase()
+        #         namespace = path.dirname(file).substring(10)
+        #         require('./boilerplate').vala(file, 
+        #             ext         :'vala'
+        #             class       : klass
+        #             name        : name
+        #             namespace   : namespace
+        #         )
     
 
     

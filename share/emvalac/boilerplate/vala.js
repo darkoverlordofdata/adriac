@@ -2,7 +2,7 @@
 
 /*
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  inject vala boilerplate
 ##

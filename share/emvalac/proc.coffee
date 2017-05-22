@@ -1,7 +1,7 @@
 #!/usr/bin/env coffee
 ###
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  Runs a command
 ##  vala dies with 1 error, and there is no error text.
@@ -9,7 +9,9 @@
 ##
 ###
 { exec } = require 'child_process'
-cmd = decodeURIComponent(process.argv[2])
+
+buildDir = process.argv[2]
+cmd = decodeURIComponent(process.argv[3])
 cmd = cmd[1...-1] if cmd[0] is '"' 
 
 exec cmd, (error, stdout, stderr) -> 

@@ -13,12 +13,30 @@ The problem is, there is no runtime - Vala uses GLib for it's runtime, and there
 https://github.com/radare/posixvala shows how we can hack the runtime back to life, by supplying missing GLib implementation.
 
 I'm taking this hack further, re-fitting selected glib modules to work in emscripten. 
-There is also no GObject in Emscripten. This limits it to compact class. so I've added a preprocessing step to inject automatic reference counting into classes tagged by 'subclassing' Object.
+There is also no GObject in Emscripten. This limits it to compact class. so I've added a preprocessing step to inject automatic reference counting into classes tagged by 'subclassing' Object. 
 
-## examples
+## restrictions
 
+### vala
+
+* one namespace per file, (except global)
+* one namespace statement per file. Use '.' to specity compound namespace:
+
+    namespace outer.inner {
+        ...
+    }
+
+#### example:
 https://github.com/darkoverlordofdata/vala-emscripten
 
+
+### genie
+
+* one class per file
+* file tree must align with namespace, like java
+* forward references to ARC methods are broken (see example for workaround)
+
+#### example:
 https://github.com/darkoverlordofdata/platformer-gs
 
 ## oop limitations

@@ -4,6 +4,8 @@
  *
  * Copyright (C) 2017  bruce davidson
  * 
+ * v 0.0.2
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -29,9 +31,7 @@
  * vala script does not include Gio, so no io...
  * besides, text processing is much easier in node.
  * 
- * Adds 2 new optiona:
- * --plugin=DIRECTORY
- * 		plugin location
+ * Adds 1 new option:
  * --builddir=DIRECTORY
  * 		required location for out of tree build
  * 		no in tree builds allowed
@@ -221,12 +221,12 @@ class EmValac {
 		build();
 		/** Call the back end to do the work  */
 		var HOME = getEnv("HOME");
-		//  var home = GLib.get_user_data_dir();
 		if (!spawn(@"cp -rf src $(builddir)")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/pre \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/post \"$(encodeURIComponent(c_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/pre-vala $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/pre-gs $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/proc $(builddir) \"$(encodeURIComponent(valac.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/post $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
+		if (!spawn(@"$(HOME)/.local/share/emvalac/proc $(builddir) \"$(encodeURIComponent(cc.str))\"")) return 1;
 		
 		stdout.printf("emvalac complete.\n");
 		return 0;

@@ -1,7 +1,7 @@
 #!/usr/bin/env coffee
 ###
 ## Copyright (c) 2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
-## GPL3
+## Apache 2.0 License
 ##
 ##  inject vala boilerplate
 ##
@@ -33,8 +33,8 @@ module.exports = (file, options) ->
     ##
     ##  class Name <K,V> : Object {
     ##
-    if /^(\s*)public\s+class\s+\w*\s*\<\w,\s*\w\>\s*:\s*Object\s{*/mg.test src
-        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w,\s*\w)\>\s*:\s*(Object)\s*{/mg, ($0, $1, $2, $3, $4) ->
+    if /^(\s*)public\s+class\s+\w*\s*\<\w,\s*\w\>\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w,\s*\w)\>\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3, $4) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             n1 = if namespace is "" then "" else namespace+"_"
             """
@@ -58,8 +58,8 @@ module.exports = (file, options) ->
     ##
     ##  class Name <G> : Object {
     ##
-    else if /^(\s*)public\s+class\s+\w*\s*\<\w\>\s*:\s*Object\s{*/mg.test src
-        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w)\>\s*:\s*(Object)\s*{/mg, ($0, $1, $2, $3, $4) ->
+    else if /^(\s*)public\s+class\s+\w*\s*\<\w\>\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w)\>\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3, $4) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             n1 = if namespace is "" then "" else namespace+"_"
             """
@@ -83,8 +83,8 @@ module.exports = (file, options) ->
     ##
     ##  class Name : Object {
     ##
-    else if /^(\s*)public\s+class\s+\w*\s*:\s*Object\s{*/mg.test src
-        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(Object)\s*{/mg, ($0, $1, $2, $3) ->
+    else if /^(\s*)public\s+class\s+\w*\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             n1 = if namespace is "" then "" else namespace+"_"
             """
@@ -109,8 +109,8 @@ module.exports = (file, options) ->
     ##
     ##  class Name {
     ##
-    else if /^(\s*)public\s+class\s+\w*\s*:\s*\w+\s*{/mg.test src
-        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(\w+)\s*{/mg, ($0, $1, $2, $3) ->
+    else if /^(\s*)public\s+class\s+\w*\s*:\s*\w+\s*{/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(\w+)\s*{/m, ($0, $1, $2, $3) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             """
 #{tab}[Compact]
