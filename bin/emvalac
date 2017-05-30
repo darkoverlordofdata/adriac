@@ -4,8 +4,6 @@
  *
  * Copyright (C) 2017  bruce davidson
  * 
- * v 0.0.2
- * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -220,13 +218,14 @@ class EmValac {
 		}
 		build();
 		/** Call the back end to do the work  */
-		var HOME = getEnv("HOME");
+		var SDK = getEnv("BOSCO");
 		if (!spawn(@"cp -rf src $(builddir)")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/pre-vala $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/pre-gs $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc $(builddir) \"$(encodeURIComponent(valac.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/post $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
-		if (!spawn(@"$(HOME)/.local/share/emvalac/proc $(builddir) \"$(encodeURIComponent(cc.str))\"")) return 1;
+		if (!spawn(@"$(SDK)/tools/pre-vala.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(SDK)/tools/pre-gs \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
+		if (!spawn(@"$(SDK)/tools/post.coffee $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
+		if (cc_command != "jni")
+			if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
 		
 		stdout.printf("emvalac complete.\n");
 		return 0;

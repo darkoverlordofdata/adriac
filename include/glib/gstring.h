@@ -8,7 +8,6 @@
 #define _POSIX_C_SOURCE 200112L
 #endif /* _POSIX_C_SOURCE */
 
-
 #include <stdarg.h>
 
 /** @return a pointer to the next unicode point in a _valid_ unicode string or null if s points to the last character. */

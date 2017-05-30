@@ -1,75 +1,45 @@
-# emvalac
+# bosco-sdk
 
-my build tools for targetting emscripen with vala
-
-
-* Compile vala/genie with emscripten. 
-* Works with SDL2. 
-* Both vala and genie, but vala has fewer limitations.
-
-Vala compiles to C, so it can target emscripten. That seems like a no brainer. 
-The problem is, there is no runtime - Vala uses GLib for it's runtime, and there is no glib port for Emscripten. 
-
-https://github.com/radare/posixvala shows how we can hack the runtime back to life, by supplying missing GLib implementation.
-
-I'm taking this hack further, re-fitting selected glib modules to work in emscripten. 
-There is also no GObject in Emscripten. This limits it to compact class. so I've added a preprocessing step to inject automatic reference counting into classes tagged by 'subclassing' Object. 
-
-## restrictions
-
-### vala
-
-* one namespace per file, (except global)
-* one namespace statement per file. Use '.' to specity compound namespace:
-
-    namespace outer.inner {
-        ...
-    }
-
-#### example:
-https://github.com/darkoverlordofdata/vala-emscripten
-
-
-### genie
-
-* one class per file
-* file tree must align with namespace, like java
-* forward references to ARC methods are broken (see example for workaround)
-
-#### example:
-https://github.com/darkoverlordofdata/platformer-gs
-
-## oop limitations
-
-* no regex
-* no virtual or override
-* no interface
-* no abstract
-* no [Flags] enum
-* subclases cannot declare instance members
-
-## workarounds
-to replace interface, make a struct of delegates
-
+generate a new vala game project
+paired with emvalac
 
 ## install
-copy bin, include, and share/emvalac to ./local
 
-add to .bashrc
+cd ~/Applications
+git clone https://github.com/darkoverlordofdata/emvalac.git
 
-    export CPATH=$HOME/.local/include/
+update ./bashrc
 
-or add to each compile command line
+    export SDL2SDK=$HOME/Applications/SDL2-2.0.5/
 
-    -X -I/home/bruce/.local/include/ 
+    export BOSCO=$HOME/Applications/emvalac/
+
+    export PATH=$PATH:$BOSCO/bin
+
+    export CPATH=$BOSCO/include/
 
 
+## use
 
-## dependencies
+    bosco init match3 com.darkoverlordofdata.match3
 
-valac
-nodejs
+    cd match3
 
-## todo
-finish glib port
+    autovala refresh
+    autovala cmake
+    cd install
+    cmake ..
+    make
+    
+    cd ..
+    cake build:emscripten
+    cake build:android
 
+## requirements
+
+    valac
+    sdl2
+    autovala
+    emscripten
+    nodejs
+    coffeescrpipt

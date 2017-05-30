@@ -43,24 +43,28 @@
 G_BEGIN_DECLS
 
 #include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <stdint.h>
 #include <limits.h>
 #include <assert.h>
 #include <time.h>
 #include <glib/gmacros.h>
+
 #include <glibconfig.h>
 #include <glib/gversionmacros.h>
 #include <glib/gtypes.h>
 #include <glib/gatomic.h>
+static gpointer g_malloc         (gsize	 n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 #include <glib/gquark.h>
 #include <glib/gtestutils.h>
 #include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
 #include <glib/gthread.h>
 #include <glib/gnode.h>
 #include <glib/gslice.h>
+#include <glib/gstrfuncs.h>
 #include <glib/gmem.h>
 #include <glib/glist.h>
 #include <glib/gslist.h>
