@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ShmupWarz</title>
+  <link rel="icon" type="image/GIF" href="favicon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="full-screen" content="yes" />
+  <meta name="screen-orientation" content="portrait" />
+  <meta name="x5-fullscreen" content="true" />
+  <meta name="360-fullscreen" content="true" />
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="game">
+  <meta name="author" content="">
+
+
+<style>
+    @font-face {
+        font-family: OpenDyslexic;
+        src: url(OpenDyslexic-Bold.otf);
+    }
+             
+    html {
+        background: url(logo.png) #000;
+        background-repeat: no-repeat;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
+
+    body {
+        font-family: OpenDyslexic;
+        padding: 0;
+        margin: 0;
+        background: #000;
+    }
+
+    body,
+    canvas, div {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -khtml-user-select: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+
+    canvas.emscripten {
+        border: 0px none;
+        margin-left:auto;
+        margin-right:auto;
+        display:block
+    }
+
+    #fullScreenButton {
+        text-align: center;
+        background-color: #e55b49;
+        padding: 10px;
+        visibility: hidden;
+        color: antiquewhite;
+        width:200px; 
+        margin-left:auto; 
+        margin-right:auto
+    }
+
+    #startButton {
+        text-align: center;
+        font-size: large;
+        background-color: darkslategrey;
+        padding: 10px;
+        visibility: hidden;
+    }
+    #loadingDiv {
+        text-align: center;
+        background-color : transparent;
+        color: antiquewhite;
+    }
+    
+</style>
+</head>
+<body>
+      <div id="loadingDiv">{{ name }} is loading...</div>
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+      <div style="width:200px; margin-left:auto; margin-right:auto">
+      <!--<p id="startButton" onclick="start_function(this)">Click to start</p>-->
+      <p id="fullScreenButton" onclick="Module.requestFullScreen(true, false)">Click for full-screen</p>
+      </div>
+</body>
+<script type='text/javascript' src="index.js"></script>
+</html>

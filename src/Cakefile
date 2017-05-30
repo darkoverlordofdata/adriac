@@ -28,6 +28,7 @@ exec = (name, lines) ->
             cb()
     next = -> exec cmds.shift(), -> next() if cmds.length
     next()
+
 ##
 ## parse *.avprj info
 ##
@@ -58,10 +59,16 @@ avprjParse = ()->
           readonly: readonly
     return data
 
+##
+## get list of vapi's to reference
+##
 getVapis = (vala_vapi) ->
     if not vala_vapi? then return ''
     ("--pkg #{path.basename(vapi.value, '.vapi')}" for vapi in vala_vapi).join(' ')
     
+##
+## get list of pkg's to reference
+##
 getPkgs = (vala_check_package) ->
     if not vala_check_package? then return ''
     result = []
@@ -72,9 +79,12 @@ getPkgs = (vala_check_package) ->
         result.push "--pkg #{pkg.value}"
     result.join(' ')
 
+##
+## get list of vala sources
+##
 getSrc = (vala_source) ->
     if not vala_source? then return ''
-    ("build/src/#{src.value}" for src in vala_source).join(' ')
+    ("build/src/#{src.value}" for src in vala_source)
 
 
 ##
@@ -91,6 +101,7 @@ emvalac --builddir build \
     -X -O2 \
     #{list}
 
+
 sed  "s/#include <SDL2/#include <SDL2\\/SDL.h>\\n#include <SDL2/g"  ./build/src/main.c >  ./android/jni/src/main.c
 #{copy}
 cd ./android/jni && ndk-build
@@ -102,6 +113,7 @@ cd ./android && ant debug
 ##
 emscriptenTemplate = (defines, vapis, pkgs, list) ->
     return """
+mkdir -p build
 emvalac  \
     --builddir build \
     --cc=emcc \
@@ -130,7 +142,7 @@ task 'build:android', 'build android project', ->
         if src.indexOf('main.') is -1
             copy.push "cp -f ./#{cfile} "+cfile.replace('build/', './android/jni/')
 
-    cmd = androidTemplate('--define ANDROID', vapis, pkgs, list, copy.join('\n'))
+    cmd = androidTemplate('--define ANDROID', vapis, pkgs, list.join(' '), copy.join('\n'))
     exec 'android', cmd
     
 ##
@@ -149,7 +161,7 @@ task 'build:emscripten', 'build emscripten project', ->
     pkgs = getPkgs(prj.vala_check_package)
     list = getSrc(prj.vala_source)
 
-    cmd = emscriptenTemplate('--define EMSCRIPTEN --define PROFILING', vapis, pkgs, list) 
+    cmd = emscriptenTemplate('--define EMSCRIPTEN --define PROFILING', vapis, pkgs, list.join(' ')) 
     console.log cmd
     exec 'emscripten', cmd
 

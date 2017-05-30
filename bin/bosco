@@ -30,13 +30,19 @@ if [ $1 == "init" ]; then
     popd
     mv -v $SDL2SDK/build/$2 ./android
     cp -v $BOSCO/src/Cakefile .
+    cp -v $BOSCO/src/example.avprj .
     cp -v $BOSCO/src/main.vala ./src
     mkdir -v -p ./assets
     cp -v -f $SDL2SDK/test/sample.bmp ./assets/sample.bmp
+    mkdir -v -p ./android/assets/assets
+    cp -v -f $SDL2SDK/test/sample.bmp ./android/assets/assets/sample.bmp
     mkdir -v -p ./src/emvapis
     cp -v -f $BOSCO/src/emvapis/*.* ./src/emvapis
     mkdir -v -p ./src/vapis
     cp -v -f $BOSCO/src/vapis/*.* ./src/vapis
+    mkdir -v -p ./web
+    sed  "s/{{ name }}/$1/g"  $BOSCO/src/web/index.js >  ./web/index.js
+    sed  "s/{{ name }}/$1/g"  $BOSCO/src/web/index.html >  ./web/index.html
     exit ;
   fi
   echo "Invalid number of arguments "
