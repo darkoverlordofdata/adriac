@@ -29,13 +29,18 @@ if [ $1 == "init" ]; then
     ./androidbuild.sh $2 $BOSCO/src/main.c
     popd
     mv -v $SDL2SDK/build/$2 ./android
+    cp -v $BOSCO/.gitignore .
+    cp -v $BOSCO/.gitattributes .
+    mkdir -v -p ./.vscode
+    cp -v $BOSCO/src/.vscode/launch.json ./.vscode/launch.json
+    cp -v $BOSCO/src/.vscode/tasks.json ./.vscode/tasks.json
     cp -v $BOSCO/src/Cakefile .
     cp -v $BOSCO/src/example.avprj .
     cp -v $BOSCO/src/main.vala ./src
     mkdir -v -p ./assets
-    cp -v -f $SDL2SDK/test/sample.bmp ./assets/sample.bmp
+    cp -v -f $BOSCO/src/sample.bmp ./assets/sample.bmp
     mkdir -v -p ./android/assets/assets
-    cp -v -f $SDL2SDK/test/sample.bmp ./android/assets/assets/sample.bmp
+    cp -v -f $BOSCO/src/sample.bmp ./android/assets/assets/sample.bmp
     mkdir -v -p ./src/emvapis
     cp -v -f $BOSCO/src/emvapis/*.* ./src/emvapis
     mkdir -v -p ./src/vapis

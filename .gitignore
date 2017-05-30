@@ -2,6 +2,18 @@ node_modules
 build/
 install/
 .publish/
+android/bin
+android/gen
+android/libs
+android/obj
+android/jni/SDL
+android/jni/SDL2_image
+android/jni/SDL2_ttf
+android/jni/SDL2_mixer
+android/jni/libmikmod*
+android/jni/smpeg*
+
+web/shmupwarz.*
 # Compiled source #
 ###################
 *.com
@@ -11,6 +23,7 @@ install/
 *.o
 *.so
 *.js.mem
+*.wasm
 
 # Packages #
 ############
