@@ -12,7 +12,13 @@ static gchar *               g_ascii_formatd  (gchar        *buffer,
 					const gchar  *format,
 					gdouble       d);
 
+/* removes leading spaces */
+static gchar*                g_strchug        (gchar        *string);
+/* removes trailing spaces */
+static gchar*                g_strchomp       (gchar        *string);
+
 #define _g_snprintf  snprintf
+#define g_strstrip( string )	g_strchomp (g_strchug (string))
 
 
 /* Functions like the ones in <ctype.h> that are not affected by locale. */
@@ -30,7 +36,28 @@ typedef enum {
   G_ASCII_XDIGIT = 1 << 10
 } GAsciiType;
 
-GLIB_VAR const guint16 * const g_ascii_table;
+static const guint16 ascii_table_data[256] = {
+  0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004,
+  0x004, 0x104, 0x104, 0x004, 0x104, 0x104, 0x004, 0x004,
+  0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004,
+  0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004,
+  0x140, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0,
+  0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0,
+  0x459, 0x459, 0x459, 0x459, 0x459, 0x459, 0x459, 0x459,
+  0x459, 0x459, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0,
+  0x0d0, 0x653, 0x653, 0x653, 0x653, 0x653, 0x653, 0x253,
+  0x253, 0x253, 0x253, 0x253, 0x253, 0x253, 0x253, 0x253,
+  0x253, 0x253, 0x253, 0x253, 0x253, 0x253, 0x253, 0x253,
+  0x253, 0x253, 0x253, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x0d0,
+  0x0d0, 0x473, 0x473, 0x473, 0x473, 0x473, 0x473, 0x073,
+  0x073, 0x073, 0x073, 0x073, 0x073, 0x073, 0x073, 0x073,
+  0x073, 0x073, 0x073, 0x073, 0x073, 0x073, 0x073, 0x073,
+  0x073, 0x073, 0x073, 0x0d0, 0x0d0, 0x0d0, 0x0d0, 0x004
+  /* the upper 128 are all zeroes */
+};
+
+//GLIB_VAR 
+static const guint16 * const g_ascii_table = ascii_table_data;
 
 #define g_ascii_isalnum(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_ALNUM) != 0)
@@ -475,6 +502,73 @@ g_ascii_formatd (gchar       *buffer,
 
   return buffer;
 //#endif
+}
+
+/**
+ * g_strchug:
+ * @string: a string to remove the leading whitespace from
+ *
+ * Removes leading whitespace from a string, by moving the rest
+ * of the characters forward.
+ *
+ * This function doesn't allocate or reallocate any memory;
+ * it modifies @string in place. Therefore, it cannot be used on
+ * statically allocated strings.
+ *
+ * The pointer to @string is returned to allow the nesting of functions.
+ *
+ * Also see g_strchomp() and g_strstrip().
+ *
+ * Returns: @string
+ */
+static inline gchar *
+g_strchug (gchar *string)
+{
+  guchar *start;
+
+  g_return_val_if_fail (string != NULL, NULL);
+
+  for (start = (guchar*) string; *start && g_ascii_isspace (*start); start++)
+    ;
+
+  memmove (string, start, strlen ((gchar *) start) + 1);
+
+  return string;
+}
+
+/**
+ * g_strchomp:
+ * @string: a string to remove the trailing whitespace from
+ *
+ * Removes trailing whitespace from a string.
+ *
+ * This function doesn't allocate or reallocate any memory;
+ * it modifies @string in place. Therefore, it cannot be used
+ * on statically allocated strings.
+ *
+ * The pointer to @string is returned to allow the nesting of functions.
+ *
+ * Also see g_strchug() and g_strstrip().
+ *
+ * Returns: @string
+ */
+static inline gchar *
+g_strchomp (gchar *string)
+{
+  gsize len;
+
+  g_return_val_if_fail (string != NULL, NULL);
+
+  len = strlen (string);
+  while (len--)
+    {
+      if (g_ascii_isspace ((guchar) string[len]))
+        string[len] = '\0';
+      else
+        break;
+    }
+
+  return string;
 }
 
 

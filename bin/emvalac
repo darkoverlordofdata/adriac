@@ -416,10 +416,13 @@ class EmValac {
 						break;
 
                     case "emscripten":
+                        cc.append("-s ALLOW_MEMORY_GROWTH=1 ");
                         cc.append("-s WASM=1 ");
                         cc.append("-s ASSERTIONS=1 ");
                         cc.append("-s EXPORTED_FUNCTIONS='[\"_game\"]' ");
                         cc.append("--preload-file assets ");
+
+						 
 						break;
 				}
 			}
