@@ -19,14 +19,14 @@ namespace sdx.files {
 		 */
 		public SDL.RWops getRWops() {
 			if (type == FileType.Resource) {
-#if (DESKTOP)
+#if (ANDROID || EMSCRIPTEN)
+				throw new SdlException.InvalidForPlatform("Resource not available");
+#else
                 var ptr = GLib.resources_lookup_data(sdx.resourceBase+"/"+getPath(), 0);
                 var raw = new SDL.RWops.from_mem((void*)ptr.get_data(), (int)ptr.get_size());
                 if (raw == null)
 					throw new SdlException.UnableToLoadResource(getPath());
                 return raw;
-#else
-				throw new SdlException.InvalidForPlatform("Resource not available");
 #endif				
 			} else {
                 var raw = new SDL.RWops.from_file(getPath(), "r");
@@ -39,7 +39,9 @@ namespace sdx.files {
 
 		public string read() {
 			if (type == FileType.Resource) {
-#if (DESKTOP)
+#if (ANDROID || EMSCRIPTEN)
+				throw new SdlException.InvalidForPlatform("Resource not available");
+#else
                 var st =  GLib.resources_open_stream(sdx.resourceBase+"/"+getPath(), 0);
 				var sb = new StringBuilder();
 				var ready = true;
@@ -54,9 +56,6 @@ namespace sdx.files {
 				}
 				return sb.str;
 
-
-#else
-				throw new SdlException.InvalidForPlatform("Resource not available");
 #endif
 			} else {
 				return file.read();
@@ -74,7 +73,11 @@ namespace sdx.files {
             var name = getName();
             var i = name.last_index_of(".");
             if (i < 0) return "";
-            return name.substring(i);			
+			var ext = name.substring(i);
+			// BUG fix for emscripten:
+			if (ext.index_of(".") < 0) ext = "."+ext;
+			return ext;
+            //  return name.substring(i);			
 		}
 
 		public string getPath() {
@@ -82,7 +85,7 @@ namespace sdx.files {
 		}
 
 		public FileHandle getParent() {
-			return new FileHandle(file.getParent(), FileType.Parent);
+			return new FileHandle(file.getParent(), type); //FileType.Parent);
 		}
 
 		public bool exists() {
@@ -100,11 +103,6 @@ namespace sdx.files {
             return new FileHandle(file.getPath() + utils.pathSeparator + name, type);
 		}
 
-//  #if (DESKTOP)
-//          public GLib.Bytes bytes() {
-//              return GLib.resources_lookup_data(getPath(), 0);
-//  		}
-//  #endif
 	}
 }
 

@@ -13,6 +13,7 @@ snakeCase = (str) ->  str.replace(/([A-Z])/g, ($0) -> "_"+$0.toLowerCase())
 template = (file, name, options) ->
 
     klass = options.class
+    console.log klass, name
     namespace = options.namespace
     pfx = options.pfx
 
@@ -22,8 +23,8 @@ template = (file, name, options) ->
     ##
     ##  class Name <K,V> : Object {
     ##
-    if ///^(\s*)public\s+class\s+#{klass}\s*\<\w,\s*\w\>\s*:\s*Object\s{*///m.test src
-        src = src.replace(///^(\s*)public\s+class\s+(#{klass})\s*\<(\w,\s*\w)\>\s*:\s*(Object)\s*{///m, ($0, $1, $2, $3, $4) ->
+    if /^(\s*)public\s+class\s+\w*\s*\<\w,\s*\w\>\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w,\s*\w)\>\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3, $4) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             """
 #{tab}[Compact, CCode ( /** reference counting */
@@ -47,8 +48,8 @@ template = (file, name, options) ->
     ##
     ##  class Name <G> : Object {
     ##
-    else if ///^(\s*)public\s+class\s+#{klass}\s*\<\w\>\s*:\s*Object\s{*///m.test src
-        src = src.replace(///^(\s*)public\s+class\s+(#{klass})\s*\<(\w)\>\s*:\s*(Object)\s*{///m, ($0, $1, $2, $3, $4) ->
+    else if /^(\s*)public\s+class\s+\w*\s*\<\w\>\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*\<(\w)\>\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3, $4) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             """
 #{tab}[Compact, CCode ( /** reference counting */
@@ -72,8 +73,8 @@ template = (file, name, options) ->
     ##
     ##  class Name : Object {
     ##
-    else if ///^(\s*)public\s+class\s+#{klass}\s*:\s*Object\s{*///m.test src
-        src = src.replace(///^(\s*)public\s+class\s+(#{klass})\s*:\s*(Object)\s*{///m, ($0, $1, $2, $3) ->
+    else if /^(\s*)public\s+class\s+\w*\s*:\s*Object\s{*/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(Object)\s*{/m, ($0, $1, $2, $3) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             """
 #{tab}[Compact, CCode ( /** reference counting */
@@ -98,8 +99,8 @@ template = (file, name, options) ->
     ##
     ##  class Name {
     ##
-    else if ///^(\s*)public\s+class\s+#{klass}\s*:\s*\w+\s*{///m.test src
-        src = src.replace(///^(\s*)public\s+class\s+(#{klass})\s*:\s*(\w+)\s*{///m, ($0, $1, $2, $3) ->
+    else if /^(\s*)public\s+class\s+\w*\s*:\s*\w+\s*{/m.test src
+        src = src.replace(/^(\s*)public\s+class\s+(\w*)\s*:\s*(\w+)\s*{/m, ($0, $1, $2, $3) ->
             tab = $1.replace(/\n/mg, "").replace("\t", "")
             """
 #{tab}[Compact]

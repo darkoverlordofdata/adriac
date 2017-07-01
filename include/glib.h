@@ -23,11 +23,19 @@
  */
 
 /*
- * Modifications by bruce davidson, 2017.
- * re jiggered as a static inline module to replace GLib 
- * when compiling vala standalone, for example when 
- * targeting Emscripten or Android
- * LGPL3 - the dark vala - 2017 - darkoverlordofdata 
+ *
+ *
+ *      __________                    ________ 
+ *      \____    /___________  ____  /  _____/ 
+ *        /     // __ \_  __ \/  _ \/   \  ___ 
+ *       /     /\  ___/|  | \(  <_> )    \_\  \
+ *      /_______ \___  >__|   \____/ \______  /
+ *              \/   \/                     \/ 
+ *
+ *
+ * ZeroG Copyright 2017 LGPL3 - darkoverlordofdata 
+ *
+ * Alternate runtime for vala on desktop, emscripten and android
  */
 #ifndef _GLIB_H_
 #define _GLIB_H_
@@ -66,6 +74,7 @@ static gpointer g_malloc         (gsize	 n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZ
 #include <glib/gslice.h>
 #include <glib/gstrfuncs.h>
 #include <glib/gmem.h>
+#include <glib/garray.h>
 #include <glib/glist.h>
 #include <glib/gslist.h>
 #include <glib/gstring.h>

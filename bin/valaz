@@ -1,6 +1,6 @@
 #!/usr/bin/env vala
 /**
- * emvalac - valac wrapper to compile for emscripten
+ * valaz - valac wrapper to compile for emscripten
  *
  * Copyright (C) 2017  bruce davidson
  * 
@@ -43,7 +43,7 @@
 
 using GLib;
 
-class EmValac {
+class Valaz {
 
 	//  const static string HOME = "/home/bruce/";
 
@@ -188,7 +188,7 @@ class EmValac {
 	static int main (string[] args) {
 
 		try {
-			var opt_context = new OptionContext ("- emvalac");
+			var opt_context = new OptionContext ("- valaz");
 			opt_context.set_help_enabled (true);
 			opt_context.add_main_entries (options, null);
 			opt_context.parse (ref args);
@@ -199,7 +199,7 @@ class EmValac {
 		}
 
 		if (version) {
-			stdout.printf ("emvalac Beta 0.0.2\n");
+			stdout.printf ("valaz Beta 0.0.2\n");
 			return 0;
 		}
 
@@ -218,16 +218,16 @@ class EmValac {
 		}
 		build();
 		/** Call the back end to do the work  */
-		var SDK = getEnv("BOSCO");
+		var SDK = getEnv("ZEROG");
 		if (!spawn(@"cp -rf src $(builddir)")) return 1;
 		if (!spawn(@"$(SDK)/tools/pre-vala.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(SDK)/tools/pre-gs \"$(encodeURIComponent(vala_files.str))\"")) return 1;
+		if (!spawn(@"$(SDK)/tools/pre-gs.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/post.coffee $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
 		if (cc_command != "jni")
 			if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
 		
-		stdout.printf("emvalac complete.\n");
+		stdout.printf("valaz complete.\n");
 		return 0;
 	}
 
@@ -404,25 +404,38 @@ class EmValac {
 				valac.append(p);
 				valac.append(" ");
 				switch (p) {
+
 					case "sdl2":
-						cc.append("-s USE_SDL=2 " );
+						if (cc_command == "emcc") {
+							cc.append("-s USE_SDL=2 " );
+						}
 						break;
+
 					case "SDL2_image":
-						cc.append("-s USE_SDL_IMAGE=2 ");
-						cc.append("-s SDL2_IMAGE_FORMATS='[\"png\"]' ");
+						if (cc_command == "emcc") {
+							cc.append("-s USE_SDL_IMAGE=2 ");
+							cc.append("-s SDL2_IMAGE_FORMATS='[\"png\"]' ");
+						}
 						break;
+
 					case "SDL2_ttf":
-						cc.append("-s USE_SDL_TTF=2 ");
+						if (cc_command == "emcc") {
+							cc.append("-s USE_SDL_TTF=2 ");
+						}
 						break;
 
                     case "emscripten":
-                        cc.append("-s ALLOW_MEMORY_GROWTH=1 ");
-                        cc.append("-s WASM=1 ");
-                        cc.append("-s ASSERTIONS=1 ");
-                        cc.append("-s EXPORTED_FUNCTIONS='[\"_game\"]' ");
-                        cc.append("--preload-file assets ");
-
-						 
+						if (cc_command == "emcc") {
+							//  cc.append("-s ALLOW_MEMORY_GROWTH=1 ");
+							//  cc.append("-s TOTAL_MEMORY=16777216 "); // 16mb
+							cc.append("-s TOTAL_MEMORY=33554432 "); // 32 mb
+							//  cc.append("-s TOTAL_MEMORY=268435456 "); // 256mb mobile max?
+							//  cc.append("-s TOTAL_MEMORY=536870912 "); // 512mb desktop max?
+							cc.append("-s WASM=1 ");
+							cc.append("-s ASSERTIONS=1 ");
+							cc.append("-s EXPORTED_FUNCTIONS='[\"_game\"]' ");
+							cc.append("--preload-file assets ");
+						}
 						break;
 				}
 			}

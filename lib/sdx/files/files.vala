@@ -20,4 +20,14 @@ namespace sdx.files {
 	public FileHandle relative(string path) {
 		return new FileHandle(path, FileType.Relative);
 	}
+	public FileHandle @default(string path) {
+#if (EMSCRIPTEN)
+		return new FileHandle(path, FileType.Relative);
+#elif (ANDROID)
+		return new FileHandle(path, FileType.Asset);
+#else
+		return new FileHandle(path, FileType.Resource);
+#endif		
+	}
 }
+

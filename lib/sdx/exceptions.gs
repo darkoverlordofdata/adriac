@@ -1,5 +1,8 @@
 namespace sdx 
 
+	exception IOException
+		InvalidData
+
 	exception SdlException 
 		Initialization
 		ImageInitialization
@@ -9,6 +12,10 @@ namespace sdx
 		CreateRenderer
 		InvalidForPlatform
 		UnableToLoadResource
+		UnableToLoadSurface
+		UnableToLoadTexture
 		NullPointer
 		NoSuchElement
-	
+		IllegalStateException
+		RuntimeException
+		NotReached

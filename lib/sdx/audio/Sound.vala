@@ -5,7 +5,7 @@ namespace sdx.audio {
 
     public class Sound : Object {
 
-#if (ANDROID || DESKTOP) 
+#if (!EMSCRIPTEN) 
         public SDLMixer.Chunk chunk;
 
         public Sound(FileHandle file) {

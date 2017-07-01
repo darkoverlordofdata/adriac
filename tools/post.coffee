@@ -34,7 +34,7 @@ snakeCase = (str) ->  str.replace(/([A-Z])/g, ($0) -> "_"+$0.toLowerCase())
 ##
 inject = (file, options) ->
     src = fs.readFileSync(file, 'utf8')
-    dst = []
+    dst = ['/** updated by emvalac */']
     flag = false
     for line in src.split('\n')
         line.replace /\#define\s+\_([_a-z0-9]+)_release0/, ($0, $1) ->

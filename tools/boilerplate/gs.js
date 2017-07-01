@@ -38,7 +38,7 @@
     src = fs.readFileSync(file, 'utf8');
     if (/^	class\s+\w*\s*:\s*Object\s*/mg.test(src)) {
       src = src.replace(/^	class\s+(\w*)\s*:\s*(Object)\s*/mg, function($0, $1, $2) {
-        return `\t[Compact, CCode ( /** reference counting */\n\t\tref_function = \"${namespace}_${name}_retain\", \n\t\tunref_function = \"${namespace}_${name}_release\"\n\t)]\n\tclass ${klass}\n\t\trefCount: int = 1\n\t\tdef retain() : unowned ${klass}\n\t\t\tGLib.AtomicInt.add (ref retainCount__, 1)\n\t\t\treturn this\n\t\tdef release() \n\t\t\tif GLib.AtomicInt.dec_and_test (ref retainCount__) do this.free ()\n\t\tdef extern free()\n\t\t`;
+        return `\t[Compact, CCode ( /** reference counting */\n\t\tref_function = \"${namespace}_${name}_retain\", \n\t\tunref_function = \"${namespace}_${name}_release\"\n\t)]\n\tclass ${klass}\n\t\tretainCount__: int = 1\n\t\tdef retain() : unowned ${klass}\n\t\t\tGLib.AtomicInt.add (ref retainCount__, 1)\n\t\t\treturn this\n\t\tdef release() \n\t\t\tif GLib.AtomicInt.dec_and_test (ref retainCount__) do this.free ()\n\t\tdef extern free()\n\t\t`;
       });
       return fs.writeFileSync(file, src);
     } else if (/^class\s+\w*\s*:\s*Object\s*/mg.test(src)) {

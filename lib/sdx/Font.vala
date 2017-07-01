@@ -11,13 +11,14 @@ namespace sdx {
 
 		public Font(string path, int size) {
 			
-#if (DESKTOP)			
-			var file = sdx.files.resource(path);
-#elif (ANDROID)
-			var file = sdx.files.asset(path);
-#else
-			var file = sdx.files.relative(path);
-#endif
+//  #if (EMSCRIPTEN)			
+//  			var file = sdx.files.relative(path);
+//  #elif (ANDROID)
+//  			var file = sdx.files.asset(path);
+//  #else
+//  			var file = sdx.files.resource(path);
+//  #endif
+			var file = sdx.files.@default(path);
 			raw = file.getRWops();
 			innerFont = new SDLTTF.Font.RW(raw, 0, size);
 			this.path = path;

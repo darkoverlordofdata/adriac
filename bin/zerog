@@ -1,0 +1,61 @@
+#!/bin/bash
+
+function USAGE {
+  echo -e "ZeroG scaffolding tools"
+  echo -e ""
+  echo -e "Usage:"
+  echo -e "zerog init folder domain.org"
+  exit 1
+}
+if [ $# -eq 0 ]; then
+  USAGE
+fi
+
+while getopts ":h " option; do
+    case $option in
+        h) USAGE;;
+        ?) echo "Error: Invalid option was specified -$OPTARG";USAGE;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ $1 == "init" ]; then
+  shift
+  if [ $# -eq 2 ]; then 
+    mkdir $1
+    cd $1
+    autovala init $1
+    pushd $SDL2SDK/build-scripts
+    ./androidbuild.sh $2 $ZEROG/src/main.c
+    popd
+    mv -v $SDL2SDK/build/$2 ./android
+    cp -v $ZEROG/.gitignore .
+    cp -v $ZEROG/.gitattributes .
+    mkdir -v -p ./.vscode
+    cp -v $ZEROG/src/.vscode/launch.json ./.vscode/launch.json
+    cp -v $ZEROG/src/.vscode/tasks.json ./.vscode/tasks.json
+    cp -v $ZEROG/src/Cakefile .
+    cp -v $ZEROG/src/example.avprj .
+    cp -v $ZEROG/src/main.vala ./src
+    mkdir -v -p ./assets
+    cp -v -f $ZEROG/src/sample.bmp ./assets/sample.bmp
+    mkdir -v -p ./android/assets/assets
+    cp -v -f $ZEROG/src/sample.bmp ./android/assets/assets/sample.bmp
+    mkdir -v -p ./src/emvapis
+    cp -v -f $ZEROG/src/emvapis/*.* ./src/emvapis
+    mkdir -v -p ./src/vapis
+    cp -v -f $ZEROG/src/vapis/*.* ./src/vapis
+    mkdir -v -p ./web
+    sed  "s/{{ name }}/$1/g"  $ZEROG/src/web/index.js >  ./web/index.js
+    sed  "s/{{ name }}/$1/g"  $ZEROG/src/web/index.html >  ./web/index.html
+    exit ;
+  fi
+  echo "Invalid number of arguments "
+  USAGE
+  exit ;
+fi
+echo "Invalid command: [$1]"
+USAGE
+
+
+      

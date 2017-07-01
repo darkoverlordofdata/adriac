@@ -3,21 +3,22 @@ using sdx.files;
 namespace sdx {
 
 	public enum FileType {
-		Parent,		/* Placeholder for the parent path  */
-		Resource,	/* Path to memory GResource */
-		Asset,		/* Android asset folder */
-		Absolute,	/* Absolute filesystem path.  */
-		Relative	/* Path relative to the pwd */
+		Resource = 1,		/* Path to memory GResource */
+		Asset,				/* Android asset folder */
+		Absolute,			/* Absolute filesystem path.  */
+		Relative			/* Path relative to the pwd */
+		//  Parent = 0x10		/* Placeholder for the parent path  */
 	}
 	
-	public class Files : Object {
-
-		public bool isResource;
-		public string resourcePath;
-
-		public Files(string resourcePath) { 
-			this.resourcePath = resourcePath;
+	public class DataInputStream : Object {
+		public string[] data; 
+		public int ctr;
+		public DataInputStream(string data) {
+			this.data = data.split("\n");
+			ctr = 0;
 		}
-
+		public string? read_line() {
+			return ctr<data.length ? data[ctr++] : null;
+		}
 	}
 }

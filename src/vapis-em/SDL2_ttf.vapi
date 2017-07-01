@@ -35,13 +35,13 @@ namespace SDLTTF {
 	public static void byteswap_unicode (int swapped);
 
 	[CCode (cname = "TTF_Init")]
-	public static int init ();
+	public static int Init ();
 
 	[CCode (cname = "TTF_WasInit")]
 	public static bool is_initialized ();
 
 	[CCode (cname = "TTF_Quit")]
-	public static void quit ();
+	public static void Quit ();
 
 	[CCode (cname = "int", cprefix = "TTF_STYLE_")]
 	public enum FontStyle {

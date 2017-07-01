@@ -37,7 +37,7 @@ module.exports = (file, options) ->
 \t\tunref_function = "#{namespace}_#{name}_release"
 \t)]
 \tclass #{klass}
-\t\trefCount: int = 1
+\t\tretainCount__: int = 1
 \t\tdef retain() : unowned #{klass}
 \t\t\tGLib.AtomicInt.add (ref retainCount__, 1)
 \t\t\treturn this

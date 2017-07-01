@@ -25,6 +25,9 @@ namespace Emscripten {
 	[CCode (cname="emscripten_set_main_loop_arg")]
 	public void emscripten_set_main_loop_arg(em_arg_callback_func fnc, void* arg, int fps, int simulate_infinite_loop);
 
+	[CCode (cname="emscripten_set_main_loop_arg")]
+	public void SetMainLoopArg(em_arg_callback_func fnc, void* arg, int fps, int simulate_infinite_loop);
+
 	[CCode (cname="emscripten_cancel_main_loop")]
 	public void emscripten_cancel_main_loop();
 

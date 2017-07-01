@@ -92,10 +92,11 @@ getSrc = (vala_source) ->
 ##
 androidTemplate = (defines, vapis, pkgs, list, copy) ->
     return """
-emvalac --builddir build \
+valaz --builddir build \
     --cc=jni \
     #{defines} \
     --vapidir src/vapis \
+    --fast-vapi project.vapi \
     #{vapis} \
     #{pkgs} \
     -X -O2 \
@@ -114,11 +115,12 @@ cd ./android && ant debug
 emscriptenTemplate = (defines, vapis, pkgs, list) ->
     return """
 mkdir -p build
-emvalac  \
+valaz  \
     --builddir build \
     --cc=emcc \
     #{defines} \
     --vapidir src/emvapis \
+    --fast-vapi project.vapi \
     --pkg emscripten \
     #{vapis} \
     #{pkgs} \

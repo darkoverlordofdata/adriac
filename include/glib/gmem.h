@@ -82,3 +82,40 @@ static inline gpointer g_malloc_n (gsize n_blocks, gsize n_block_bytes)
 
 #define GLIB_CHECK_VERSION(m,n,o) TRUE
 
+/**
+ * g_realloc:
+ * @mem: (nullable): the memory to reallocate
+ * @n_bytes: new size of the memory in bytes
+ * 
+ * Reallocates the memory pointed to by @mem, so that it now has space for
+ * @n_bytes bytes of memory. It returns the new address of the memory, which may
+ * have been moved. @mem may be %NULL, in which case it's considered to
+ * have zero-length. @n_bytes may be 0, in which case %NULL will be returned
+ * and @mem will be freed unless it is %NULL.
+ * 
+ * Returns: the new address of the allocated memory
+ */
+static inline gpointer
+g_realloc (gpointer mem,
+	   gsize    n_bytes)
+{
+  gpointer newmem;
+
+  if (G_LIKELY (n_bytes))
+    {
+      newmem = realloc (mem, n_bytes);
+      //TRACE (GLIB_MEM_REALLOC((void*) newmem, (void*)mem, (unsigned int) n_bytes, 0));
+      if (newmem)
+	return newmem;
+
+      printf ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+               G_STRLOC, n_bytes);
+    }
+
+  if (mem)
+    free (mem);
+
+  //TRACE (GLIB_MEM_REALLOC((void*) NULL, (void*)mem, 0, 0));
+
+  return NULL;
+}

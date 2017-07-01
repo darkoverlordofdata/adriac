@@ -90,7 +90,7 @@ namespace SDL {
 	 * @return Returns 0 on success or a negative error code on failure; call {@link SDL.get_error} for more information.
 	 */
 	[CCode (cname = "SDL_Init")]
-	public static int init (uint32 flags = SDL.InitFlag.EVERYTHING);
+	public static int Init (uint32 flags = SDL.InitFlag.EVERYTHING);
 
 	/**
 	 * Use this function to initialize specific SDL subsystems.
@@ -107,7 +107,7 @@ namespace SDL {
 	 * @return Returns 0 on success or a negative error code on failure; call {@link SDL.get_error} for more information.
 	 */
 	[CCode (cname = "SDL_InitSubSystem")]
-	public static int init_subsystem (uint32 flags);
+	public static int InitSubsystem (uint32 flags);
 
 	/**
 	 * Use this function to return a mask of the specified subsystems which have previously been initialized.
@@ -137,7 +137,7 @@ namespace SDL {
 	 * The return value does not include {@link SDL.InitFlag.NOPARACHUTE}.
 	 */
 	[CCode (cname = "SDL_WasInit")]
-	public static uint32 get_initialized (uint32 flags);
+	public static uint32 GetInitialized (uint32 flags);
 
 
 	/**
@@ -151,7 +151,7 @@ namespace SDL {
 	 * to shut it down before calling {@link SDL.quit}.
 	 */
 	[CCode (cname = "SDL_Quit")]
-	public static void quit ();
+	public static void Quit ();
 
 	/**
 	 * Use this function to shut down specific SDL subsystems.
@@ -159,7 +159,7 @@ namespace SDL {
 	 * @param flags any of the flags used by {@link SDL.init}.
 	 */
 	[CCode (cname = "SDL_QuitSubSystem")]
-	public static void quit_subsystem (uint32 flags);
+	public static void QuitSubsystem (uint32 flags);
 
 	//
 	// CPU Info
@@ -1013,7 +1013,7 @@ namespace SDL {
 		 */
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_AddHintCallback", cheader_filename = "SDL2/SDL_hints.h")]
-		public static void add_callback (string name, HintFunc callback);
+		public static void AddCallback (string name, HintFunc callback);
 
 		/**
 		 * Use this function to remove a function watching a particular hint.
@@ -1023,7 +1023,7 @@ namespace SDL {
 		 */
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_DelHintCallback", cheader_filename = "SDL2/SDL_hints.h")]
-		public static void del_callback (string name, HintFunc callback);
+		public static void DelCallback (string name, HintFunc callback);
 
 		/**
 		 * Use this function to set a hint with normal priority.
@@ -1038,7 +1038,7 @@ namespace SDL {
 		 * @return true if the hint was set. false otherwise.
 		 */
 		[CCode (cname = "SDL_SetHint", cheader_filename = "SDL2/SDL_hints.h")]
-		public static bool set_hint (string name, string hint_value);
+		public static bool SetHint (string name, string hintValue);
 
 		/**
 		 * Use this function to get the value of a hint.
@@ -1048,14 +1048,14 @@ namespace SDL {
 		 * @return Returns the string value of a hint or null if the hint isn't set.
 		 */
 		[CCode (cname = "SDL_GetHint", cheader_filename = "SDL2/SDL_hints.h")]
-		public static unowned string get_hint (string name);
+		public static unowned string GetHint (string name);
 
 		/**
 		 * Use this funcion on boolean hints to see if they are enabled.
 		 */
 		[Version (since = "2.0.5")]
 		[CCode (cname = "SDL_GetHintBoolean", cheader_filename = "SDL2/SDL_hints.h")]
-		public static bool hint_enabled (string name, bool default_value);
+		public static bool HintEnabled (string name, bool default_value);
 
 		/**
 		 * Use this function to clear all hints.
@@ -1063,7 +1063,7 @@ namespace SDL {
 		 * This function is automatically called during {@link SDL.quit}.
 		 */
 		[CCode (cname = "SDL_ClearHints", cheader_filename = "SDL2/SDL_hints.h")]
-		public static void clear_all ();
+		public static void ClearAll ();
 
 		/**
 		 * Use this function to set a hint with a specific priority.
@@ -1075,7 +1075,7 @@ namespace SDL {
 		 * @return true if the hint was set. false otherwise.
 		 */
 		[CCode (cname = "SDL_SetHintWithPriority", cheader_filename = "SDL2/SDL_hints.h")]
-		public static bool set_hint_with_priority (string name, string hint_value, Hint.Priority priority);
+		public static bool SetHintWithPriority (string name, string hint_value, Hint.Priority priority);
 
 	}//Hints
 
@@ -1107,8 +1107,10 @@ namespace SDL {
 
 
 
+	//  [CCode (cname = "SDL_GetError")]
+	//  public static unowned string get_error ();
 	[CCode (cname = "SDL_GetError")]
-	public static unowned string get_error ();
+	public static unowned string GetError ();
 
 	[CCode (cname = "SDL_ClearError")]
 	public static void clear_error ();
@@ -1202,7 +1204,7 @@ namespace SDL {
 
 
 		[CCode (cname = "SDL_RWFromMem")]
-		public RWops.from_mem (void* mem, int size);
+		public RWops.FromMem (void* mem, int size);
 		
 		[Version (since = "2.0.0")]
 		public int64 size{
@@ -1743,7 +1745,7 @@ namespace SDL {
 			[CCode (cname = "SDL_PointInRect", instance_pos = 1)]
 			public bool contains_point (Video.Point p);
 			[CCode (cname = "SDL_HasIntersection")]
-			public bool is_intersecting (Video.Rect other_rect);
+			public bool HasIntersection (Video.Rect other_rect);
 
 			[CCode (cname = "SDL_IntersectRect")]
 			public bool intersection_rect (Video.Rect other_rect, out Video.Rect result);
@@ -1870,12 +1872,12 @@ namespace SDL {
 			}
 
 			[CCode (cname = "SDL_CreateRGBSurface")]
-			public Surface.legacy_rgb (uint32 flags, int width, int height, int depth,
+			public Surface.LegacyRgb (uint32 flags, int width, int height, int depth,
 						uint32 rmask, uint32 gmask, uint32 bmask, uint32 amask);
 
 			public Surface.rgb (int width, int height, int depth,
 						uint32 rmask, uint32 gmask, uint32 bmask, uint32 amask) {
-				this.legacy_rgb (0, width, height, depth, rmask, gmask, bmask, amask);
+				new this.LegacyRgb (0, width, height, depth, rmask, gmask, bmask, amask);
 			}
 
 			[CCode (cname = "SDL_CreateRGBSurfaceFrom")]
@@ -1934,13 +1936,13 @@ namespace SDL {
 			public int get_colormod (out uint8 r, out int8 g, out uint8 b);
 
 			[CCode (cname = "SDL_SetSurfaceAlphaMod")]
-			public int set_alphamod (uint8 alpha);
+			public int SetAlphaMod (uint8 alpha);
 
 			[CCode (cname = "SDL_GetSurfaceAlphaMod")]
 			public int get_alphamod (out uint8 alpha);
 
 			[CCode (cname = "SDL_SetSurfaceBlendMode")]
-			public int set_blend_mode (Video.BlendMode blend_mode);
+			public int SetBlendMode (Video.BlendMode blend_mode);
 
 			[CCode (cname = "SDL_GetSurfaceBlendMode")]
 			public int get_blend_mode (out Video.BlendMode blend_mode);
@@ -1973,7 +1975,7 @@ namespace SDL {
 			public int lowerblit (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
 
 			[CCode (cname = "SDL_BlitScaled")]
-			public int blit_scaled (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
+			public int BlitScaled (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
 
 			[CCode (cname = "SDL_LowerBlitScaled")]
 			public int lowerblit_scaled (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
@@ -2030,121 +2032,121 @@ namespace SDL {
 		[Compact]
 		public class Renderer {
 			[CCode (cname = "SDL_GetNumRenderDrivers")]
-			public static int num_drivers ();
+			public static int NumDrivers ();
 
 			[CCode (cname = "SDL_GetRenderDriverInfo")]
-			public static int get_driver_info (int index, Video.RendererInfo info);
+			public static int GetDriverInfo (int index, Video.RendererInfo info);
 
 			[CCode (cname = "SDL_CreateWindowAndRenderer")]
-			public static int create_with_window (int width, int height, uint32 window_flags, out Video.Window window, out Video.Renderer renderer);
+			public static int CreateWithWindow (int width, int height, uint32 window_flags, out Video.Window window, out Video.Renderer renderer);
 
 			[CCode (cname = "SDL_CreateRenderer")]
-			public static Renderer? create (Video.Window window, int index, uint32 flags);
+			public static Renderer? Create (Video.Window window, int index, uint32 flags);
 
 			[CCode (cname = "SDL_CreateSoftwareRenderer")]
-			public static Renderer? create_from_surface (Video.Surface surface);
+			public static Renderer? CreateFromSurface (Video.Surface surface);
 
 			[CCode (cname = "SDL_GetRendererInfo")]
-			public int get_info (out Video.RendererInfo info);
+			public int GetInfo (out Video.RendererInfo info);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_RenderTargetSupported")]
-			public bool is_supported ();
+			public bool IsSupported ();
 			
 			[Version (since = "2.0.0")]
-			public Video.Texture? render_target{
+			public Video.Texture? RenderTarget{
 				[CCode (cname = "SDL_GetRenderTarget")]get;
 				[CCode (cname = "SDL_SetRenderTarget")]set;
 			}
 
 			[Version (since = "2.0.4")]
 			[CCode (cname = "SDL_RenderIsClipEnabled")]
-			public bool is_clip_enabled ();
+			public bool IsClipEnabled ();
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_RenderSetLogicalSize")]
-			public int set_logical_size (int w, int h);
+			public int SetLogicalSize (int w, int h);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_RenderGetLogicalSize")]
-			public void get_logical_size (out int w, out int h);
+			public void GetLogicalSize (out int w, out int h);
 
 			[CCode (cname = "SDL_RenderSetViewport")]
-			public int set_viewport (Video.Rect? rect);
+			public int SetViewport (Video.Rect? rect);
 
 			[CCode (cname = "SDL_RenderGetViewport")]
-			public void get_viewport (out Video.Rect rect);
+			public void GetViewport (out Video.Rect rect);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_RenderSetScale")]
-			public int set_scale (float scale_x, float scale_y);
+			public int SetScale (float scale_x, float scale_y);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_RenderGetScale")]
-			public void get_scale (out float scale_x, out float scale_y);
+			public void GetScale (out float scale_x, out float scale_y);
 			
 			[Version (since = "2.0.5")]
 			[CCode (cname = "SDL_RenderSetIntegerScale")]
-			public int set_int_scale (bool enable);
+			public int SetIntScale (bool enable);
 			
 			[Version (since = "2.0.5")]
 			[CCode (cname = "SDL_RenderGetIntegerScale")]
-			public bool get_int_scale ();
+			public bool GetIntScale ();
 
 			[CCode (cname = "SDL_SetRenderDrawColor")]
-			public int set_draw_color (uint8 r, uint8 g, uint8 b, uint8 a);
+			public int SetDrawColor (uint8 r, uint8 g, uint8 b, uint8 a);
 
 			[CCode (cname = "SDL_GetRenderDrawColor")]
-			public int get_draw_color (out uint8 r, out uint8 g, out uint8 b, out uint8 a);
+			public int GetDrawColor (out uint8 r, out uint8 g, out uint8 b, out uint8 a);
 
 			[CCode (cname = "SDL_SetRenderDrawBlendMode")]
-			public int set_draw_blend_mode (Video.BlendMode blend_mode);
+			public int SetDrawBlendMode (Video.BlendMode blend_mode);
 
 			[CCode (cname = "SDL_GetRenderDrawBlendMode")]
-			public int get_draw_blend_mode (out Video.BlendMode blend_mode);
+			public int GetDrawBlendMode (out Video.BlendMode blend_mode);
 
 			[CCode (cname = "SDL_RenderClear")]
-			public int clear ();
+			public int Clear ();
 
 			[CCode (cname = "SDL_RenderDrawPoint")]
-			public int draw_point (int x, int y);
+			public int DrawPoint (int x, int y);
 
 			[CCode (cname = "SDL_RenderDrawPoints")]
-			public int draw_points (Video.Point[] points);
+			public int DrawPoints (Video.Point[] points);
 
 			[CCode (cname = "SDL_RenderDrawLine")]
-			public int draw_line (int x1, int y1, int x2, int y2);
+			public int DrawLine (int x1, int y1, int x2, int y2);
 
 			[CCode (cname = "SDL_RenderDrawLines")]
-			public int draw_lines (Video.Point[] points);
+			public int DrawLines (Video.Point[] points);
 
 			[CCode (cname = "SDL_RenderDrawRect")]
-			public int draw_rect (Video.Rect? rect);
+			public int DrawRect (Video.Rect? rect);
 
 			[CCode (cname = "SDL_RenderDrawLines")]
-			public int draw_rects (Video.Rect[] points, int count);
+			public int DrawRects (Video.Rect[] points, int count);
 
 			[CCode (cname = "SDL_RenderFillRect")]
-			public int fill_rect (Video.Rect? rect);
+			public int FillRect (Video.Rect? rect);
 
 			[CCode (cname = "SDL_RenderFillRects")]
-			public int fill_rects (Video.Rect[] points, int count);
+			public int FillRects (Video.Rect[] points, int count);
 
 			[CCode (cname = "SDL_RenderCopy")]
-			public int copy (Video.Texture texture, Video.Rect? srcrect, Video.Rect? dstrect);
+			public int Copy (Video.Texture texture, Video.Rect? srcrect, Video.Rect? dstrect);
 
 			[CCode (cname = "SDL_RenderCopyEx")]
-			public int copyex (Video.Texture texture, Video.Rect? srcrect, Video.Rect? dstrect, double angle, Video.Point? center, Video.RendererFlip flip);
+			public int CopyEx (Video.Texture texture, Video.Rect? srcrect, Video.Rect? dstrect, double angle, Video.Point? center, Video.RendererFlip flip);
 
 			[CCode (cname = "SDL_RenderReadPixels")]
-			public int read_pixels (Video.Rect? rect, Video.PixelRAWFormat format, out void* pixels, int pitch);
+			public int ReadPixels (Video.Rect? rect, Video.PixelRAWFormat format, out void* pixels, int pitch);
 
 			[CCode (cname = "SDL_RenderPresent")]
-			public void present ();
+			public void Present ();
 			
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_GetRendererOutputSize")]
-			public void get_output_size (out int w, out int h);
+			public void GetOutputSize (out int w, out int h);
 		}// Renderer
 
 		[CCode (cprefix = "SDL_", cname = "SDL_Texture", free_function = "SDL_DestroyTexture", cheader_filename = "SDL2/SDL_render.h")]
@@ -2154,25 +2156,31 @@ namespace SDL {
 			public static Texture? create (Video.Renderer renderer, Video.PixelRAWFormat format, int access, int w, int h);
 
 			[CCode (cname = "SDL_CreateTextureFromSurface")]
-			public static Texture? create_from_surface (Video.Renderer renderer, Video.Surface surface);
+			public static Texture? CreateFromSurface (Video.Renderer renderer, Video.Surface surface);
 
 			[CCode (cname = "SDL_QueryTexture")]
 			public int query (out Video.PixelRAWFormat format, out int access, out int w, out int h);
 
+			//  [CCode (cname = "SDL_SetTextureColorMod")]
+			//  public int set_color_mod (uint8 r, uint8 g, uint8 b);
+
 			[CCode (cname = "SDL_SetTextureColorMod")]
-			public int set_color_mod (uint8 r, uint8 g, uint8 b);
+			public int SetColorMod (uint8 r, uint8 g, uint8 b);
 
 			[CCode (cname = "SDL_GetTextureColorMod")]
 			public int get_color_mod (out uint8 r, out uint8 g, out uint8 b);
 
+			//  [CCode (cname = "SDL_SetTextureAlphaMod")]
+			//  public int set_alpha_mod (uint8 alpha);
+
 			[CCode (cname = "SDL_SetTextureAlphaMod")]
-			public int set_alpha_mod (uint8 alpha);
+			public int SetAlphaMod (uint8 alpha);
 
 			[CCode (cname = "SDL_GetTextureColorMod")]
 			public int get_alpha_mod (out uint8 alpha);
 
 			[CCode (cname = "SDL_SetTextureBlendMode")]
-			public int set_blend_mode (Video.BlendMode blend_mode);
+			public int SetBlendMode (Video.BlendMode blend_mode);
 
 			[CCode (cname = "SDL_GetTextureBlendMode")]
 			public int get_blend_mode (out Video.BlendMode blend_mode);
@@ -2261,34 +2269,34 @@ namespace SDL {
 		public struct Display : int {
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_GetDisplayName")]
-			public unowned string? get_name ();
+			public unowned string? GetName ();
 
 			[CCode (cname = "SDL_GetDisplayBounds")]
-			public int get_bounds (out Video.Rect rect);
+			public int GetBounds (out Video.Rect rect);
 
 			[Version (since = "2.0.0")]
 			[CCode (cname = "SDL_GetNumDisplayModes")]
-			public int num_modes ();
+			public int NumModes ();
 
 			[CCode (cname = "SDL_GetDisplayMode")]
-			public int get_mode (int mode_index, out Video.DisplayMode mode);
+			public int GetMode (int mode_index, out Video.DisplayMode mode);
 
 			[Version (since = "2.0.4")]
 			[CCode (cname = "SDL_GetDisplayDPI")]
-			public int get_dpi (out float ddpi, out float hdpi, out float vdpi);
+			public int GetDpi (out float ddpi, out float hdpi, out float vdpi);
 
 			[CCode (cname = "SDL_GetDesktopDisplayMode")]
-			public int get_desktop_mode (out Video.DisplayMode mode);
+			public int GetDesktopMode (out Video.DisplayMode mode);
 
 			[CCode (cname = "SDL_GetCurrentDisplayMode")]
-			public int get_current_mode (out Video.DisplayMode mode);
+			public int GetCurrentMode (out Video.DisplayMode mode);
 
 			[CCode (cname = "SDL_GetClosestDisplayMode")]
-			public Video.DisplayMode? get_closest_mode (Video.DisplayMode mode, out Video.DisplayMode closest);
+			public Video.DisplayMode? GetClosestMode (Video.DisplayMode mode, out Video.DisplayMode closest);
 
 			[Version (since = "2.0.5")]
 			[CCode (cname = "SDL_GetDisplayUsableBounds")]
-			public int get_usable_bounds (out Video.Rect? rect);
+			public int GetUsableBounds (out Video.Rect? rect);
 		}// Display
 
 		[CCode (cname = " SDL_SYSWM_TYPE", cprefix = "SDL_SYSWM_", cheader_filename = "SDL2/SDL_syswm.h")]
@@ -4002,24 +4010,24 @@ namespace SDL {
 	[Compact]
 	public class Timer {
 		[CCode (cname = "SDL_GetTicks")]
-		public static uint32 get_ticks ();
+		public static uint32 GetTicks ();
 
 		[CCode (cname = "SDL_GetPerformanceCounter")]
-		public static uint64 get_performance_counter ();
+		public static uint64 GetPerformanceCounter ();
 
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_GetPerformanceFrequency")]
-		public static uint64 get_performance_frequency ();
+		public static uint64 GetPerformanceFrequency ();
 
 		[CCode (cname = "SDL_Delay")]
-		public static void delay (uint32 ms);
+		public static void Delay (uint32 ms);
 
 		[CCode (cname = "SDL_AddTimer", delegate_target_pos= 1.1)]
 		public Timer (uint32 interval, SDL.TimerFunc callback);
 
 		[CCode (cname = "SDL_RemoveTimer")]
 		[DestroysInstance]
-		public bool remove ();
+		public bool Remove ();
 	}// Timer
 
 

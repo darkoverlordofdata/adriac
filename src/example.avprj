@@ -9,6 +9,7 @@ project_name: match3
 vapidir: src/vapis
 
 vala_binary: src/match3
+compile_options: --fast-vapi project.vapi
 vala_check_package: glib-2.0
 vala_check_package: gobject-2.0
 vala_check_package: sdl2
