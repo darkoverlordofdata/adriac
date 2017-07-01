@@ -56,19 +56,13 @@ update ./bashrc
 ## Dark Vala Manifesto
 
 
-While working with ecere, I saw again that I prefer the MSDN style naming convention.
-So, moving back to Vala, I implement my code using that style. But it is jaring to see 
-against the gnome snake case code - but that can fixed in the vapi.
+Powered by ZeroG - runtime for vala without GObject
 
-Dark Vala is born, powered by ZeroG - runtime for vala without GObject
-
-
-So, by design, Dark Vala reinforces that it is a different vala:
+So, by design, this Dark Vala reinforces that it is a different vala:
 
 * no PThread, GObject / GType / Gio, etc
 * no snake-case natives, use msdn style
-* modernize vapi for List, StringBuilder, etc
-* alternate oop methodologies
+* simplified api for builtins: List, StringBuilder, etc.
+* alternate oop methodologies such as closures.
 
-A different version of vala for games? Not so unique. Unity3D has a 3.xish version of CSharp. Pico8 adds it's own restictions to Lua.
 
