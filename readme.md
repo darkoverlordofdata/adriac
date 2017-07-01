@@ -56,6 +56,10 @@ update ./bashrc
 ## Dark Vala Manifesto
 
 
+While working with ecere, I saw again that I prefer the MSDN style naming convention.
+Moving back to Vala, I implement my code using that style. But it is jaring to see 
+against the gnome snake case code - but that can fixed in the vapi.
+
 Powered by ZeroG - runtime for vala without GObject
 
 So, by design, this Dark Vala reinforces that it is a different vala:
