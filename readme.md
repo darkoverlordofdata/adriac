@@ -76,6 +76,6 @@ So, by design, this Dark Vala reinforces that it is a different vala:
 * no PThread, GObject / GType / Gio, etc
 * no snake-case natives, use msdn style
 * simplified api for builtins: List, StringBuilder, etc.
-* alternate oop methodologies such as closures.
+* alternate oop strategies such as closures.
 
 
