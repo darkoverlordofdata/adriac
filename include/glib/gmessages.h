@@ -6,4 +6,6 @@
 #define g_print printf
 #define g_critical printf
 #define g_warning printf
+#define g_warn_if_fail printf
+
 

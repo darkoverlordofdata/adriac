@@ -18,7 +18,7 @@ Additional pre and post processing steps:
                 \/   \/                     \/ 
 
 
-    Lightweight replacement for GLib runtime for Vala
+    Lightweight replacement Vala's runtime, GLib
 
 ## install
 
@@ -62,20 +62,26 @@ update ./bashrc
     nodejs
     coffeescrpipt
 
-## Dark Vala Manifesto
+## ZeroG and the Dark Vala
 
+ZeroG is a lightweight replacement Vala's runtime, GLib.
 
-While working with ecere, I saw again that I prefer the MSDN style naming convention.
-Moving back to Vala, I implement my code using that style. But it is jaring to see 
-against the gnome snake case code - but that can fixed in the vapi.
+Based on a posix profile approach, so GObject is replaced with reference
+counted compact class. This limits the available oop semantics, and there are
+some other limitations, so it's no longer fully compatible with standard vala.
+I'm also updating the style.
 
-Powered by ZeroG - runtime for vala without GObject
-
-So, by design, this Dark Vala reinforces that it is a different vala:
-
-* no PThread, GObject / GType / Gio, etc
-* no snake-case natives, use msdn style
+* no PThread, GObject, Gio, etc
+* no snake-case natives, use 'ToString'
 * simplified api for builtins: List, StringBuilder, etc.
-* alternate oop strategies such as closures.
+* favor composition over inheritane, 
+* favor closures, delegates and functional code over 'classy' oop 
 
+Implements:
+
+* GList & GSList
+* GHashTable
+* GString
+* GNode
+* GQue
 

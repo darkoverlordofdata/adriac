@@ -227,7 +227,7 @@ class Adriac {
 		if (cc_command != "jni")
 			if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
 		
-		stdout.printf("valaz complete.\n");
+		stdout.printf("adriac complete.\n");
 		return 0;
 	}
 

@@ -54,6 +54,9 @@ typedef unsigned int    guint;
 typedef float   gfloat;
 typedef double  gdouble;
 
+typedef guint32 gunichar;
+typedef guint16 gunichar2;
+
 /* Define min and max constants for the fixed size numerical types */
 #define G_MININT8	((gint8) -0x80)
 #define G_MAXINT8	((gint8)  0x7f)

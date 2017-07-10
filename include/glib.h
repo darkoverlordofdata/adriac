@@ -70,13 +70,14 @@ static gpointer g_malloc         (gsize	 n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZ
 #include <glib/gtestutils.h>
 #include <glib/gmessages.h>
 #include <glib/gthread.h>
-#include <glib/gnode.h>
 #include <glib/gslice.h>
 #include <glib/gstrfuncs.h>
 #include <glib/gmem.h>
+#include <glib/gnode.h>
 #include <glib/garray.h>
 #include <glib/glist.h>
 #include <glib/gslist.h>
+#include <glib/gstrfunc2.h>
 #include <glib/gstring.h>
 #include <glib/gerror.h>
 #include <glib/ghash.h>
