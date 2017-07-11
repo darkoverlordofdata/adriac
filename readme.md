@@ -18,7 +18,7 @@ Additional pre and post processing steps:
                 \/   \/                     \/ 
 
 
-    Lightweight replacement Vala's runtime, GLib
+    Lightweight replacement for Vala runtime GLib
 
 ## install
 
@@ -64,14 +64,28 @@ update ./bashrc
 
 ## ZeroG and the Dark Vala
 
-ZeroG is a lightweight replacement Vala's runtime, GLib.
+ZeroG is a lightweight replacement for Vala runtime GLib.
+This supports a subset of Vala.
 
-Based on a posix profile approach, so GObject is replaced with reference
-counted compact class. This limits the available oop semantics, and there are
-some other limitations, so it's no longer fully compatible with standard vala.
-I'm also updating the style.
+Code is based on portions of the original GLib, but only includes
+parts required for vala. These are ported to static inline code for inclusion
+as *.h header files.
 
-* no PThread, GObject, Gio, etc
+GObject is replaced with reference counted compact class. 
+This limits the available oop semantics, and there are
+some other limitations, so it's no longer fully compatible with standard vala,
+and not compatible with genie classes. Genie also does not support closures.
+
+In addition, I'm updating the style to be more like msdn guides:
+* Namespaces, types and functions are PascalCase
+* parameters and variables are camelCase
+* constants are UPPER_CASE
+
+I prefer this for readabliity, and it ensures the code will not be mistaken for standard vala.
+
+Differences:
+
+* no PThread, GObject, Gio, RegEx
 * no snake-case natives, use 'ToString'
 * simplified api for builtins: List, StringBuilder, etc.
 * favor composition over inheritane, 
@@ -82,6 +96,7 @@ Implements:
 * GList & GSList
 * GHashTable
 * GString
+* GArray
 * GNode
 * GQue
 

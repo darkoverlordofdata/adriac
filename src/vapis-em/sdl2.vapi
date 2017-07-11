@@ -1135,7 +1135,7 @@ namespace SDL {
 		public uint32 type;
 
 		[CCode (cname = "SDL_RWread")]
-		public size_t read (void* ptr, size_t size, size_t maxnum);
+		public size_t Read (void* ptr, size_t size, size_t maxnum);
 
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_ReadU8")]
@@ -1195,7 +1195,7 @@ namespace SDL {
 		public int64 close ();
 
 		[CCode (cname = "SDL_RWFromFile")]
-		public RWops.from_file (string file, string mode);
+		public RWops.FromFile (string file, string mode);
 
         [CCode (cname = "vala_rw-from_file")]
 		public static RWops from_resource(string file) {
@@ -1917,7 +1917,7 @@ namespace SDL {
 			public int save_bmp_rw (RWops dst, int freedst = 0);
 
 			public int save_bmp (string file) {
-				return save_bmp_rw (new SDL.RWops.from_file (file, "wb"), 1);
+				return save_bmp_rw (new SDL.RWops.FromFile (file, "wb"), 1);
 			}
 
 			[CCode (cname = "SDL_SetSurfaceRLE")]
@@ -3402,7 +3402,7 @@ namespace SDL {
 
 			[Version (since = "2.0.0")]
 			public static int load_dollar_templates (Touch.TouchID touch_id, string file) {
-				return load_dollar_templates_rw (touch_id, new SDL.RWops.from_file (file, "rb"));
+				return load_dollar_templates_rw (touch_id, new SDL.RWops.FromFile (file, "rb"));
 			}
 
 			[Version (since = "2.0.0")]
@@ -3410,7 +3410,7 @@ namespace SDL {
 			public static int save_dollar_template_rw (GestureID gesture_id, SDL.RWops dst);
 
 			public static int save_dollar_template (GestureID gesture_id, string file) {
-				return save_dollar_template_rw (gesture_id, new SDL.RWops.from_file (file, "wb"));
+				return save_dollar_template_rw (gesture_id, new SDL.RWops.FromFile (file, "wb"));
 			}
 
 			[Version (since = "2.0.0")]
@@ -3418,7 +3418,7 @@ namespace SDL {
 			public static int save_all_dollar_templates_rw (SDL.RWops dst);
 
 			public static int save_all_dollar_templates (string file) {
-				return save_all_dollar_templates_rw (new SDL.RWops.from_file (file, "wb"));
+				return save_all_dollar_templates_rw (new SDL.RWops.FromFile (file, "wb"));
 			}
 
 			[Version (since = "2.0.0")]
@@ -3967,7 +3967,7 @@ namespace SDL {
 		public static unowned AudioSpec? load_rw (RWops src, int freesrc, ref AudioSpec spec, out uint8[] audio_buf, out uint32 audio_len);
 
 		public static unowned AudioSpec? load (string file, ref AudioSpec spec, out uint8[] audio_buf, out uint32 audio_len) {
-			return load_rw (new SDL.RWops.from_file (file, "rb"), 1,
+			return load_rw (new SDL.RWops.FromFile (file, "rb"), 1,
 			ref spec, out audio_buf, out audio_len);
 		}
 

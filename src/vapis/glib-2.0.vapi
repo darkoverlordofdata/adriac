@@ -31,10 +31,12 @@
 /** 
  * Zero-G modified vala bindings.
  * 
- * Binds to zerog runtime in place of glib
+ * Binds to zerog runtime or glib
  * 
  * Copyright (C) 2017 bruce davidson
  */
+    
+
 [SimpleType]
 [GIR (name = "gboolean")]
 [CCode (cname = "gboolean", cheader_filename = "glib.h", type_id = "G_TYPE_BOOLEAN", marshaller_type_name = "BOOLEAN", get_value_function = "g_value_get_boolean", set_value_function = "g_value_set_boolean", default_value = "FALSE", type_signature = "b")]
@@ -128,6 +130,8 @@ public struct int {
 
 	[CCode (cname = "g_strdup_printf", instance_pos = -1)]
 	public string ToString (string format = "%i");
+	[CCode (cname = "g_strdup_printf", instance_pos = -1)]
+	public string to_string (string format = "%i");
 
 	[CCode (cname = "MIN")]
 	public static int min (int a, int b);
@@ -1045,6 +1049,8 @@ public class string {
 	public int Scanf (...);
 	[CCode (cname = "g_strconcat")]
 	public string Concat (string string2, ...);
+	[CCode (cname = "g_strconcat")]
+	public string concat (string string2, ...);
 	[CCode (cname = "g_strescape")]
 	public string Escape (string? exceptions = null);
 	[CCode (cname = "g_strcompress")]
@@ -4321,75 +4327,31 @@ namespace GLib {
 
 		[CCode (cname = "g_list_append"), ReturnsModifiedPointer ()]
 		public void Add (owned G data);
-		[ReturnsModifiedPointer ()]
-		public void prepend (owned G data);
 		[CCode (cname = "g_list_insert"), ReturnsModifiedPointer ()]
 		public void Insert (owned G data, int position=0);
-		[ReturnsModifiedPointer ()]
-		public void insert_before (List<G> sibling, owned G data);
-		[ReturnsModifiedPointer ()]
-		public void insert_sorted (owned G data, CompareFunc<G> compare_func);
 		[CCode (cname = "g_list_remove"), ReturnsModifiedPointer ()]
 		public void Remove (G data);
-		[ReturnsModifiedPointer ()]
-		public void remove_link (List<G> llink);
-		[ReturnsModifiedPointer ()]
-		public void delete_link (List<G> link_);
-		[ReturnsModifiedPointer ()]
-		public void remove_all (G data);
-
 		[CCode (cname = "g_list_length")]
 		public uint Length ();
-		public List<unowned G> copy ();
-		[Version (since = "2.34")]
-		public List<G> copy_deep (CopyFunc<G> func);
-		[ReturnsModifiedPointer ()]
-		public void reverse ();
-		[ReturnsModifiedPointer ()]
-		public void sort (CompareFunc<G> compare_func);
-		[Version (since = "2.10")]
-		[ReturnsModifiedPointer ()]
-		public void insert_sorted_with_data (owned G data, CompareDataFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void sort_with_data (CompareDataFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void concat (owned List<G> list2);
+		[CCode (cname = "g_list_copy")]
+		public List<unowned G> Copy ();
 		[CCode (cname = "g_list_foreach")]
 		public void ForEach (Func<G> func);
-
-		private unowned List<G> first ();
-		private unowned List<G> last ();
-		
-		public unowned List<G> Head {
-			get {
-				return first();
-			}
-		}
-
-		public unowned List<G> Tail {
-			get {
-				return last();
-			}
-		}
-
+		public unowned List<G> Tail { get { return last(); } }
+		public unowned List<G> Head { get { return first(); } }
 		[CCode (cname = "g_list_nth")]
 		public unowned List<G> Item (uint n);
-		[CCode (cname = "g_list_nth_data")]
-		public unowned G NthData (uint n);
-		public unowned List<G> nth_prev (uint n);
-
 		[CCode (cname = "g_list_find")]
 		public unowned List<G> Find (G data);
-		public unowned List<G> find_custom (G data, CompareFunc<G> func);
-		[CCode (cname = "g_list_find_custom", simple_generics = true)]
-		public unowned List<G> search<T> (T data, SearchFunc<G,T> func);
 
-		public int position (List<G> llink);
-		public int index (G data);
-
+		//  public int position (List<G> llink);
+		//  public int index (G data);
 		public G data;
 		public List<G> next;
 		public unowned List<G> prev;
+
+		private unowned List<G> first ();
+		private unowned List<G> last ();
 	}
 
 	/* Singly-Linked Lists */
@@ -4399,56 +4361,28 @@ namespace GLib {
 	public class SList<G> {
 		public SList ();
 
-		[ReturnsModifiedPointer ()]
-		public void append (owned G data);
-		[ReturnsModifiedPointer ()]
-		public void prepend (owned G data);
-		[ReturnsModifiedPointer ()]
-		public void insert (owned G data, int position);
-		[ReturnsModifiedPointer ()]
-		public void insert_before (SList<G> sibling, owned G data);
-		[ReturnsModifiedPointer ()]
-		public void insert_sorted (owned G data, CompareFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void remove (G data);
-		[ReturnsModifiedPointer ()]
-		public void remove_link (SList<G> llink);
-		[ReturnsModifiedPointer ()]
-		public void delete_link (SList<G> link_);
-		[ReturnsModifiedPointer ()]
-		public void remove_all (G data);
+		[CCode (cname = "g_slist_append"), ReturnsModifiedPointer ()]
+		public void Add (owned G data);
+		[CCode (cname = "g_slist_insert"), ReturnsModifiedPointer ()]
+		public void Insert (owned G data, int position=0);
+		[CCode (cname = "g_slist_remove"), ReturnsModifiedPointer ()]
+		public void Remove (G data);
+		[CCode (cname = "g_slist_remove_all"), ReturnsModifiedPointer ()]
+		public void RemoveAll (G data);
+		[CCode (cname = "g_slist_foreach")]
+		public void ForEach (Func<G> func);
+		public unowned SList<G> Tail { get { return last(); } }
+		[CCode (cname = "g_slist_nth")]
+		public unowned SList<G> Item (uint n);
+		[CCode (cname = "g_slist_find")]
+		public unowned SList<G> Find (G data);
 
-		public uint length ();
-		public SList<unowned G> copy ();
-		[Version (since = "2.34")]
-		public SList<G> copy_deep (CopyFunc<G> func);
-		[ReturnsModifiedPointer ()]
-		public void reverse ();
-		[Version (since = "2.10")]
-		[ReturnsModifiedPointer ()]
-		public void insert_sorted_with_data (owned G data, CompareDataFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void sort (CompareFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void sort_with_data (CompareDataFunc<G> compare_func);
-		[ReturnsModifiedPointer ()]
-		public void concat (owned SList<G> list2);
-		public void @foreach (Func<G> func);
-
-		public unowned SList<G> last ();
-		public unowned SList<G> nth (uint n);
-		public unowned G nth_data (uint n);
-
-		public unowned SList<G> find (G data);
-		public unowned SList<G> find_custom (G data, CompareFunc<G> func);
-		[CCode (cname = "g_slist_find_custom", simple_generics = true)]
-		public unowned SList<G> search<T> (T data, SearchFunc<G,T> func);
-
-		public int position (SList<G> llink);
-		public int index (G data);
-
+		//  public int position (SList<G> llink);
+		//  public int index (G data);
 		public G data;
 		public SList<G> next;
+
+		private unowned SList<G> last ();
 	}
 
 	[CCode (has_target = false)]
@@ -4476,50 +4410,58 @@ namespace GLib {
 
 		public Queue ();
 
-		[Version (since = "2.14")]
-		public void clear ();
-		public bool is_empty ();
-		[Version (since = "2.4")]
-		public uint get_length ();
-		[Version (since = "2.4")]
-		public void reverse ();
-		public Queue copy ();
-		[Version (since = "2.4")]
-		public unowned List<G> find (G data);
-		[Version (since = "2.4")]
-		public unowned List<G> find_custom (G data, CompareFunc<G> func);
-		[CCode (cname = "g_queue_find_custom", simple_generics = true)]
-		public unowned List<G> search<T> (T data, SearchFunc<G,T> func);
-		[Version (since = "2.4")]
-		public void sort (CompareDataFunc<G> compare_func);
-		public void push_head (owned G data);
-		public void push_tail (owned G data);
-		[Version (since = "2.4")]
-		public void push_nth (owned G data, int n);
-		public G pop_head ();
-		public G pop_tail ();
-		[Version (since = "2.4")]
-		public G pop_nth (uint n);
-		public unowned G peek_head ();
-		public unowned G peek_tail ();
-		[Version (since = "2.4")]
-		public unowned G peek_nth (uint n);
-		[Version (since = "2.4")]
-		public int index (G data);
-		[Version (since = "2.4")]
-		public void remove (G data);
-		[Version (since = "2.4")]
-		public void remove_all (G data);
-		[Version (since = "2.4")]
-		public void delete_link (List<G> link);
-		[Version (since = "2.4")]
-		public void unlink (List<G> link);
-		[Version (since = "2.4")]
-		public void insert_before (List<G> sibling, owned G data);
-		[Version (since = "2.4")]
-		public void insert_after (List<G> sibling, owned G data);
-		[Version (since = "2.4")]
-		public void insert_sorted (owned G data, CompareDataFunc<G> func);
+		[Version (since = "2.14"), CCode (cname = "g_queue_clear")]
+		public void Clear ();
+		[CCode (cname = "g_queue_is_empty")]
+		public bool IsEmpty ();
+		[Version (since = "2.4"), CCode (cname = "g_queue_get_length")]
+		public uint GetLength ();
+		[Version (since = "2.4"), CCode (cname = "g_queue_reverse")]
+		public void Reverse ();
+		[CCode (cname = "g_queue_copy")]
+		public Queue Copy ();
+		[Version (since = "2.4"), CCode (cname = "g_queue_find")]
+		public unowned List<G> Find (G data);
+		//  [Version (since = "2.4")]
+		//  public unowned List<G> find_custom (G data, CompareFunc<G> func);
+		//  [CCode (cname = "g_queue_find_custom", simple_generics = true)]
+		//  public unowned List<G> search<T> (T data, SearchFunc<G,T> func);
+		//  [Version (since = "2.4")]
+		//  public void sort (CompareDataFunc<G> compare_func);
+		[CCode (cname = "g_queue_push_head")]
+		public void PushHead (owned G data);
+		[CCode (cname = "g_queue_push_tail")]
+		public void PushTail (owned G data);
+		//  [Version (since = "2.4")]
+		//  public void push_nth (owned G data, int n);
+		[CCode (cname = "g_queue_pop_head")]
+		public G PopHead ();
+		[CCode (cname = "g_queue_pop_tail")]
+		public G PopTail ();
+		//  [Version (since = "2.4")]
+		//  public G pop_nth (uint n);
+		[CCode (cname = "g_queue_peek_head")]
+		public unowned G PeekHead ();
+		[CCode (cname = "g_queue_peek_tail")]
+		public unowned G PeekTail ();
+		//  [Version (since = "2.4")]
+		//  public unowned G peek_nth (uint n);
+		//  [Version (since = "2.4")]
+		//  public int index (G data);
+		[Version (since = "2.4"), CCode (cname = "g_queue_remove")]
+		public void Remove (G data);
+		[Version (since = "2.4"), CCode (cname = "g_queue_remove_all")]
+		public void RemoveAll (G data);
+		//  [Version (since = "2.4")]
+		//  public void delete_link (List<G> link);
+		//  [Version (since = "2.4")]
+		//  public void unlink (List<G> link);
+		//  [Version (since = "2.4")]
+		//  public void insert_before (List<G> sibling, owned G data);
+		//  [Version (since = "2.4")]
+		//  public void insert_after (List<G> sibling, owned G data);
+		//  [Version (since = "2.4")]
+		//  public void insert_sorted (owned G data, CompareDataFunc<G> func);
 	}
 
 	/* Sequences */
@@ -4624,49 +4566,43 @@ namespace GLib {
 	public class HashTable<K,V> {
 		[CCode (cname = "g_hash_table_new_full", simple_generics = true)]
 		public HashTable (HashFunc<K>? hash_func, EqualFunc<K>? key_equal_func);
-		public HashTable.full (HashFunc<K>? hash_func, EqualFunc<K>? key_equal_func, DestroyNotify? key_destroy_func, DestroyNotify? value_destroy_func);
-		public void insert (owned K key, owned V value);
-		public void replace (owned K key, owned V value);
-		[Version (since = "2.32", deprecated_since = "vala-0.26", replacement = "GenericSet.add")]
-		public void add (owned K key);
-		public unowned V? lookup (K key);
-		public bool lookup_extended (K lookup_key, out unowned K orig_key, out unowned V value);
-		[Version (since = "2.32")]
-		public bool contains (K key);
-		public bool remove (K key);
-		[Version (since = "2.12")]
-		public void remove_all ();
-		public uint foreach_remove (HRFunc<K,V> predicate);
-		[CCode (cname = "g_hash_table_lookup")]
-		public unowned V? @get (K key);
 		[CCode (cname = "g_hash_table_insert")]
-		public void @set (owned K key, owned V value);
-		[Version (since = "2.14")]
-		public List<unowned K> get_keys ();
+		public void Insert (owned K key, owned V value);
+		[CCode (cname = "g_hash_table_replace")]
+		public void Replace (owned K key, owned V value);
+		[CCode (cname = "g_hash_table_add"), Version (since = "2.32", deprecated_since = "vala-0.26", replacement = "GenericSet.add")]
+		public void Add (owned K key);
+		[CCode (cname = "g_hash_table_lookup")]
+		public unowned V? Lookup (K key);
+		[Version (since = "2.32"), CCode (cname = "g_hash_table_contains")]
+		public bool Contains (K key);
+		[CCode (cname = "g_hash_table_remove")]
+		public bool Remove (K key);
+		[Version (since = "2.12"), CCode (cname = "g_hash_table_remove_all")]
+		public void RemoveAll ();
+		[CCode (cname = "g_hash_table_lookup")]
+		public unowned V? Get (K key);
+		[CCode (cname = "g_hash_table_insert")]
+		public void Set (owned K key, owned V value);
+		[Version (since = "2.14"), CCode (cname = "g_hash_table_get_keys")]
+		public List<unowned K> GetKeys ();
 #if VALA_0_26
-		[Version (since = "2.40")]
-		public (unowned K)[] get_keys_as_array ();
+		[Version (since = "2.40"), CCode (cname = "g_hash_table_get_keys_as_array")]
+		public (unowned K)[] GetKeysAsArray ();
 #endif
-		[Version (since = "2.14")]
-		public List<unowned V> get_values ();
-		public void @foreach (HFunc<K,V> func);
+		[Version (since = "2.14"), CCode (cname = "g_hash_table_get_values")]
+		public List<unowned V> GetValues ();
 		[CCode (cname = "g_hash_table_foreach")]
-		public void for_each (HFunc<K,V> func);
-		[Version (since = "2.4")]
-		public unowned V? find (HRFunc<K,V> predicate);
-		public uint size ();
-		public bool steal (K key);
-		[Version (since = "2.12")]
-		public void steal_all ();
-		[CCode (cname = "_vala_g_hash_table_take")]
-		public V? take (K key, out bool exists = null) {
-			GLib.HashTable<K,V>? ht = null;
-			void** htp = &ht;
-			*htp = this.lookup (key);
-			exists = this.steal (key);
-			return ht;
-		}
+		public void ForEach (HFunc<K,V> func);
+		[Version (since = "2.4"), CCode (cname = "g_hash_table_find")]
+		public unowned V? Find (HRFunc<K,V> predicate);
+		[CCode (cname = "g_hash_table_size")]
+		public uint Size ();
 		public uint length {
+			[CCode (cname = "g_hash_table_size")]
+			get;
+		}
+		public uint Length {
 			[CCode (cname = "g_hash_table_size")]
 			get;
 		}
@@ -4700,7 +4636,7 @@ namespace GLib {
 		public GLib.GenericSetIter<T> Iterator ();
 		[CCode (cname = "_vala_g_hash_set_foreach")]
 		public void ForEach (GLib.Func<T> func) {
-			((GLib.HashTable<unowned T,T>) this).foreach ((k, v) => func (v));
+			((GLib.HashTable<unowned T,T>) this).ForEach ((k, v) => func (v));
 		}
 		public uint Length {
 			[CCode (cname = "g_hash_table_size")]
@@ -4777,7 +4713,7 @@ namespace GLib {
 		[CCode (cname = "g_string_append_c")]
 		public unowned StringBuilder AppendChar (char c);
 		[CCode (cname = "g_string_append_unichar")]
-		public unowned StringBuilder Append_UniChar (unichar wc);
+		public unowned StringBuilder AppendUniChar (unichar wc);
 		public unowned StringBuilder append_len (string val, ssize_t len);
 		public unowned StringBuilder prepend (string val);
 		public unowned StringBuilder prepend_c (char c);
@@ -4793,7 +4729,8 @@ namespace GLib {
 		[Version (since = "2.14")]
 		public unowned StringBuilder overwrite_len (size_t pos, string val, ssize_t len);
 		public unowned StringBuilder erase (ssize_t pos = 0, ssize_t len = -1);
-		public unowned StringBuilder truncate (size_t len = 0);
+		[CCode (cname = "g_string_truncate")]
+		public unowned StringBuilder Truncate (size_t len = 0);
 
 		[PrintfFormat]
 		public void printf (string format, ...);
@@ -4873,17 +4810,31 @@ namespace GLib {
 		[Version (since = "2.30")]
 		[CCode (cname = "g_ptr_array_new_full", simple_generics = true)]
 		public GenericArray (uint reserved_size = 0);
+		[CCode (cname = "g_ptr_array_add")]
+		public void Add (owned G data);
 		public void add (owned G data);
+		[CCode (cname = "g_ptr_array_foreach")]
+		public void ForEach (GLib.Func<G> func);
 		public void foreach (GLib.Func<G> func);
 		[CCode (cname = "g_ptr_array_index")]
 		public unowned G get (uint index);
+		[CCode (cname = "g_ptr_array_index")]
+		public unowned G Get (uint index);
 		[Version (since = "2.40")]
 		public void insert (int index, owned G data);
 		public bool remove (G data);
 		public void remove_index (uint index);
 		public bool remove_fast (G data);
+		[CCode (cname = "g_ptr_array_remove_index_fast")]
+		public void RemoveFast (uint index);
 		public void remove_index_fast (uint index);
+		[CCode (cname = "g_ptr_array_remove_range")]
+		public void RemoveRange (uint index, uint length);
 		public void remove_range (uint index, uint length);
+		public void Set (uint index, owned G data) {
+			this.add ((owned) data);
+			this.remove_index_fast (index);
+		}
 		public void set (uint index, owned G data) {
 			this.add ((owned) data);
 			this.remove_index_fast (index);

@@ -1739,11 +1739,11 @@ namespace SDL {
 			}
 
 			[CCode (cname = "SDL_RectEquals")]
-			public bool is_equal (Video.Rect other_rect);
+			public bool IsEqual (Video.Rect other_rect);
 
 			[Version (since = "2.0.4")]
 			[CCode (cname = "SDL_PointInRect", instance_pos = 1)]
-			public bool contains_point (Video.Point p);
+			public bool ContainsPoint (Video.Point p);
 			[CCode (cname = "SDL_HasIntersection")]
 			public bool HasIntersection (Video.Rect other_rect);
 
@@ -1981,7 +1981,7 @@ namespace SDL {
 			public int lowerblit_scaled (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
 
 			[CCode (cname = "SDL_SoftStretch")]
-			public int softstretch (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
+			public int SoftStretch (Video.Rect? srcrect, Video.Surface dst, Video.Rect? dstrect);
 		} //Surface
 
 		///
