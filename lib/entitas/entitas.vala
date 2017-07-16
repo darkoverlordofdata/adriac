@@ -52,14 +52,6 @@ namespace Entitas
 	}
 
 
-	public struct ISystem 
-	{ 
-		public SystemInitialize Initialize;
-		public SystemExecute Execute;
-	}
-	public delegate void SystemInitialize();
-	public delegate void SystemExecute(float delta);
-
 	public class System : Object 
 	{
 		public ISystem ISystem 
@@ -69,6 +61,14 @@ namespace Entitas
 		public SystemInitialize Initialize = () => {};
 		public SystemExecute Execute = (delta) => {};
 	}	
+
+	public struct ISystem 
+	{ 
+		public SystemInitialize Initialize;
+		public SystemExecute Execute;
+	}
+	public delegate void SystemInitialize();
+	public delegate void SystemExecute(float delta);
 
 
 

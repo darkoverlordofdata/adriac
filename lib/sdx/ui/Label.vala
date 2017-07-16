@@ -24,6 +24,7 @@ namespace Sdx.Ui
         public Label()
         {
             base();
+            kind = Kind.Label;
         }
 
         public class Text : Label {

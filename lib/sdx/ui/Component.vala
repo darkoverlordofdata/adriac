@@ -15,14 +15,6 @@
  ******************************************************************************/
 namespace Sdx.Ui 
 {
-/**
- * Game loop should check & fire events on components
- */
-    public struct Dimension
-    {
-        public int width;
-        public int height;
-    }
 	/**
 	 * base UI Component
 	 */
@@ -32,6 +24,7 @@ namespace Sdx.Ui
         {
 			Window, Label, Button
         }
+        public Kind kind;
         public Component? parent;
         public SDL.Video.Window? root;
         public SDL.Video.Rect? bounds;
@@ -113,6 +106,7 @@ namespace Sdx.Ui
         public Window(int w, int h, string name) 
         {
             base(0, 0, w, h);
+            kind = Kind.Window;
             this.name = name;
             root = Sdx.Initialize(w, h, name);
             Sdx.ui = this;
@@ -127,6 +121,7 @@ namespace Sdx.Ui
         public Button()
         {
             base();
+            kind = Kind.Button;
 			Sdx.SetInputProcessor(InputProcessor() 
 			{ 
 				TouchDown = (x, y, pointer, button) => 
