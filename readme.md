@@ -1,12 +1,3 @@
-# adriac
-Wrapper for valac performs out of tree build of vala
-Additional pre and post processing steps:
-
-* pre processing 
-    Reference counting code is injected into vala classes
-* post processing
-    Forward references to injected code is added to resulting c code
-
 # ZeroG
 
 
@@ -19,6 +10,15 @@ Additional pre and post processing steps:
 
 
     Lightweight replacement for Vala runtime GLib
+
+# adriac
+Wrapper for valac performs out of tree build of vala using ZeroG
+Additional pre and post processing steps:
+
+* pre processing 
+    Reference counting code is injected into vala classes
+* post processing
+    Forward references to injected code is added to resulting c code
 
 ## install
 
