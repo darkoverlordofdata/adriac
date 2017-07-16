@@ -1,2 +1,3 @@
 *.vala linguist-language=Vala
 *.c linguist-language=C
+*.coffee linguist-language=Coffee
