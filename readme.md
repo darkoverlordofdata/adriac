@@ -72,24 +72,7 @@ parts required for vala. These are ported to static inline code for inclusion
 as *.h header files.
 
 GObject is replaced with reference counted compact class. 
-This limits the available oop semantics, and there are
-some other limitations, so it's no longer fully compatible with standard vala,
-and not compatible with genie classes. Genie also does not support closures.
-
-In addition, I'm updating the style to be more like msdn guides:
-* Namespaces, types and functions are PascalCase
-* parameters and variables are camelCase
-* constants are UPPER_CASE
-
-I prefer this for readabliity, and it ensures the code will not be mistaken for standard vala.
-
-Differences:
-
-* no PThread, GObject, Gio, RegEx
-* no snake-case natives, use 'ToString'
-* simplified api for builtins: List, StringBuilder, etc.
-* favor composition over inheritane, 
-* favor closures, delegates and functional code over 'classy' oop 
+This limits the available oop semantics, and Genie is not fully supported.
 
 Implements:
 
@@ -100,3 +83,12 @@ Implements:
 * GNode
 * GQue
 
+Dark Vala style guide:
+[Based on](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions)
+
+* Do use casing instead of underscores.
+* Do use Pascal casing for all public member, type, and namespace names.
+* Do use camel casing for parameter, field and variable names.
+* Do use UPPER_CASE for constants.
+
+I prefer this for readabliity, and it ensures the code will not be mistaken for standard vala.

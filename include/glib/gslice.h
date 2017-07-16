@@ -1,4 +1,6 @@
-/* LGPL3 - posixvala glib replacement - 2013 - pancake@nopcode.org */
+
+#ifndef __GLIB_SLICE_H__
+#define __GLIB_SLICE_H__
 
 #define g_new0(x,y) (x*)calloc (y, sizeof(x));
 #define g_new(x, y)	(x*)malloc (sizeof(x)*y);	
@@ -8,3 +10,4 @@
 #define g_slice_free(x,y) free(y)
 #define g_free(x) free(x)
 
+#endif /* __GLIB_SLICE_H__ */

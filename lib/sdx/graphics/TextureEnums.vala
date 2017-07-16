@@ -1,5 +1,20 @@
+/*******************************************************************************
+ * Copyright 2017 darkoverlordofdata.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 
-namespace sdx.graphics {
+namespace Sdx.Graphics {
 
     public enum TextureFilter {
         Nearest,
@@ -18,7 +33,8 @@ namespace sdx.graphics {
                 case "MipMapLinearNearest": return MipMapLinearNearest;
                 case "MipMapNearestLinear": return MipMapNearestLinear;
                 case "MipMapLinearLinear": return MipMapLinearLinear;
-                default: throw new SdlException.NotReached("TextureFilter.from["+value+"]");
+                default: return Nearest;
+                //  default: throw new SdlException.NotReached("TextureFilter.from["+value+"]");
             }
         }
 
@@ -27,7 +43,7 @@ namespace sdx.graphics {
         }
 
 
-        public string to_string() {
+        public string ToString() {
             switch (this) {
                 case Nearest: return "Nearest";
                 case Linear: return "Linear";
@@ -36,7 +52,8 @@ namespace sdx.graphics {
                 case MipMapLinearNearest: return "MipMapLinearNearest";
                 case MipMapNearestLinear: return "MipMapNearestLinear";
                 case MipMapLinearLinear: return "MipMapLinearLinear";
-                default: throw new SdlException.NotReached("TextureFilter.to_string["+this.to_string()+"]");
+                default: return "Nearest";
+                //  default: throw new SdlException.NotReached("TextureFilter.ToString["+this.ToString()+"]");
             }
         }
     }
@@ -49,14 +66,16 @@ namespace sdx.graphics {
             switch (value)  {
                 case "ClampToEdge": return ClampToEdge;
                 case "Repeat": return Repeat;
-                default: throw new SdlException.NotReached("TextureWrap.from["+value+"]");
+                default: return ClampToEdge;
+                //  default: throw new SdlException.NotReached("TextureWrap.from[%s]", value);
             }
         }
-        public string to_string() {
+        public string ToString() {
             switch (this) {
                 case ClampToEdge: return "ClampToEdge";
                 case Repeat: return "Repeat";
-                default: throw new SdlException.NotReached("TextureWrap.to_string["+this.to_string()+"]");
+                default: return "ClampToEdge";
+                //  default: throw new SdlException.NotReached("TextureWrap.ToString[%s]", this.ToString());
             }
         }
     }
@@ -78,10 +97,11 @@ namespace sdx.graphics {
                 case "RGBA4444": return RGBA4444;
                 case "RGB888": return RGB888;
                 case "RGBA8888": return RGBA8888;
-                default: throw new SdlException.NotReached("Format.from["+value+"]");
+                //  default: throw new SdlException.NotReached("Format.from["+value+"]");
+                default: return RGBA8888;
             }
         }
-        public string to_string() {
+        public string ToString() {
             switch (this) {
                 case Alpha: return "Alpha";
                 case Intensity: return "Intensity";
@@ -90,7 +110,8 @@ namespace sdx.graphics {
                 case RGBA4444: return "RGBA4444";
                 case RGB888: return "RGB888";
                 case RGBA8888: return "RGBA8888";
-                default: throw new SdlException.NotReached("Format.to_string["+this.to_string()+"]");
+                //  default: throw new SdlException.NotReached("Format.ToString["+this.ToString()+"]");
+                default: return "RGBA8888";
             }
         }
 

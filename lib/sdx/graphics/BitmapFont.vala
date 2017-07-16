@@ -1,15 +1,30 @@
+/*******************************************************************************
+ * Copyright 2017 darkoverlordofdata.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 /**
  * BitmapFont.gs
  *
  */
-using sdx;
-using sdx.files;
-using sdx.utils;
+using Sdx;
+using Sdx.Files;
+using Sdx.Utils;
 /**
- * parse the *.fnt file
+ * Parse the *.fnt file
  * use angelcode.com format
  */
-namespace sdx.graphics {
+namespace Sdx.Graphics {
 
     public class BitmapFont : Object {
 
@@ -17,7 +32,7 @@ namespace sdx.graphics {
         public const int PAGE_SIZE = 1 << LOG2_PAGE_SIZE;
         public const int PAGES = 0x10000 / PAGE_SIZE;
 
-        public sdx.utils.Json? dummy2;
+        public Sdx.Utils.Json? dummy2;
         public TextureRegion? dummy; // generic reference doesn't trigger forward reference.
         
         public BitmapFontData? data;
@@ -30,10 +45,10 @@ namespace sdx.graphics {
         public int y;
         public int width;
         public int height;
-        public double u;
-        public double v;
-        public double u2;
-        public double v2;
+        public float u;
+        public float v;
+        public float u2;
+        public float v2;
         public int xoffset;
         public int yoffset;
         public int xadvance;
@@ -41,7 +56,7 @@ namespace sdx.graphics {
         public bool fixedWidth;
         public int page = 0;
 
-        public int getKerning(char ch) {
+        public int GetKerning(char ch) {
             if (kerning != null) {
                 var i = ch >> BitmapFont.LOG2_PAGE_SIZE;
                 var j = ch & BitmapFont.PAGE_SIZE - 1;
@@ -50,7 +65,7 @@ namespace sdx.graphics {
             return 0;
         }
 
-        public void setKerning(int ch, int value) {
+        public void SetKerning(int ch, int value) {
             if (kerning == null) kerning = new char[BitmapFont.PAGES,BitmapFont.PAGE_SIZE];
             var i = ch >> BitmapFont.LOG2_PAGE_SIZE;
             var j = ch & BitmapFont.PAGE_SIZE - 1;
@@ -62,24 +77,24 @@ namespace sdx.graphics {
         public string[] imagePaths;
         public FileHandle fontFile;
         public bool flipped;
-        public double padTop;
-        public double padRight;
-        public double padBottom;
-        public double padLeft;
-        public double lineHeight;
-        public double capHeight = 1;
-        public double ascent;
-        public double descent;
-        public double down;
-        public double blankLineScale = 1;
-        public double scaleX = 1;
-        public double scaleY = 1;
+        public float padTop;
+        public float padRight;
+        public float padBottom;
+        public float padLeft;
+        public float lineHeight;
+        public float capHeight = 1;
+        public float ascent;
+        public float descent;
+        public float down;
+        public float blankLineScale = 1;
+        public float scaleX = 1;
+        public float scaleY = 1;
         public bool markupEnabled;
-        public double cursorX;
+        public float cursorX;
         public Glyph[,] glyphs = new Glyph[BitmapFont.PAGES,BitmapFont.PAGE_SIZE];
         public Glyph missingGlyph;
-        public double spaceWidth;
-        public double xHeight = 1;
+        public float spaceWidth;
+        public float xHeight = 1;
         public char[] breakChars;
         public char[] xChars = {'x', 'e', 'a', 'o', 'n', 's', 'r', 'c', 'u', 'm', 'v', 'w', 'z'};
         public char[] capChars = {'M', 'N', 'B', 'D', 'C', 'E', 'F', 'K', 'A', 'G', 'H', 'I', 'J', 'L', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -88,62 +103,63 @@ namespace sdx.graphics {
             if (fontFile != null) {
                 this.fontFile = fontFile;
                 this.flipped = flip;
-                load(fontFile, flip);
+                Load(fontFile, flip);
             }
         }
 
-        public void load(FileHandle fontFile, bool flip) {
+        public void Load(FileHandle fontFile, bool flip) {
             if (imagePaths != null) throw new SdlException.IllegalStateException("Already loaded.");
 
-            var json = sdx.utils.Json.parse(fontFile.read());
-            var padding = json.member("font").member("info").member("padding").@string.split(",", 4);
-            if (padding.length != 4) throw new SdlException.RuntimeException("Invalid padding.");
-            padTop = int.parse(padding[0]);
-            padRight = int.parse(padding[1]);
-            padBottom = int.parse(padding[2]);
-            padLeft = int.parse(padding[3]);
+            var json = Sdx.Utils.Json.Parse(fontFile.Read());
+            var padding = json.Member("font").Member("info").Member("padding").string.Split(",", 4);
+            if (padding.length != 4) throw new SdlException.RuntimeException("Invalid padding: %d.", padding.length);
+            padTop = int.Parse(padding[0]);
+            padRight = int.Parse(padding[1]);
+            padBottom = int.Parse(padding[2]);
+            padLeft = int.Parse(padding[3]);
             var padY = padTop + padBottom;
 
-            lineHeight = (int)json.member("font").member("common").member("lineHeight").number;
-            var baseLine = (int)json.member("font").member("common").member("base").number;
+            lineHeight = (int)json.Member("font").Member("common").Member("lineHeight").number;
+            var baseLine = (int)json.Member("font").Member("common").Member("base").number;
 
-            var pages = json.member("font").member("pages").@object.get_keys_as_array();
+
+            var pages = json.Member("font").Member("pages").object.GetKeysAsArray();
             var pageCount = pages.length;
             imagePaths = new string[pageCount];
             // Read each page definition.
             for (var p = 0; p<pageCount; p++) {
-                var node = json.member("font").member("pages").member(pages[p]);
-                var filename = node.member("file").@string;
-                imagePaths[p] = fontFile.getParent().child(filename).getPath();
+                var node = json.Member("font").Member("pages").Member(pages[p]);
+                var filename = node.Member("file").string;
+                imagePaths[p] = fontFile.GetParent().Child(filename).GetPath();
             }
 
             descent = 0;
-            foreach (var ch in json.member("font").member("chars").member("char").array) {
+            foreach (var ch in json.Member("font").Member("chars").Member("char").array) {
                 var glyph = new Glyph();
-                    glyph.id = int.parse(ch.member("id").@string);
-                    glyph.x = int.parse(ch.member("x").@string);
-                    glyph.y = int.parse(ch.member("y").@string);
-                    glyph.width = int.parse(ch.member("width").@string);
-                    glyph.height = int.parse(ch.member("height").@string);
-                    glyph.xoffset = int.parse(ch.member("xoffset").@string);
+                    glyph.id = int.Parse(ch.Member("id").string);
+                    glyph.x = int.Parse(ch.Member("x").string);
+                    glyph.y = int.Parse(ch.Member("y").string);
+                    glyph.width = int.Parse(ch.Member("width").string);
+                    glyph.height = int.Parse(ch.Member("height").string);
+                    glyph.xoffset = int.Parse(ch.Member("xoffset").string);
                     if (flip)
-                        glyph.yoffset = int.parse(ch.member("yoffset").@string);
+                        glyph.yoffset = int.Parse(ch.Member("yoffset").string);
                     else
-                        glyph.yoffset = -(glyph.height + int.parse(ch.member("yoffset").@string));
-                    glyph.xadvance = int.parse(ch.member("xadvance").@string);
+                        glyph.yoffset = -(glyph.height + int.Parse(ch.Member("yoffset").string));
+                    glyph.xadvance = int.Parse(ch.Member("xadvance").string);
 
-                    if (glyph.width > 0 && glyph.height > 0) descent = Math.fmin(baseLine + glyph.yoffset, descent);
+                    if (glyph.width > 0 && glyph.height > 0) descent = GLib.Math.fminf(baseLine + glyph.yoffset, descent);
             }
             descent += padBottom;
                 
-            var spaceGlyph = getGlyph(' ');
+            var spaceGlyph = GetGlyph(' ');
             if (spaceGlyph == null) {
                 spaceGlyph = new Glyph();
                 spaceGlyph.id = (int)' ';
-                var xadvanceGlyph = getGlyph('l');
-                if (xadvanceGlyph == null) xadvanceGlyph = getFirstGlyph();
+                var xadvanceGlyph = GetGlyph('l');
+                if (xadvanceGlyph == null) xadvanceGlyph = GetFirstGlyph();
                 spaceGlyph.xadvance = xadvanceGlyph.xadvance;
-                setGlyph(' ', spaceGlyph);
+                SetGlyph(' ', spaceGlyph);
             }
             
             if (spaceGlyph.width == 0) {
@@ -156,15 +172,15 @@ namespace sdx.graphics {
             Glyph xGlyph = null;
 
             foreach (var xChar in xChars) {
-                xGlyph = getGlyph(xChar);
+                xGlyph = GetGlyph(xChar);
                 if (xGlyph != null) break;
             }
-            if (xGlyph == null) xGlyph = getFirstGlyph();
+            if (xGlyph == null) xGlyph = GetFirstGlyph();
             xHeight = xGlyph.height - padY;
 
             Glyph capGlyph = null;
             foreach (var capChar in capChars) {
-                capGlyph = getGlyph(capChar);
+                capGlyph = GetGlyph(capChar);
                 if (capGlyph != null) break;
             }
             if (capGlyph == null) {
@@ -172,7 +188,7 @@ namespace sdx.graphics {
                     for (var g = 0; g<BitmapFont.PAGE_SIZE; g++) {
                         var glyph = glyphs[p,g];
                         if (glyph == null || glyph.height == 0 || glyph.width == 0) continue;
-                        capHeight = Math.fmax(capHeight, glyph.height);
+                        capHeight = GLib.Math.fmaxf(capHeight, glyph.height);
                     }
                 }
             } else {
@@ -188,17 +204,17 @@ namespace sdx.graphics {
             }
         }
 
-        public void setGlyphRegion(Glyph glyph, TextureRegion region) {
+        public void SetGlyphRegion(Glyph glyph, TextureRegion region) {
             var texture = region.texture;
-            var invTexWidth = 1.0 / texture.width;
-            var invTexHeight = 1.0 / texture.height;
+            var invTexWidth = 1.0f / texture.width;
+            var invTexHeight = 1.0f / texture.height;
 
             var offsetX = 0;
             var offsetY = 0;
             var u = region.u;
             var v = region.v;
-            var regionWidth = region.getRegionWidth();
-            var regionHeight = region.getRegionHeight();
+            var regionWidth = region.GetRegionWidth();
+            var regionHeight = region.GetRegionHeight();
             //  if (region is TextureAtlas.AtlasRegion) {
             //      // Compensate for whitespace stripped from left and top edges.
             //      var atlasRegion = (TextureAtlas.AtlasRegion)region;
@@ -251,16 +267,16 @@ namespace sdx.graphics {
             }
         }
 
-        public void setLineHeight(double height) {
+        public void SetLineHeight(float height) {
             lineHeight = height * scaleY;
             down = flipped ? lineHeight : -lineHeight;
         }
 
-        public void setGlyph(int ch, Glyph glyph) {
+        public void SetGlyph(int ch, Glyph glyph) {
             glyphs[ch / BitmapFont.PAGE_SIZE, ch & BitmapFont.PAGE_SIZE - 1] = glyph;
         }
 
-        public Glyph getFirstGlyph() {
+        public Glyph GetFirstGlyph() {
             for (var p = 0; p<BitmapFont.PAGES; p++) {
                 for (var g = 0; g<BitmapFont.PAGE_SIZE; g++) {
                     var glyph = glyphs[p,g];
@@ -271,35 +287,35 @@ namespace sdx.graphics {
             throw new SdlException.RuntimeException("No glyphs found.");
         }
             
-        public bool hasGlyph(char ch) {
+        public bool HasGlyph(char ch) {
             if (missingGlyph != null) return true;
-            return getGlyph(ch) != null;
+            return GetGlyph(ch) != null;
         }
             
-        public Glyph getGlyph(char ch) {
+        public Glyph GetGlyph(char ch) {
             return glyphs[ch / BitmapFont.PAGE_SIZE, ch & BitmapFont.PAGE_SIZE - 1];
         }
 
         //  public getGlyphs(run: GlyphLayout.GlyphRun, str: string, start: int, end: int, tightBounds: bool)
         //      pass
 
-        public int getWrapIndex(int start, List<Glyph> glyphs) {
+        public int GetWrapIndex(int start, List<Glyph> glyphs) {
             return 0;
         }
 
-        public bool isBreakChar(char c) {
+        public bool IsBreakChar(char c) {
             return false;
         }
 
 
-        public string getImagePath(int index) {
+        public string GetImagePath(int index) {
             return imagePaths[index];
         }
 
-        //  public setScale(scaleX: double, scaleY: double)
+        //  public setScale(scaleX: float, scaleY: float)
         //      pass
 
-        //  public scale(amount: double)
+        //  public scale(amount: float)
         //      pass
     }
     //  }

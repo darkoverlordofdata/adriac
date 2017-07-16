@@ -56,6 +56,6 @@ namespace Emscripten {
 	public float emscripten_random();
 
 	[CCode (cname="emscripten_run_script")]
-	public void emscripten_run_script(string script);
+	public void RunScript(string script);
 
 }

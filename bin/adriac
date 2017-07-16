@@ -224,9 +224,12 @@ class Adriac {
 		if (!spawn(@"$(SDK)/tools/pre-gs.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/post.coffee $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
+		//  stdout.printf("=============================\n");
+		//  stdout.printf(cc.str);
+		//  stdout.printf("=============================\n");
 		if (cc_command != "jni")
 			if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
-		
+
 		stdout.printf("adriac complete.\n");
 		return 0;
 	}

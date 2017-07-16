@@ -96,7 +96,7 @@ adriac --builddir build \
     --cc=jni \
     #{defines} \
     --vapidir src/vapis \
-    --fast-vapi project.vapi \
+    --pkg android \
     #{vapis} \
     #{pkgs} \
     -X -O2 \
@@ -106,9 +106,8 @@ adriac --builddir build \
 sed  "s/#include <SDL2/#include <SDL2\\/SDL.h>\\n#include <SDL2/g"  ./build/src/main.c >  ./android/jni/src/main.c
 #{copy}
 cd ./android/jni && ndk-build
-cd ./android && ant debug 
+cd ./android && ant debug # install
 """
-
 ##
 ## Template: emscripten build script
 ##
@@ -119,13 +118,39 @@ adriac  \
     --builddir build \
     --cc=emcc \
     #{defines} \
-    --vapidir src/emvapis \
-    --fast-vapi project.vapi \
+    --vapidir src/vapis-em \
     --pkg emscripten \
     #{vapis} \
     #{pkgs} \
-    -X -O2 \
+    -X -O3 \
+    -X -I/usr/local/include \
+    -X -I/home/bruce/.local/include/ \
     -o web/#{path.basename(__dirname)}.html  \
+    #{list}
+"""
+
+##
+## Template: desktop build script
+##
+desktopTemplate = (defines, vapis, pkgs, list) ->
+    return """
+mkdir -p build
+adriac  \
+    --builddir build \
+    --cc=clang \
+    #{defines} \
+    --vapidir src/vapis \
+    #{vapis} \
+    #{pkgs} \
+    -X -lm \
+    -X -lSDL2 \
+    -X -lSDL2_image \
+    -X -lSDL2_mixer \
+    -X -lSDL2_ttf \
+    -X -O3 \
+    -X -I/usr/local/include \
+    -X -I/home/bruce/.local/include/ \
+    -o build/#{path.basename(__dirname)}  \
     #{list}
 """
 
@@ -161,9 +186,9 @@ task 'build:emscripten', 'build emscripten project', ->
     prj = avprjParse()
     vapis = getVapis(prj.vala_vapi)
     pkgs = getPkgs(prj.vala_check_package)
-    list = getSrc(prj.vala_source)
+    list = getSrc(prj.vala_source).join(' ') + ' ' + getSrc(prj.c_source).join(' ')
 
-    cmd = emscriptenTemplate('--define EMSCRIPTEN --define PROFILING', vapis, pkgs, list.join(' ')) 
+    cmd = emscriptenTemplate('--define EMSCRIPTEN --define PROFILING', vapis, pkgs, list) 
     console.log cmd
     exec 'emscripten', cmd
 
@@ -173,4 +198,17 @@ task 'build:emscripten', 'build emscripten project', ->
 task 'clean:emscripten', 'clean emscripten project', ->
     console.log "not implemented"
     return
+
+##
+## build desktop project
+##
+task 'build:desktop', 'build desktop project', ->
+    prj = avprjParse()
+    vapis = getVapis(prj.vala_vapi)
+    pkgs = getPkgs(prj.vala_check_package)
+    list = getSrc(prj.vala_source).join(' ') + ' ' + getSrc(prj.c_source).join(' ')
+
+    cmd = desktopTemplate('--define NOGOBJECT', vapis, pkgs, list) 
+    console.log cmd
+    exec 'desktop', cmd
 

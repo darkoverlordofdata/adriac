@@ -1,6 +1,23 @@
-namespace sdx.utils {
+/*******************************************************************************
+ * Copyright 2017 darkoverlordofdata.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+namespace Sdx.Utils 
+{
 
-    public class StringTokenizer : Object {
+    public class StringTokenizer : Object 
+    {
 
         public int currentPosition;
         public int newPosition;
@@ -10,10 +27,10 @@ namespace sdx.utils {
         public bool retDelims;
         public bool delimsChanged;
         public int maxDelimCodePoint;
-        public bool hasSurrogates = false;
         public int[] delimiterCodePoints;
 
-        public StringTokenizer(string str, string delim = " \t\n\r\f", bool returnDelims = false) {
+        public StringTokenizer(string str, string delim = " \t\n\r\f", bool returnDelims = false) 
+        {
             currentPosition = 0;
             newPosition = -1;
             delimsChanged = false;
@@ -21,11 +38,13 @@ namespace sdx.utils {
             maxPosition = str.length;
             delimiters = delim;
             retDelims = returnDelims;
-            setMaxDelimCodePoint();
+            SetMaxDelimCodePoint();
         }
             
-        public void setMaxDelimCodePoint() {
-            if (delimiters == null) {
+        public void SetMaxDelimCodePoint() 
+        {
+            if (delimiters == null) 
+            {
                 maxDelimCodePoint = 0;
                 return;
             }
@@ -33,7 +52,8 @@ namespace sdx.utils {
             var m = 0;
             var c = 0;
             var count = 0;
-            for (var i=0 ; i<delimiters.length-1; i++) {
+            for (var i=0 ; i<delimiters.length-1; i++) 
+            {
                 c = delimiters[i];
                 if (m < c) m = c;
                 count++;
@@ -41,69 +61,81 @@ namespace sdx.utils {
             maxDelimCodePoint = m;
         }
 
-        public int skipDelimiters(int startPos) {
-            if (delimiters == null) {
+        public int SkipDelimiters(int startPos) 
+        {
+            if (delimiters == null) 
+            {
                 throw new SdlException.NullPointer("delimiters");
             }
 
             var position = startPos;
-            while (!retDelims && position < maxPosition) {
+            while (!retDelims && position < maxPosition) 
+            {
                 var c = str[position];
-                if ((c > maxDelimCodePoint) || !isDelimiter(c)) break;
+                if ((c > maxDelimCodePoint) || !IsDelimiter(c)) break;
                 position += 1;
             }
             return position;
         }
 
-        public int scanToken(int startPos) {
+        public int ScanToken(int startPos) 
+        {
             var position = startPos;
-            while (position < maxPosition) {
+            while (position < maxPosition) 
+            {
                 var c = str[position];
-                if ((c <= maxDelimCodePoint) && isDelimiter(c)) break;
+                if ((c <= maxDelimCodePoint) && IsDelimiter(c)) break;
                 position += 1;
             }   
-            if (retDelims && (startPos == position)) {
+            if (retDelims && (startPos == position)) 
+            {
                 var c = str[position];
-                if ((c <= maxDelimCodePoint) && isDelimiter(c)) position += 1;
+                if ((c <= maxDelimCodePoint) && IsDelimiter(c)) position += 1;
             }
             return position;
         }
 
 
-        public bool isDelimiter(char c) {
+        public bool IsDelimiter(char c) 
+        {
             for (var i = 0; i<delimiters.length-1; i++)
                 if (delimiters[i] == c) return true;
             return false;
         }
 
-        public bool hasMoreTokens() {
-            newPosition = skipDelimiters(currentPosition);
+        public bool HasMoreTokens() 
+        {
+            newPosition = SkipDelimiters(currentPosition);
             return newPosition < maxPosition;
         }
 
-        public string nextToken(string delim = "") {
-            if (delim > "") {
+        public string NextToken(string delim = "") 
+        {
+            if (delim > "") 
+            {
                 delimiters = delim;
                 delimsChanged = true;
             }
-            currentPosition = newPosition >= 0 && !delimsChanged ? newPosition : skipDelimiters(currentPosition);
+            currentPosition = newPosition >= 0 && !delimsChanged ? newPosition : SkipDelimiters(currentPosition);
 
             delimsChanged = false;
             newPosition = -1;
 
             if (currentPosition >= maxPosition) throw new SdlException.NoSuchElement("");
             var start = currentPosition;
-            currentPosition = scanToken(currentPosition);
-            return str.substring(start, currentPosition);
+            currentPosition = ScanToken(currentPosition);
+            return str.SubString(start, currentPosition);
         }
         
-        public int countTokens() {
+        public int CountTokens() 
+        {
             var count = 0;
             var currpos = currentPosition;
-            while (currpos < maxPosition) {
-                currpos = skipDelimiters(currpos);
+            while (currpos < maxPosition) 
+            {
+                currpos = SkipDelimiters(currpos);
                 if (currpos >= maxPosition) break;
-                currpos = scanToken(currpos);
+                currpos = ScanToken(currpos);
                 count++;
             }
             return count;

@@ -133,7 +133,7 @@ namespace SDLTTF {
 		public SDL.Video.Surface? render_latin1 ([CCode (array_length = false)]uint8[] text, SDL.Video.Color fg);
 
 		[CCode (cname = "TTF_RenderUTF8_Solid")]
-		public SDL.Video.Surface? render (string text, SDL.Video.Color fg);
+		public SDL.Video.Surface? Render (string text, SDL.Video.Color fg);
 
 		[CCode (cname = "TTF_RenderUNICODE_Solid")]
 		public SDL.Video.Surface? render_utf16 ([CCode (array_length = false)] uint16[] text, SDL.Video.Color fg);
@@ -142,7 +142,7 @@ namespace SDLTTF {
 		public SDL.Video.Surface? render_shaded_latin1 ([CCode (array_length = false)] uint8[] text, SDL.Video.Color fg, SDL.Video.Color bg);
 
 		[CCode (cname = "TTF_RenderUTF8_Shaded")]
-		public SDL.Video.Surface? render_shaded (string text, SDL.Video.Color fg, SDL.Video.Color bg);
+		public SDL.Video.Surface? RenderShaded (string text, SDL.Video.Color fg, SDL.Video.Color bg);
 
 		[CCode (cname = "TTF_RenderUNICODE_Shaded")]
 		public SDL.Video.Surface? render_shaded_utf16 ([CCode (array_length = false)] uint16[] text, SDL.Video.Color? fg, SDL.Video.Color bg);

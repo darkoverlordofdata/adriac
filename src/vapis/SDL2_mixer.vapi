@@ -30,10 +30,10 @@ namespace SDLMixer {
 	public static unowned SDL.Version linked ();
 
 	[CCode (cname = "Mix_OpenAudio")]
-	public static int open (int frequency, SDL.Audio.AudioFormat format, int channels, int chunksize);
+	public static int Open (int frequency, SDL.Audio.AudioFormat format, int channels, int chunksize);
 
 	[CCode (cname = "Mix_CloseAudio")]
-	public static void close ();
+	public static void Close ();
 
 	[CCode (cname = "Mix_QuerySpec")]
 	public static int query (out int frequency, out SDL.Audio.AudioFormat format, out int channels);

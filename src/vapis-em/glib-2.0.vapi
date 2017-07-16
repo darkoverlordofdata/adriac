@@ -4801,6 +4801,44 @@ namespace GLib {
 	[Compact]
 	[CCode (cname = "GPtrArray", cprefix = "g_ptr_array_", ref_function = "g_ptr_array_ref", unref_function = "g_ptr_array_unref", type_id = "G_TYPE_PTR_ARRAY")]
 	[GIR (name = "PtrArray")]
+	public class Stack<G> {
+		[Version (since = "2.30")]
+		[CCode (cname = "g_ptr_array_new_full", simple_generics = true)]
+		public Stack (uint reserved_size = 0);
+
+		public void Clear() {
+			this.remove_range(0, this.len);
+		}
+		[CCode (cname = "g_ptr_array_index")]
+		public unowned G Get (uint index);
+		[CCode (cname = "g_ptr_array_foreach")]
+		public void ForEach (GLib.Func<G> func);
+		public bool IsEmpty () {
+			return this.len == 0;
+		}
+		[CCode (cname = "g_ptr_array_add")]
+		public void Push (owned G data);
+		public G Pop() {
+			var item = this.Get(this.len-1);
+			this.remove_index(this.len-1);
+			return item;
+		}
+		public void Set (uint index, owned G data) {
+			this.add ((owned) data);
+			this.remove_index_fast (index);
+		}
+
+		private void add (owned G data);
+		private void remove_index (uint index);
+		private void remove_index_fast (uint index);
+		private void remove_range (uint index, uint length);
+		private uint len;
+	}
+
+	
+	[Compact]
+	[CCode (cname = "GPtrArray", cprefix = "g_ptr_array_", ref_function = "g_ptr_array_ref", unref_function = "g_ptr_array_unref", type_id = "G_TYPE_PTR_ARRAY")]
+	[GIR (name = "PtrArray")]
 	public class GenericArray<G> {
 		[Version (since = "2.30")]
 		[CCode (cname = "g_ptr_array_new_full", simple_generics = true)]

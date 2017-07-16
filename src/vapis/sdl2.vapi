@@ -1741,6 +1741,7 @@ namespace SDL {
 			[CCode (cname = "SDL_RectEquals")]
 			public bool IsEqual (Video.Rect other_rect);
 
+			
 			[Version (since = "2.0.4")]
 			[CCode (cname = "SDL_PointInRect", instance_pos = 1)]
 			public bool ContainsPoint (Video.Point p);
