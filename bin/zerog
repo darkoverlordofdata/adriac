@@ -41,10 +41,14 @@ if [ $1 == "init" ]; then
     cp -v -f $ZEROG/src/sample.bmp ./assets/sample.bmp
     mkdir -v -p ./android/assets/assets
     cp -v -f $ZEROG/src/sample.bmp ./android/assets/assets/sample.bmp
-    mkdir -v -p ./src/emvapis
-    cp -v -f $ZEROG/src/emvapis/*.* ./src/emvapis
-    mkdir -v -p ./src/vapis
-    cp -v -f $ZEROG/src/vapis/*.* ./src/vapis
+
+    ln -sv $ZEROG/lib/entitas ./src/entitas
+    ln -sv $ZEROG/lib/sdx ./src/sdx
+    ln -sv $ZEROG/lib/vapis ./src/vapis
+    ln -sv $ZEROG/lib/vapis-em ./src/vapis-em
+    ln -sv $ZEROG/lib/mt19937ar.c ./src/mt19937ar.c
+    ln -sv $ZEROG/lib/mt19937ar.h ./src/mt19937ar.h
+    
     mkdir -v -p ./web
     sed  "s/{{ name }}/$1/g"  $ZEROG/src/web/index.js >  ./web/index.js
     sed  "s/{{ name }}/$1/g"  $ZEROG/src/web/index.html >  ./web/index.html

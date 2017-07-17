@@ -12,7 +12,11 @@
     Lightweight replacement for Vala runtime GLib
 
 # adriac
-Wrapper for valac performs out of tree build of vala using ZeroG
+
+    "A spoiled brat with a God complex."
+                        Vala Mal Doran 
+
+Adriac is a Wrapper for valac, it performs an out of tree build using ZeroG
 Additional pre and post processing steps:
 
 * pre processing 
@@ -67,12 +71,9 @@ update ./bashrc
 ZeroG is a lightweight replacement for Vala runtime GLib.
 This supports a subset of Vala.
 
-Code is based on portions of the original GLib, but only includes
-parts required for vala. These are ported to static inline code for inclusion
-as *.h header files.
+Code is based on portions of the original GLib, but only includes parts required for vala plus some data strutures. These are ported to static inline code for inclusion as *.h header files.
 
-GObject is replaced with reference counted compact class. 
-This limits the available oop semantics, and Genie is not fully supported.
+GObject is replaced with reference counted compact class. This limits the available oop semantics, and Genie is not fully supported.
 
 Implements:
 
@@ -92,3 +93,5 @@ Dark Vala style guide:
 * Do use UPPER_CASE for constants.
 
 I prefer this for readabliity, and it ensures the code will not be mistaken for standard vala.
+
+
