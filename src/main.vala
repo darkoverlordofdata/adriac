@@ -23,7 +23,7 @@ public class HelloWorld : Object {
 		window = new Window("Hello World", Window.POS_CENTERED, Window.POS_CENTERED, 600, 400, WindowFlags.SHOWN);
 #endif		
 		renderer = Renderer.Create(window, -1, Video.RendererFlags.ACCELERATED | Video.RendererFlags.PRESENTVSYNC);
-		surface = new Surface.FromBMP("assets/sample.bmp");
+		surface = SDLImage.Load("assets/sample.bmp");
 		texture = Texture.CreateFromSurface(renderer, surface);
 	}
 
