@@ -1,4 +1,4 @@
-# emvalac
+# adriac
 
 my build tools for targetting emscripen with vala
 
@@ -53,7 +53,6 @@ to replace interface, make a struct of delegates
 
 
 ## install
-copy bin, include, and share/emvalac to ./local
 
 add to .bashrc
 

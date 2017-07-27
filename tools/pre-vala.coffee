@@ -17,7 +17,7 @@ template = (file, name, options) ->
     pfx = options.pfx
 
     src = fs.readFileSync(file, 'utf8')
-    return src if src.indexOf("[Emvalac]") >= 0
+    return src if src.indexOf("[Adriac]") >= 0
 
     ##
     ##  class Name <K,V> : Object {
@@ -208,4 +208,4 @@ for arg in args
             template(arg, name, opts)
 
 
-fs.writeFileSync("#{buildDir}/emvalac.json", JSON.stringify(sym, null, 2))
+fs.writeFileSync("#{buildDir}/adriac.json", JSON.stringify(sym, null, 2))

@@ -20,11 +20,11 @@ namespace Sdx
 	 * @author Nathan Sweet */
 	public class InputMultiplexer : Object
 	{
-		public GenericArray<InputProcessor?> processors;
+		public GenericArray<InputProcessor> processors;
 
 		public InputMultiplexer() 
 		{
-			processors = new GenericArray<InputProcessor?>(4);
+			processors = new GenericArray<InputProcessor>(4);
 		}
 		public void Add(InputProcessor processor)
 		{

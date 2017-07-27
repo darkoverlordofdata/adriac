@@ -34,23 +34,65 @@ snakeCase = (str) ->  str.replace(/([A-Z])/g, ($0) -> "_"+$0.toLowerCase())
 ##
 inject = (file, options) ->
     src = fs.readFileSync(file, 'utf8')
-    dst = ['/** updated by emvalac */']
+    dst = ['/** updated by adriac */']
     flag = false
+    # flag = true
     for line in src.split('\n')
+        #
+        #   check for macro wrapper 
+        #
         line.replace /\#define\s+\_([_a-z0-9]+)_release0/, ($0, $1) ->
             type = symtbl[$1]
+            # dst.push "// symtbl #{$1}"
             if type?
                 flag = true
                 dst.push "void #{$1}_release (#{type}* self);"
                 dst.push "void #{$1}_free (#{type}* self);"
                 dst.push "#{type}* #{$1}_retain (#{type}* self);"
 
-        line.replace /\void\s+([_a-z0-9]+)_release\s+\((\w+)* self\)/, ($0, $1, $2) ->
+        #
+        #   check for function wrapper 
+        #
+        line.replace /static\s+void\s+\_([_a-z0-9]+)_release0_/, ($0, $1) ->
             type = symtbl[$1]
+            # dst.push "// symtbl #{$1}"
             if type?
                 flag = true
-                dst.push "void #{$1}_release (#{$2}* self);"
-                dst.push "#{$2}* #{$1}_retain (#{$2}* self);"
+                dst.push "void #{$1}_release (#{type}* self);"
+                dst.push "void #{$1}_free (#{type}* self);"
+                dst.push "#{type}* #{$1}_retain (#{type}* self);"
+
+        #
+        #   check for base class methods 
+        #
+        line.replace /(\w+)\*\s+([_a-z0-9]+)_new/, ($0, $1, $2) ->
+            type = symtbl[$2]
+            # dst.push "// symtbl #{$1} / #{$2}"
+            if type?
+                if !(///#{type}*\s+#{$2}_retain\s+(#{type}*\s+self);///.test(src))
+                    flag = true
+                    dst.push "#{type}* #{$2}_retain (#{type}* self);"
+
+            if type?
+                if !(///void\s+#{$2}_release\s+(#{type}*\s+self);///.test(src))
+                    flag = true
+                    dst.push "void #{$2}_release (#{type}* self);"
+
+        # line.replace /\void\s+([_a-z0-9]+)_release\s+\((\w+)* self\)/, ($0, $1, $2) ->
+        #     type = symtbl[$1]
+        #     dst.push "// symtbl #{$1} #{$2}"
+        #     if type?
+        #         flag = true
+        #         dst.push "void #{$1}_release (#{$2}* self);"
+        #         dst.push "#{$2}* #{$1}_retain (#{$2}* self);"
+
+        # line.replace /void\s+([_a-z0-9]+)_free\s+\((\w+)* self\)/, ($0, $1, $2) ->
+        #     type = symtbl[$1]
+        #     dst.push "// symtbl #{$1}"
+        #     if type?
+        #         flag = true
+        #         dst.push "void #{$1}_release (#{$2}* self);"
+        #         dst.push "#{$2}* #{$1}_retain (#{$2}* self);"
 
         dst.push line 
     if flag then fs.writeFileSync(file, dst.join('\n'))
@@ -81,10 +123,10 @@ merge = (a, b) ->
 ## cross reference _release & _free
 ##
 buildDir = process.argv[2]
-symtbl = merge("./emvalac.json", "#{buildDir}/emvalac.json")
+symtbl = merge("./adriac.json", "#{buildDir}/adriac.json")
 # symtbl = merge(
-#     JSON.parse(fs.readFileSync("./emvalac.json", 'utf8')), 
-#     JSON.parse(fs.readFileSync("#{buildDir}/emvalac.json", 'utf8')))
+#     JSON.parse(fs.readFileSync("./adriac.json", 'utf8')), 
+#     JSON.parse(fs.readFileSync("#{buildDir}/adriac.json", 'utf8')))
 files = decodeURIComponent(process.argv[3])
 files = files[1...-1] if files[0] is '"' 
 for file in files.split(" ")

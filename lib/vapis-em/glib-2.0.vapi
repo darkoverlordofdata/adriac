@@ -4858,6 +4858,8 @@ namespace GLib {
 		public unowned G Get (uint index);
 		[Version (since = "2.40")]
 		public void insert (int index, owned G data);
+		[CCode (cname = "g_ptr_array_remove")]
+		public bool Remove (G data);
 		public bool remove (G data);
 		public void remove_index (uint index);
 		public bool remove_fast (G data);

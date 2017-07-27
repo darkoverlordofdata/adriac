@@ -26,13 +26,13 @@
   };
 
   template = function(file, name, options) {
-    fs.appendFileSync('./emvalac.log', 'name = '+name+'\n');
+    fs.appendFileSync('./adriac.log', 'name = '+name+'\n');
     var klass, namespace, pfx, src;
     klass = options["class"];
     namespace = options.namespace;
     pfx = options.pfx;
     src = fs.readFileSync(file, 'utf8');
-    if (src.indexOf("[Emvalac]") >= 0) {
+    if (src.indexOf("[Adriac]") >= 0) {
       return src;
     }
     if (/^(\s*)public\s+class\s+\w*\s*\<\w,\s*\w\>\s*:\s*Object\s{*/m.test(src)) {
