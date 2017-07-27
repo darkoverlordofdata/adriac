@@ -95,3 +95,14 @@ Dark Vala style guide:
 I prefer this for readabliity, and it ensures this code will not be mistaken for standard vala.
 
 
+## License
+Various licences apply. 
+
+The ZeroG library and Adriac: GPL2
+
+Dark Vala preprocesors: Apache2.
+
+Application libraries:
+* entitas - MIT
+* sdx - Apache2
+* mt19937 - see code 
