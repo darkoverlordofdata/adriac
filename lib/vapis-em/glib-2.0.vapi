@@ -1416,6 +1416,9 @@ public class string {
 		return result;
 	}
 
+	public unowned string to_string () {
+		return this;
+	}
 	public unowned string ToString () {
 		return this;
 	}

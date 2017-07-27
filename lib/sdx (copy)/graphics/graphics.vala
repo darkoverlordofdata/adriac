@@ -13,29 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
-
-	exception IOException
-		InvalidData
-
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
-
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
-		NotReached
+namespace Sdx.Graphics { 
+	public struct Blit {
+		SDL.Video.Rect source;
+		SDL.Video.Rect dest;
+		SDL.Video.RendererFlip flip;
+	}
+	
+	public delegate Blit[] Compositor(int x, int y);	
+    
+}

@@ -18,10 +18,6 @@ namespace Sdx
 	exception IOException
 		InvalidData
 
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
-
 	exception SdlException 
 		Initialization
 		ImageInitialization

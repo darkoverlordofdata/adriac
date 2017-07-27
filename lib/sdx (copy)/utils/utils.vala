@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
+namespace Sdx.Utils {
 
-	exception IOException
-		InvalidData
+    public enum Align
+    {
+        Center = 1 << 0,
+        Top = 1 << 1,
+        Bottom = 1 << 2,
+        Left = 1 << 3,
+        Right = 1 << 4,
 
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
-
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
-		NotReached
+        TopLeft = Top | Left,
+        TopRight = Top | Right,
+        BottomLeft = Bottom | Left,
+        BottomRight = Bottom | Right
+        
+    }
+}

@@ -64,14 +64,14 @@ update ./bashrc
     autovala
     emscripten
     nodejs
-    coffeescrpipt
+    coffeescript
 
 ## ZeroG and the Dark Vala
 
 ZeroG is a lightweight replacement for Vala runtime GLib.
 This supports a subset of Vala.
 
-Code is based on portions of the original GLib, but only includes parts required for vala plus some data strutures. These are ported to static inline code for inclusion as *.h header files.
+Code is based on portions of the original GLib, but only includes parts required for vala, plus some data strutures. These are ported to static inline code for inclusion as *.h header files.
 
 GObject is replaced with reference counted compact class. This limits the available oop semantics, and Genie is not fully supported.
 
@@ -92,6 +92,6 @@ Dark Vala style guide:
 * Do use camel casing for parameter, field and variable names.
 * Do use UPPER_CASE for constants.
 
-I prefer this for readabliity, and it ensures the code will not be mistaken for standard vala.
+I prefer this for readabliity, and it ensures this code will not be mistaken for standard vala.
 
 

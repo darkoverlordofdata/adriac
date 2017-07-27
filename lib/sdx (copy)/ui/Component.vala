@@ -41,18 +41,13 @@ namespace Sdx.Ui
         public List<Component> controls;
         public Sdx.Graphics.Sprite[] image;
         public int index;
-        public InputProcessor handler;
 
-        public delegate void ComponentOnMouseClick(Component c, int x, int y);
-        public delegate void ComponentOnMouseLeave(Component c, int x, int y);
-        public delegate void ComponentOnMouseEnter(Component c, int x, int y);
-        public delegate void ComponentStart();
-        public delegate void ComponentStop();
-        public ComponentOnMouseClick OnMouseClick = (c, x, y) => {};
-        public ComponentOnMouseEnter OnMouseEnter = (c, x, y) => {};
-        public ComponentOnMouseLeave OnMouseLeave = (c, x, y) => {};
-        public ComponentStart Start = () => {};
-        public ComponentStart Stop = () => {};
+        public delegate void VirtualOnMouseClick(Component c, int x, int y);
+        public delegate void VirtualOnMouseLeave(Component c, int x, int y);
+        public delegate void VirtualOnMouseEnter(Component c, int x, int y);
+        public VirtualOnMouseClick OnMouseClick = (c, x, y) => {};
+        public VirtualOnMouseEnter OnMouseEnter = (c, x, y) => {};
+        public VirtualOnMouseLeave OnMouseLeave = (c, x, y) => {};
 
         public int width 
         {
@@ -94,7 +89,6 @@ namespace Sdx.Ui
         public void Remove(Component child) 
         {
             controls.Remove(child);
-            child.Stop();
             child.parent = null;
         }
         public Component SetPos(int x, int y)
@@ -120,7 +114,7 @@ namespace Sdx.Ui
     }
 
     /**
-     * A Button is like a label with handler
+     * A Button is like a label with events
      */
     public class Button : Component 
     {
@@ -128,46 +122,38 @@ namespace Sdx.Ui
         {
             base();
             kind = Kind.Button;
-            Start = EventStart;
-            Stop = EventStop;
-            Start();
-        }
-
-        public void EventStop()
-        {
-            Sdx.RemoveInputProcessor(handler);
-            handler = null;
-        }
-
-        public void EventStart()
-        {
-            Sdx.AddInputProcessor(handler = new InputProcessor()
-
-                .SetTouchDown((x, y, pointer, button) => 
-                {
+			Sdx.SetInputProcessor(InputProcessor() 
+			{ 
+				TouchDown = (x, y, pointer, button) => 
+				{
                     if (Test(x, y))
                     {
                         OnMouseClick(this, x, y);
                         return true;
                     }
                     return false;
-                })
+				},
 
-                .SetTouchUp((x, y, pointer, button) => 
-                {
-                    return Test(x, y);
-                })
+				TouchUp = (x, y, pointer, button) => 
+				{
+					return Test(x, y);
+				},
 
-                .SetTouchDragged((x, y, pointer) => 
-                {
+				TouchDragged = (x, y, pointer) => 
+				{
                     return Test(x, y);
-                })
-                
-                .SetMouseMoved((x, y) => 
-                {
+				},
+
+				MouseMoved = (x, y) => 
+				{
                     return Test(x, y);
-                })
-            );
+                },
+                KeyDown = (keycode) => {return false;},
+                KeyUp = (keycode) => {return false;},
+                KeyTyped = (character) => {return false;},
+                Scrolled = (amount) => {return false;}
+
+            });
         }
 
         public bool Test(int x, int y)
@@ -176,6 +162,7 @@ namespace Sdx.Ui
             if (test && index == 0) index = 1;
             if (!test && index == 1) index = 0;
             return test;
+            //  return false;
         }
 
         public class Text : Button {

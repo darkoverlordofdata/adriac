@@ -61,8 +61,6 @@ namespace Sdx
 	 * Global vars
 	 * 
 	 */
-	const double MS_PER_UPDATE = 1.0/60.0;
-
 #if (DESKTOP)
 	FileType platform = FileType.Resource;
 	const int pixelFactor = 1;
@@ -79,21 +77,31 @@ namespace Sdx
 	Sdx.Font largeFont;
 	SDL.Video.Display display;
 	SDL.Video.DisplayMode displayMode;
+	SDL.Video.Color fpsColor;
 	SDL.Video.Color bgdColor;
+	Sdx.Graphics.Sprite.TextSprite fpsSprite;
+	Sdx.Graphics.Sprite.AnimatedSprite fps1;
+	Sdx.Graphics.Sprite.AnimatedSprite fps2;
+	Sdx.Graphics.Sprite.AnimatedSprite fps3;
+	Sdx.Graphics.Sprite.AnimatedSprite fps4;
+	Sdx.Graphics.Sprite.AnimatedSprite fps5;
 	Sdx.Graphics.TextureAtlas atlas;
-	float fps = 60f;
+	bool showFps;
+	float fps;
 	float delta = 1.0f/60.0f;
 	bool running;
 	string resourceBase;
 	double currentTime;
 	double accumulator;
+	const double MS_PER_UPDATE = 1.0/60.0;
 	double freq;
 	int width;
 	int height;
 	Sdx.Ui.Window ui;
-	Event evt;
-	InputMultiplexer inputProcessor;
-	Math.TweenManager tweenManager;
+	Event _evt;
+	bool _mouseDown;
+	bool _defaultUserInput;
+	InputMultiplexer _inputProcessor;
 
 	/**
 	 * Initialization
@@ -139,11 +147,12 @@ namespace Sdx
 			throw new SdlException.CreateRenderer(SDL.GetError());
 
 		freq = SDL.Timer.GetPerformanceFrequency();
+		fpsColor = Sdx.Color.AntiqueWhite;
 		bgdColor = Sdx.Color.Black; 
 		
+		fps = 60;
 		MersenneTwister.InitGenrand((ulong)SDL.Timer.GetPerformanceCounter());
-		inputProcessor = new InputMultiplexer();
-		tweenManager = new Math.TweenManager();
+		_inputProcessor = new InputMultiplexer();
 		return window;
 	}
 
@@ -157,14 +166,9 @@ namespace Sdx
 		atlas = new Sdx.Graphics.TextureAtlas(Sdx.Files.Default(path));
 	}
 
-	public void AddInputProcessor(InputProcessor processor) 
+	public void SetInputProcessor(InputProcessor processor) 
 	{
-		inputProcessor.Add(processor);
-	}
-
-	public void RemoveInputProcessor(InputProcessor processor) 
-	{
-		inputProcessor.Remove(processor);
+		_inputProcessor.Add(processor);
 	}
 
 	void SetResourceBase(string path) 
@@ -187,6 +191,42 @@ namespace Sdx
 		largeFont = new Sdx.Font(path, size);
 	}
 
+	void SetShowFps(bool value) 
+	{
+		showFps = value;
+		if (showFps == true) 
+		{
+
+			fps1 = new Sdx.Graphics.Sprite.AnimatedSprite("assets/fonts/tom-thumb-white.png", 16, 24);
+			fps2 = new Sdx.Graphics.Sprite.AnimatedSprite("assets/fonts/tom-thumb-white.png", 16, 24);
+			fps3 = new Sdx.Graphics.Sprite.AnimatedSprite("assets/fonts/tom-thumb-white.png", 16, 24);
+			fps4 = new Sdx.Graphics.Sprite.AnimatedSprite("assets/fonts/tom-thumb-white.png", 16, 24);
+			fps5 = new Sdx.Graphics.Sprite.AnimatedSprite("assets/fonts/tom-thumb-white.png", 16, 24);
+
+		} 
+		else 
+		{
+			fpsSprite = null;
+		}
+	}
+
+	void DrawFps() 
+	{
+		if (showFps) 
+		{
+			var f = "%2.2f".printf(fps);
+			fps1.SetFrame(f[0]);
+			fps1.Render(20, 12);
+			fps2.SetFrame(f[1]);
+			fps2.Render(35, 12);
+			fps3.SetFrame(f[2]);
+			fps3.Render(50, 12);
+			fps4.SetFrame(f[3]);
+			fps4.Render(65, 12);
+			fps5.SetFrame(f[4]);
+			fps5.Render(80, 12);
+		}
+	}
 
 	double GetNow() 
 	{
@@ -212,7 +252,6 @@ namespace Sdx
 		ProcessEvents();
 		while (accumulator >= MS_PER_UPDATE) 
 		{
-			tweenManager.Update((float)MS_PER_UPDATE);
 			game.Update();
 			accumulator -= MS_PER_UPDATE;
 		}
@@ -222,78 +261,81 @@ namespace Sdx
 
 	void ProcessEvents() 
 	{
-		while (SDL.Event.poll(out evt) != 0) 
+		while (SDL.Event.poll(out _evt) != 0) 
 		{
-			switch (evt.type) 
+			switch (_evt.type) 
 			{
 				case SDL.EventType.QUIT:
 					running = false;
 					break;
 
 				case SDL.EventType.KEYDOWN:
-					if (evt.key.keysym.sym < 0 || evt.key.keysym.sym > 255) break;
-                    if (inputProcessor.KeyDown != null)
-						inputProcessor.KeyDown(evt.key.keysym.sym);
+					if (_evt.key.keysym.sym < 0 || _evt.key.keysym.sym > 255) break;
+                    if (_inputProcessor.KeyDown != null)
+						_inputProcessor.KeyDown(_evt.key.keysym.sym);
 					break;
 
 				case SDL.EventType.KEYUP:
-					if (evt.key.keysym.sym < 0 || evt.key.keysym.sym > 255) break;
-                    if (inputProcessor.KeyUp != null)
-						inputProcessor.KeyUp(evt.key.keysym.sym);
+					if (_evt.key.keysym.sym < 0 || _evt.key.keysym.sym > 255) break;
+                    if (_inputProcessor.KeyUp != null)
+						_inputProcessor.KeyUp(_evt.key.keysym.sym);
 					break;
 
 				case SDL.EventType.MOUSEMOTION:
-					if (inputProcessor.MouseMoved != null)
-						inputProcessor.MouseMoved(evt.motion.x, evt.motion.y);
+					if (_inputProcessor.MouseMoved != null)
+						_inputProcessor.MouseMoved(_evt.motion.x, _evt.motion.y);
 
 					break;
 
 				case SDL.EventType.MOUSEBUTTONDOWN:
-                    if (inputProcessor.TouchDown != null)
-						if (inputProcessor.TouchDown(evt.motion.x, evt.motion.y, 0, 0)) return;
+                    if (_inputProcessor.TouchDown != null)
+						if (_inputProcessor.TouchDown(_evt.motion.x, _evt.motion.y, 0, 0)) return;
 					break;
 
 				case SDL.EventType.MOUSEBUTTONUP:
-                    if (inputProcessor.TouchUp != null)
-						if (inputProcessor.TouchUp(evt.motion.x, evt.motion.y, 0, 0)) return;
+                    if (_inputProcessor.TouchUp != null)
+						if (_inputProcessor.TouchUp(_evt.motion.x, _evt.motion.y, 0, 0)) return;
 					break;
 #if (!ANDROID)
 				case SDL.EventType.FINGERMOTION:
 #if (EMSCRIPTEN)					
-					if (inputProcessor.TouchDragged != null)
-						inputProcessor.TouchDragged(
-							(int)(evt.tfinger.x * (float)width), 
-							(int)(evt.tfinger.y * (float)height), 0);
+					if (_inputProcessor.TouchDragged != null)
+						_inputProcessor.TouchDragged(
+							(int)(_evt.tfinger.x * (float)width), 
+							(int)(_evt.tfinger.y * (float)height), 
+							0);
 #else
-					if (inputProcessor.TouchDragged != null)
-						inputProcessor.TouchDragged(
-							(int)evt.tfinger.x, (int)evt.tfinger.y, 0);
+					if (_inputProcessor.TouchDragged != null)
+						_inputProcessor.TouchDragged(
+							(int)_evt.tfinger.x, (int)_evt.tfinger.y, 0);
 #endif
 					break;
 
 				case SDL.EventType.FINGERDOWN:
 #if (EMSCRIPTEN)					
-                    if (inputProcessor.TouchDown != null)
-						inputProcessor.TouchDown(
-							(int)(evt.tfinger.x * (float)width), 
-							(int)(evt.tfinger.y * (float)height), 0, 0);
+                    if (_inputProcessor.TouchDown != null)
+						_inputProcessor.TouchDown(
+							(int)(_evt.tfinger.x * (float)width), 
+							(int)(_evt.tfinger.y * (float)height), 
+							0, 0);
 #else
-                    if (inputProcessor.TouchDown != null)
-						inputProcessor.TouchDown(
-							(int)evt.tfinger.x, (int)evt.tfinger.y, 0, 0);
+                    if (_inputProcessor.TouchDown != null)
+						_inputProcessor.TouchDown(
+							(int)_evt.tfinger.x, (int)_evt.tfinger.y, 0, 0);
 #endif
 					break;
 
 				case SDL.EventType.FINGERUP:
 #if (EMSCRIPTEN)					
-                    if (inputProcessor.TouchUp != null)
-						inputProcessor.TouchUp(
-							(int)(evt.tfinger.x * (float)width), 
-							(int)(evt.tfinger.y * (float)height), 0, 0);
+                    if (_inputProcessor.TouchUp != null)
+						_inputProcessor.TouchUp(
+							(int)(_evt.tfinger.x * (float)width), 
+							(int)(_evt.tfinger.y * (float)height), 
+							0, 0);
 #else
-                    if (inputProcessor.TouchUp != null)
-						inputProcessor.TouchUp(
-							(int)evt.tfinger.x, (int)evt.tfinger.y, 0, 0);
+                    if (_inputProcessor.TouchUp != null)
+						_inputProcessor.TouchUp(
+							(int)_evt.tfinger.x, (int)_evt.tfinger.y, 0, 0);
 #endif
 					break;
 #endif
@@ -305,10 +347,12 @@ namespace Sdx
 	{
 		renderer.SetDrawColor(bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
 		renderer.Clear();
+		//  ui.Render();
 	}
 
 	void End() 
 	{
+		//  ui.Render();
 		renderer.Present();
 	}
 

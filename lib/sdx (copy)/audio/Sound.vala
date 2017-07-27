@@ -13,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
 
-	exception IOException
-		InvalidData
+using Sdx.Files;
 
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
+namespace Sdx.Audio {
 
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
-		NotReached
+    public class Sound : Object {
+
+#if (!EMSCRIPTEN) 
+        public SDLMixer.Chunk chunk;
+
+        public Sound(FileHandle file) {
+            chunk = new SDLMixer.Chunk.WAV_RW(file.GetRWops());
+        }
+
+        public void Play(int loops = 0) {   
+            SDLMixer.play(-1, chunk, loops);
+        }
+#else
+// TODO:  use vorbis for emscripten
+
+        public Sound(FileHandle file) {
+        }
+
+        public void Play(int loops = 0) {            
+        }
+
+#endif
+    }
+}

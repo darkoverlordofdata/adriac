@@ -13,29 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
+namespace Sdx.Audio {
 
-	exception IOException
-		InvalidData
-
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
-
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
-		NotReached
+}

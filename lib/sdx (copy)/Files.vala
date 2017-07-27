@@ -13,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
+using Sdx.Files;
 
-	exception IOException
-		InvalidData
+namespace Sdx {
 
-	exception Exception 
-		IllegalArgumentException
-		RuntimeException
+	public enum FileType 
+	{
+		Resource = 1,		/* Path to memory GResource */
+		Asset,				/* Android asset folder */
+		Absolute,			/* Absolute filesystem path.  */
+		Relative			/* Path relative to the pwd */
+		//  Parent = 0x10		/* Placeholder for the parent path  */
+	}
+	
+	public class DataInputStream : Object 
+	{
+		public string[] data; 
+		public int ctr;
+		public DataInputStream(string data) 
+		{
+			this.data = data.Split("\n");
 
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
-		NotReached
+			ctr = 0;
+		}
+		public string? ReadLine() 
+		{
+			return ctr<data.length ? data[ctr++] : null;
+		}
+	}
+}

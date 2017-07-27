@@ -41,11 +41,8 @@ namespace Sdx.Graphics
 		public int y;
 		public int index;
 		public int frame = -1;
-		public double angle = 0.0;
 		public Scale scale = Scale() { x = 1, y = 1 };
 		public SDL.Video.Color color = Sdx.Color.White;
-		public SDL.Video.RendererFlip flip = SDL.Video.RendererFlip.NONE;
-		public SDL.Video.Point center;
 		public bool centered = true;
 		public int layer = 0;
 		public string path;
@@ -67,7 +64,6 @@ namespace Sdx.Graphics
 				index = Surface.CachedSurface.IndexOfPath(path);
 				this.height = height;
 				this.width = width;
-				this.center = { width / 2, height / 2 };
 				this.path = path;
 				this.kind = Kind.AnimatedSprite;
 				SetFrame(0);
@@ -115,7 +111,6 @@ namespace Sdx.Graphics
 				texture.SetBlendMode(SDL.Video.BlendMode.BLEND);
 				width = Surface.CachedSurface.cache[index].width;
 				height = Surface.CachedSurface.cache[index].height;
-				this.center = { width / 2, height / 2 };
 				this.path = path;
 				this.kind = Kind.TextureSprite;
 			}
@@ -147,7 +142,6 @@ namespace Sdx.Graphics
 				this.texture = SDL.Video.Texture.CreateFromSurface(renderer, surface);
 				this.width = w;
 				this.height = h;
-				this.center = { width / 2, height / 2 };
 				this.path = region.name;
 				this.kind = Kind.AtlasSprite;
 			}
@@ -184,7 +178,6 @@ namespace Sdx.Graphics
 				texture = SDL.Video.Texture.CreateFromSurface(renderer, surface);
 				width = w;
 				height = h;
-				this.center = { width / 2, height / 2 };
 				this.path = path;
 				kind = Kind.CompositeSprite;
 			}
@@ -242,7 +235,6 @@ namespace Sdx.Graphics
 				texture = SDL.Video.Texture.CreateFromSurface(renderer, surface);
 				this.width = width;
 				this.height = height;
-				this.center = { width / 2, height / 2 };
 				//this.path = path;
 				kind = Kind.NineSliceSprite;
 			}
@@ -324,7 +316,6 @@ namespace Sdx.Graphics
 				texture.SetBlendMode(SDL.Video.BlendMode.BLEND);
 				this.width = width;
 				this.height = height;
-				this.center = { width / 2, height / 2 };
 				kind = Kind.NineSliceSprite;
 			}
 		}
@@ -343,7 +334,6 @@ namespace Sdx.Graphics
 			{
 				SetText(text, font, fg, bg);
 				centered = false;
-				center = { 0, 0 };
 				kind = Kind.TextSprite;
 			}
 
@@ -388,8 +378,7 @@ namespace Sdx.Graphics
 			texture.SetColorMod(color.r, color.g, color.b);
 			texture.SetAlphaMod(color.a);
 			/* copy to the rendering context */
-			//  renderer.Copy(texture, clip, { x, y, w, h });
-			renderer.CopyEx(texture, clip, { x, y, w, h }, angle, center, flip);
+			renderer.Copy(texture, clip, { x, y, w, h });
 		}
 
 		public void Copy(SDL.Video.Rect? src = null, SDL.Video.Rect? dest = null) 
@@ -418,11 +407,6 @@ namespace Sdx.Graphics
 		public Sprite SetCentered(bool value) 
 		{
 			centered = value;
-			if (centered)
-				center = { width / 2, height / 2 };
-			else
-				center = { 0, 0 };
-
 			return this;
 		}
 	}
