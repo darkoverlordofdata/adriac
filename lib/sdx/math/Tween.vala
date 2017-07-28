@@ -15,34 +15,98 @@
  ******************************************************************************/
 namespace  Sdx.Math 
 {
-    
-    
-    public class Tween : Object
+    /**
+     * Core class of the Tween Engine. A Tween is basically an interpolation
+     * between two values of an object attribute. However, the main interest of a
+     * Tween is that you can apply an easing formula on this interpolation, in
+     * order to smooth the transitions or to achieve cool effects like springs or
+     * bounces.
+     * <p/>
+     *
+     * The Universal Tween Engine is called "universal" because it is able to apply
+     * interpolations on every attribute from every possible object. Therefore,
+     * every object in your application can be animated with cool effects: it does
+     * not matter if your application is a game, a desktop interface or even a
+     * console program! If it makes sense to animate something, then it can be
+     * animated through this engine.
+     * <p/>
+     *
+     * This class contains many static factory methods to create and instantiate
+     * new interpolations easily. The common way to create a Tween is by using one
+     * of these factories:
+     * <p/>
+     *
+     * - Tween.to(...)<br/>
+     * - Tween.from(...)<br/>
+     * - Tween.set(...)<br/>
+     * - Tween.call(...)
+     * <p/>
+     *
+     * <h2>Example - firing a Tween</h2>
+     *
+     * The following example will move the target horizontal position from its
+     * current value to x=200 and y=300, during 500ms, but only after a delay of
+     * 1000ms. The animation will also be repeated 2 times (the starting position
+     * is registered at the end of the delay, so the animation will automatically
+     * restart from this registered position).
+     * <p/>
+     *
+     * <pre> {@code
+     * Tween.to(myObject, POSITION_XY, 0.5f)
+     *      .target(200, 300)
+     *      .ease(Quad.INOUT)
+     *      .delay(1.0f)
+     *      .repeat(2, 0.2f)
+     *      .start(myManager);
+     * }</pre>
+     *
+     * Tween life-cycles can be automatically managed for you, thanks to the
+     * {@link TweenManager} class. If you choose to manage your tween when you start
+     * it, then you don't need to care about it anymore. <b>Tweens are
+     * <i>fire-and-forget</i>: don't think about them anymore once you started
+     * them (if they are managed of course).</b>
+     * <p/>
+     *
+     * You need to periodicaly update the tween engine, in order to compute the new
+     * values. If your tweens are managed, only update the manager; else you need
+     * to call {@link #update()} on your tweens periodically.
+     * <p/>
+     *
+     * <h2>Example - setting up the engine</h2>
+     *
+     * The engine cannot directly change your objects attributes, since it doesn't
+     * know them. Therefore, you need to tell him how to get and set the different
+     * attributes of your objects: <b>you need to implement the {@link
+     * TweenAccessor} interface for each object class you will animate</b>. Once
+     * done, don't forget to register these implementations, using the static method
+     * {@link registerAccessor()}, when you start your application.
+     *
+     * @see TweenAccessor
+     * @see TweenManager
+     * @see TweenEquation
+     * @see Timeline
+     * @author Aurelien Ribon | http://www.aurelienribon.com/
+     */
+    public class Tween : Tweenbase
     {
+        // -------------------------------------------------------------------------
+        // Static -- misc
+        // -------------------------------------------------------------------------
+
+        public static void Init()
+        {
+            pool = new Stack<Tween>();
+            registeredAccessors = new GenericArray<TweenAccessor>();
+        }
+
+        /**
+         * Used as parameter in {@link #repeat(int, float)} and
+         * {@link #repeatYoyo(int, float)} methods.
+         */
         public const int INFINITY = -1;
         
-        public enum TweenCallback {
-            BEGIN = 0x01,
-            START = 0x02,
-            END = 0x04,
-            COMPLETE = 0x08,
-            BACK_BEGIN = 0x10,
-            BACK_START = 0x20,
-            BACK_END = 0x40,
-            BACK_COMPLETE = 0x80,
-            ANY_FORWARD = 0x0F,
-            ANY_BACKWARD = 0xF0,
-            ANY = 0xFF
-        }
-        public delegate void TweenCallbackOnEvent(int type, Tween source);
-
-        
-        // -------------------------------------------------------------------------
-        // Static -- tween accessors
-        // -------------------------------------------------------------------------
-        public static GenericArray<TweenAccessor> registeredAccessors;
-        public static Stack<Tween> pool;
         public static int combinedAttrsLimit = 3;
+        public static int waypointsLimit = 0;
         /**
          * Changes the limit for combined attributes. Defaults to 3 to reduce
          * memory footprint.
@@ -52,46 +116,20 @@ namespace  Sdx.Math
             combinedAttrsLimit = limit;
         }
 
-        public void* target;
-        public int type;
-        public Interpolation equation;
-        public TweenAccessor accessor;
-        public bool isFrom;
-        public bool isRelative;
-        public int combinedAttrsCnt;
-        public int waypointsCnt;
-        public float[] targetValues = new float[combinedAttrsLimit];
-        public float[] startValues = new float[combinedAttrsLimit];
-	    public float[] accessorBuffer = new float[combinedAttrsLimit];
-
-        public bool isInitialized;
-        public bool isAutoRemoveEnabled;
-        public bool isAutoStartEnabled;
-        public int step;
-        public int repeatCnt;
-        public bool isIterationStep;
-        public bool isYoyo;
-
-        // Timings
-        public float delay;
-        public float duration;
-        public float repeatDelay;
-        public float currentTime;
-        public float deltaTime;
-        public bool isStarted;  // true when the object is started
-        public bool isFinished; // true when all repetitions are done
-        public bool isKilled;   // true if kill() was called
-        public bool isPaused;   // true if pause() was called
-
-        public TweenCallbackOnEvent callback;
-        public int callbackTriggers;
-        public void* userData;
         
-        public static void Init()
+        /**
+         * Changes the limit of allowed waypoints for each tween. Defaults to 0 to
+         * reduce memory footprint.
+         */
+        public static void SetWaypointsLimit(int limit) 
         {
-            pool = new Stack<Tween>();
-            registeredAccessors = new GenericArray<TweenAccessor>();
+            waypointsLimit = limit;
         }
+
+        
+        // -------------------------------------------------------------------------
+        // Static -- tween accessors
+        // -------------------------------------------------------------------------
 
         /**
          * Registers an accessor with the class of an object. This accessor will be
@@ -125,43 +163,169 @@ namespace  Sdx.Math
         // Static -- factories
         // -------------------------------------------------------------------------
 
+        /**
+         * Factory creating a new standard interpolation. This is the most common
+         * type of interpolation. The starting values are retrieved automatically
+         * after the delay (if any).
+         * <br/><br/>
+         *
+         * <b>You need to set the target values of the interpolation by using one
+         * of the target() methods</b>. The interpolation will run from the
+         * starting values to these target values.
+         * <br/><br/>
+         *
+         * The common use of Tweens is "fire-and-forget": you do not need to care
+         * for tweens once you added them to a TweenManager, they will be updated
+         * automatically, and cleaned once finished. Common call:
+         * <br/><br/>
+         *
+         * <pre> {@code
+         * Tween.to(myObject, POSITION, 1.0f)
+         *      .target(50, 70)
+         *      .ease(Quad.INOUT)
+         *      .start(myManager);
+         * }</pre>
+         *
+         * Several options such as delay, repetitions and callbacks can be added to
+         * the tween.
+         *
+         * @param target The target object of the interpolation.
+         * @param tweenType The desired type of interpolation.
+         * @param duration The duration of the interpolation, in milliseconds.
+         * @return The generated Tween.
+         */
         public static Tween To(void* target, int tweenType, float duration) 
         {
-            var tween = pool.IsEmpty() ? new Tween() : pool.Pop().Reset();
+            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
+            var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, duration);
             tween.Ease(Interpolation.quadInOut);
             return tween;
         }
 
+        /**
+         * Factory creating a new reversed interpolation. The ending values are
+         * retrieved automatically after the delay (if any).
+         * <br/><br/>
+         *
+         * <b>You need to set the starting values of the interpolation by using one
+         * of the target() methods</b>. The interpolation will run from the
+         * starting values to these target values.
+         * <br/><br/>
+         *
+         * The common use of Tweens is "fire-and-forget": you do not need to care
+         * for tweens once you added them to a TweenManager, they will be updated
+         * automatically, and cleaned once finished. Common call:
+         * <br/><br/>
+         *
+         * <pre> {@code
+         * Tween.from(myObject, POSITION, 1.0f)
+         *      .target(0, 0)
+         *      .ease(Quad.INOUT)
+         *      .start(myManager);
+         * }</pre>
+         *
+         * Several options such as delay, repetitions and callbacks can be added to
+         * the tween.
+         *
+         * @param target The target object of the interpolation.
+         * @param tweenType The desired type of interpolation.
+         * @param duration The duration of the interpolation, in milliseconds.
+         * @return The generated Tween.
+         */
         public static Tween From(void* target, int tweenType, float duration) 
         {
-            var tween = pool.IsEmpty() ? new Tween() : pool.Pop().Reset();
+            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
+            var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, duration);
             tween.Ease(Interpolation.quadInOut);
             tween.isFrom = true;
             return tween;
         }
 
+        /**
+         * Factory creating a new instantaneous interpolation (thus this is not
+         * really an interpolation).
+         * <br/><br/>
+         *
+         * <b>You need to set the target values of the interpolation by using one
+         * of the target() methods</b>. The interpolation will set the target
+         * attribute to these values after the delay (if any).
+         * <br/><br/>
+         *
+         * The common use of Tweens is "fire-and-forget": you do not need to care
+         * for tweens once you added them to a TweenManager, they will be updated
+         * automatically, and cleaned once finished. Common call:
+         * <br/><br/>
+         *
+         * <pre> {@code
+         * Tween.set(myObject, POSITION)
+         *      .target(50, 70)
+         *      .delay(1.0f)
+         *      .start(myManager);
+         * }</pre>
+         *
+         * Several options such as delay, repetitions and callbacks can be added to
+         * the tween.
+         *
+         * @param target The target object of the interpolation.
+         * @param tweenType The desired type of interpolation.
+         * @return The generated Tween.
+         */
         public static Tween Set(void* target, int tweenType)
         {
-            var tween = pool.IsEmpty() ? new Tween() : pool.Pop().Reset();
+            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
+            var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, 0);
             tween.Ease(Interpolation.quadInOut);
             return tween;
         }
 
+        /**
+         * Factory creating a new timer. The given callback will be triggered on
+         * each iteration start, after the delay.
+         * <br/><br/>
+         *
+         * The common use of Tweens is "fire-and-forget": you do not need to care
+         * for tweens once you added them to a TweenManager, they will be updated
+         * automatically, and cleaned once finished. Common call:
+         * <br/><br/>
+         *
+         * <pre> {@code
+         * Tween.call(myCallback)
+         *      .delay(1.0f)
+         *      .repeat(10, 1000)
+         *      .start(myManager);
+         * }</pre>
+         *
+         * @param callback The callback that will be triggered on each iteration
+         * start.
+         * @return The generated Tween.
+         * @see TweenCallback
+         */
         public static Tween Call(TweenCallbackOnEvent callback)
         {
-            var tween = pool.IsEmpty() ? new Tween() : pool.Pop().Reset();
+            var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
+            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             tween.Setup(null, -1, 0);
             tween.SetCallback(callback);
 		    tween.SetCallbackTriggers(TweenCallback.START);
             return tween;
         }
 
+        /**
+         * Convenience method to create an empty tween. Such object is only useful
+         * when placed inside animation sequences (see {@link Timeline}), in which
+         * it may act as a beacon, so you can set a callback on it in order to
+         * trigger some action at the right moment.
+         *
+         * @return The generated Tween.
+         * @see Timeline
+         */
         public static Tween Mark()
         {
-            var tween = pool.IsEmpty() ? new Tween() : pool.Pop().Reset();
+            var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
+            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             tween.Setup(null, -1, 0);
             return tween;
         }
@@ -171,36 +335,140 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         public Tween()
         {
+            base();
+            kind = TweenKind.TWEEN;
+            var Reset_ = Reset;
+            Reset = () => 
+            {
+                Reset_();
+                target = null;
+                accessor = null;
+                type = -1;
+                equation = null;
+
+                isFrom = isRelative = false;
+                combinedAttrsCnt = waypointsCnt = 0;
+                if (accessorBuffer.length != combinedAttrsLimit) {
+                    accessorBuffer = new float[combinedAttrsLimit];
+                }
+                return this;
+            };
+
+            // -------------------------------------------------------------------------
+            // Overrides
+            // -------------------------------------------------------------------------
+        
+            Build = () =>
+            {
+                if (target == null) return this;
+                accessor = registeredAccessors.Get(type);
+                if (accessor != null) 
+                    combinedAttrsCnt = accessor.GetValues(target, type, ref accessorBuffer);
+                else
+                    throw new Exception.RuntimeException("No TweenAccessor was found for the target");
+
+                if (combinedAttrsCnt > combinedAttrsLimit) 
+                    throw new Exception.IllegalArgumentException("CombinedAttrsLimitReached");
+                return this;
+            };
+
+            InitializeOverride = () => 
+            {
+                if (target == null) return;
+
+                accessor.GetValues(target, type, ref startValues);
+
+                for (int i=0; i<combinedAttrsCnt; i++) 
+                {
+                    targetValues[i] += isRelative ? startValues[i] : 0;
+                    if (isFrom) 
+                    {
+                        float tmp = startValues[i];
+                        startValues[i] = targetValues[i];
+                        targetValues[i] = tmp;
+                    }
+                }
+            };
+            
+            UpdateOverride = (step, lastStep, isIterationStep, delta) => 
+            {
+                if (target == null || equation == null) return;
+
+                // Case iteration end has been reached
+                if (!isIterationStep && step > lastStep) 
+                {
+                    if (IsReverse(lastStep))
+                        accessor.SetValues(target, type, ref startValues);
+                    else
+                        accessor.SetValues(target, type, ref targetValues);
+                    return;
+                }
+
+                if (!isIterationStep && step < lastStep) 
+                {
+                    if (IsReverse(lastStep))
+                        accessor.SetValues(target, type, ref targetValues);
+                    else
+                        accessor.SetValues(target, type, ref startValues);
+                    return;
+                }
+
+                // Validation
+                assert(isIterationStep);
+                assert(GetCurrentTime() >= 0);
+                assert(GetCurrentTime() <= duration);
+
+                // Case duration equals zero
+
+                if (duration < 0.00000000001f && delta > -0.00000000001f) 
+                {
+                    if (IsReverse(step))
+                        accessor.SetValues(target, type, ref targetValues);
+                    else
+                        accessor.SetValues(target, type, ref startValues);
+                    return;
+                }
+
+                if (duration < 0.00000000001f && delta < 0.00000000001f) 
+                {
+                    if (IsReverse(step))
+                        accessor.SetValues(target, type, ref startValues);
+                    else
+                        accessor.SetValues(target, type, ref targetValues);
+                    return;
+                }
+                float time = IsReverse(step) ? duration - GetCurrentTime() : GetCurrentTime();
+                float t = equation.Apply(time/duration);
+                for (int i=0; i<combinedAttrsCnt; i++) {
+                    accessorBuffer[i] = startValues[i] + t * (targetValues[i] - startValues[i]);
+                }
+                accessor.SetValues(target, type, ref accessorBuffer);
+
+            };
+            
+            ForceStartValues = () => 
+            {
+                if (target == null) return;
+                accessor.SetValues(target, type, ref startValues);
+            };
+
+            ForceEndValues = () => 
+            {
+                if (target == null) return;
+                accessor.SetValues(target, type, ref targetValues);
+            };
+
+
+            ContainsTarget = (target, tweenType) =>
+            {
+                return tweenType < 0
+                    ? this.target == target
+                    : this.target == target && this.type == tweenType;
+            };
+
             Reset();
         }
         
-        public Tween Reset()
-        {
-            step = -2;
-            repeatCnt = 0;
-            isIterationStep = isYoyo = false;
-
-            delay = duration = repeatDelay = currentTime = deltaTime = 0;
-            isStarted = isInitialized = isFinished = isKilled = isPaused = false;
-
-            callback = null;
-            callbackTriggers = TweenCallback.COMPLETE;
-            userData = null;
-
-            isAutoRemoveEnabled = isAutoStartEnabled = true;
-
-            target = null;
-            accessor = null;
-            type = -1;
-            equation = null;
-
-            isFrom = isRelative = false;
-            combinedAttrsCnt = waypointsCnt = 0;
-            if (accessorBuffer.length != combinedAttrsLimit) {
-                accessorBuffer = new float[combinedAttrsLimit];
-            }
-            return this;
-        }
         public void Setup(void* target, int tweenType, float duration)
         {
 		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
@@ -212,6 +480,32 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         // Public API
         // -------------------------------------------------------------------------
+
+        /**
+         * Sets the easing equation of the tween. Existing equations are located in
+         * <i>aurelienribon.tweenengine.equations</i> package, but you can of course
+         * implement your owns, see {@link TweenEquation}. You can also use the
+         * {@link TweenEquations} static instances to quickly access all the
+         * equations. Default equation is Quad.INOUT.
+         * <p/>
+         *
+         * <b>Proposed equations are:</b><br/>
+         * - Linear.INOUT,<br/>
+         * - Quad.IN | OUT | INOUT,<br/>
+         * - Cubic.IN | OUT | INOUT,<br/>
+         * - Quart.IN | OUT | INOUT,<br/>
+         * - Quint.IN | OUT | INOUT,<br/>
+         * - Circ.IN | OUT | INOUT,<br/>
+         * - Sine.IN | OUT | INOUT,<br/>
+         * - Expo.IN | OUT | INOUT,<br/>
+         * - Back.IN | OUT | INOUT,<br/>
+         * - Bounce.IN | OUT | INOUT,<br/>
+         * - Elastic.IN | OUT | INOUT
+         *
+         * @return The current tween, for chaining instructions.
+         * @see TweenEquation
+         * @see TweenEquations
+         */
         public Tween Ease(Interpolation easeEquation)
         {
             equation = easeEquation;
@@ -265,429 +559,5 @@ namespace  Sdx.Math
             }
             return this;
         }
-
-        public Tween Start(TweenManager? manager = null)
-        {
-            if (manager == null)
-            {
-                Build();
-                currentTime = 0;
-                isStarted = true;
-            }
-            else
-            {
-                manager.Add(this);
-            }
-            return this;
-        }
-        public Tween Delay(float delay)
-        {
-            this.delay += delay;
-            return this;
-        }
-        public void Kill()
-        {
-            isKilled = true;
-        }
-        public void Pause()
-        {
-            isPaused = true;
-        }
-
-        public void Resume()
-        {
-            isPaused = false;
-        }
-
-        public Tween Repeat(int count, float delay=0)
-        {
-            if (isStarted) throw new Exception.RuntimeException("You can't change the repetitions of a tween or timeline once it is started");
-            repeatCnt = count;
-            repeatDelay = delay >= 0 ? delay : 0;
-            isYoyo = false;
-            return this;
-            
-        }
-
-        public Tween RepeatYoyo(int count, float delay=0)
-        {
-            if (isStarted) throw new Exception.RuntimeException("You can't change the repetitions of a tween or timeline once it is started");
-            repeatCnt = count;
-            repeatDelay = delay >= 0 ? delay : 0;
-            isYoyo = true;
-            return this;
-            
-        }
-
-        public Tween SetCallback(TweenCallbackOnEvent callback)
-        {
-            this.callback = callback;
-            return this;
-        }
-
-        public Tween SetCallbackTriggers(int flags)
-        {
-            callbackTriggers = flags;
-            return this;
-        }
-
-        public Tween SetUserData(void* data)
-        {
-            userData = data;
-            return this;
-        }
-
-        public float GetDelay()
-        {
-            return delay;
-        }
-
-        public float GetDuration()
-        {
-            return duration;
-        }
-
-        public int GetRepeatCount()
-        {
-            return repeatCnt;
-        }
-
-        public float GetRepeatDelay()
-        {
-    		return repeatDelay;
-        }
-
-        public float GetFullDuration() 
-        {
-            if (repeatCnt < 0) return -1;
-            return delay + duration + (repeatDelay + duration) * repeatCnt;
-        }
-
-        public void* GetUserData()
-        {
-            return userData;
-        }
-
-        public int GetStep() 
-        {
-            return step;
-        }
-
-        public float GetCurrentTime() 
-        {
-            return currentTime;
-        }
-        
-        public bool IsStarted() 
-        {
-            return isStarted;
-        }
-        
-        public bool IsInitialized() 
-        {
-            return isInitialized;
-        }
-        
-        public bool IsFinished() 
-        {
-            return isFinished || isKilled;
-        }
-
-        public bool IsYoyo() 
-        {
-            return isYoyo;
-        }
-
-        public bool IsPaused() 
-        {
-            return isPaused;
-        }
-
-        public void CallCallback(int type) 
-        {
-            //  print("CallCallback %d\n", type);
-            if (callback != null && (callbackTriggers & type) > 0) callback(type, this);
-        }
-        
-
-        public bool IsReverse(int step) 
-        {
-            return isYoyo && GLib.Math.fabs(step%4) == 2;
-        }
-
-        public bool IsValid(int step) 
-        {
-            return (step >= 0 && step <= repeatCnt*2) || repeatCnt < 0;
-        }
-
-        public void KillTarget(void* target, int tweenType=-1) {
-            if (ContainsTarget(target, tweenType)) Kill();
-        }
-        
-        public void Update(float delta)
-        {
-            //  print(" isStarted %s\n", isStarted.ToString());
-            //  print(" isPaused %s\n", isPaused.ToString());
-            //  print(" isKilled %s\n", isKilled.ToString());
-            if (!isStarted || isPaused || isKilled) return;
-
-            deltaTime = delta;
-
-            if (!isInitialized) {
-                Initialize();
-            }
-
-            if (isInitialized) {
-                TestRelaunch();
-                UpdateStep();
-                TestCompletion();
-            }
-
-            currentTime += deltaTime;
-            deltaTime = 0;
-
-        }
-
-        public void Initialize() 
-        {
-            if (currentTime+deltaTime >= delay) 
-            {
-                InitializeOverride();
-                isInitialized = true;
-                isIterationStep = true;
-                step = 0;
-                deltaTime -= delay-currentTime;
-                currentTime = 0;
-                CallCallback(TweenCallback.BEGIN);
-                CallCallback(TweenCallback.START);
-            }
-        }
-        
-        public void TestRelaunch() 
-        {
-            if (!isIterationStep && repeatCnt >= 0 && step < 0 && currentTime+deltaTime >= 0) 
-            {
-                assert(step == -1);
-                isIterationStep = true;
-                step = 0;
-                float delta = 0-currentTime;
-                deltaTime -= delta;
-                currentTime = 0;
-                CallCallback(TweenCallback.BEGIN);
-                CallCallback(TweenCallback.START);
-                UpdateOverride(step, step-1, isIterationStep, delta);
-
-            } 
-            else if (!isIterationStep && repeatCnt >= 0 && step > repeatCnt*2 && currentTime+deltaTime < 0) 
-            {
-                assert(step == repeatCnt*2 + 1);
-                isIterationStep = true;
-                step = repeatCnt*2;
-                float delta = 0-currentTime;
-                deltaTime -= delta;
-                currentTime = duration;
-                CallCallback(TweenCallback.BACK_BEGIN);
-                CallCallback(TweenCallback.BACK_START);
-                UpdateOverride(step, step+1, isIterationStep, delta);
-            }
-        }
-
-        public void UpdateStep() 
-        {
-            while (IsValid(step)) 
-            {
-                if (!isIterationStep && currentTime+deltaTime <= 0) 
-                {
-                    isIterationStep = true;
-                    step -= 1;
-
-                    float delta = 0-currentTime;
-                    deltaTime -= delta;
-                    currentTime = duration;
-
-                    if (IsReverse(step)) ForceStartValues(); else ForceEndValues();
-                    CallCallback(TweenCallback.BACK_START);
-                    UpdateOverride(step, step+1, isIterationStep, delta);
-
-                } 
-                else if (!isIterationStep && currentTime+deltaTime >= repeatDelay) 
-                {
-                    isIterationStep = true;
-                    step += 1;
-
-                    float delta = repeatDelay-currentTime;
-                    deltaTime -= delta;
-                    currentTime = 0;
-
-                    if (IsReverse(step)) ForceEndValues(); else ForceStartValues();
-                    CallCallback(TweenCallback.START);
-                    UpdateOverride(step, step-1, isIterationStep, delta);
-
-                } 
-                else if (isIterationStep && currentTime+deltaTime < 0) 
-                {
-                    isIterationStep = false;
-                    step -= 1;
-
-                    float delta = 0-currentTime;
-                    deltaTime -= delta;
-                    currentTime = 0;
-
-                    UpdateOverride(step, step+1, isIterationStep, delta);
-                    CallCallback(TweenCallback.BACK_END);
-
-                    if (step < 0 && repeatCnt >= 0) CallCallback(TweenCallback.BACK_COMPLETE);
-                    else currentTime = repeatDelay;
-
-                } 
-                else if (isIterationStep && currentTime+deltaTime > duration) 
-                {
-                    isIterationStep = false;
-                    step += 1;
-
-                    float delta = duration-currentTime;
-                    deltaTime -= delta;
-                    currentTime = duration;
-
-                    UpdateOverride(step, step-1, isIterationStep, delta);
-                    CallCallback(TweenCallback.END);
-
-                    if (step > repeatCnt*2 && repeatCnt >= 0) CallCallback(TweenCallback.COMPLETE);
-                    currentTime = 0;
-
-                } 
-                else if (isIterationStep) 
-                {
-                    float delta = deltaTime;
-                    deltaTime -= delta;
-                    currentTime += delta;
-                    UpdateOverride(step, step, isIterationStep, delta);
-                    break;
-
-                } 
-                else 
-                {
-                    float delta = deltaTime;
-                    deltaTime -= delta;
-                    currentTime += delta;
-                    break;
-                }
-            }
-        }
-            
-        public void TestCompletion() 
-        {
-            isFinished = repeatCnt >= 0 && (step > repeatCnt*2 || step < 0);
-        }
-
-        public Tween Build()
-        {
-		    if (target == null) return this;
-            accessor = registeredAccessors.Get(type);
-            if (accessor != null) 
-                combinedAttrsCnt = accessor.GetValues(target, type, ref accessorBuffer);
-            else
-                throw new Exception.RuntimeException("No TweenAccessor was found for the target");
-
-            if (combinedAttrsCnt > combinedAttrsLimit) 
-                throw new Exception.IllegalArgumentException("CombinedAttrsLimitReached");
-            return this;
-        }
-
-        public void InitializeOverride() 
-        {
-            if (target == null) return;
-
-            accessor.GetValues(target, type, ref startValues);
-
-            for (int i=0; i<combinedAttrsCnt; i++) 
-            {
-                targetValues[i] += isRelative ? startValues[i] : 0;
-                if (isFrom) 
-                {
-                    float tmp = startValues[i];
-                    startValues[i] = targetValues[i];
-                    targetValues[i] = tmp;
-                }
-            }
-        }
-       
-        public void UpdateOverride(int step, int lastStep, bool isIterationStep, float delta) 
-        {
-            if (target == null || equation == null) return;
-
-            // Case iteration end has been reached
-            if (!isIterationStep && step > lastStep) 
-            {
-                if (IsReverse(lastStep))
-                    accessor.SetValues(target, type, ref startValues);
-                else
-                    accessor.SetValues(target, type, ref targetValues);
-                return;
-            }
-
-            if (!isIterationStep && step < lastStep) 
-            {
-                if (IsReverse(lastStep))
-                    accessor.SetValues(target, type, ref targetValues);
-                else
-                    accessor.SetValues(target, type, ref startValues);
-                return;
-            }
-
-            // Validation
-            assert(isIterationStep);
-            assert(GetCurrentTime() >= 0);
-            assert(GetCurrentTime() <= duration);
-
-            // Case duration equals zero
-
-            if (duration < 0.00000000001f && delta > -0.00000000001f) 
-            {
-                if (IsReverse(step))
-                    accessor.SetValues(target, type, ref targetValues);
-                else
-                    accessor.SetValues(target, type, ref startValues);
-                return;
-            }
-
-            if (duration < 0.00000000001f && delta < 0.00000000001f) 
-            {
-                if (IsReverse(step))
-                    accessor.SetValues(target, type, ref startValues);
-                else
-                    accessor.SetValues(target, type, ref targetValues);
-                return;
-            }
-            float time = IsReverse(step) ? duration - GetCurrentTime() : GetCurrentTime();
-            float t = equation.Apply(time/duration);
-			for (int i=0; i<combinedAttrsCnt; i++) {
-				accessorBuffer[i] = startValues[i] + t * (targetValues[i] - startValues[i]);
-			}
-		    accessor.SetValues(target, type, ref accessorBuffer);
-
-        }
-        
-        public void ForceStartValues() 
-        {
-            if (target == null) return;
-            accessor.SetValues(target, type, ref startValues);
-        }
-
-        public void ForceEndValues() 
-        {
-            if (target == null) return;
-            accessor.SetValues(target, type, ref targetValues);
-        }
-
-
-        public bool ContainsTarget(void* target, int tweenType=-1) {
-            return tweenType < 0
-                ? this.target == target
-                : this.target == target && this.type == tweenType;
-        }
-        
-
     }
-
 }

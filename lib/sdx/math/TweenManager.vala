@@ -61,14 +61,14 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         // Public API
         // -------------------------------------------------------------------------
-        public GenericArray<Tween> objects;     
+        public GenericArray<Tweenbase> objects;     
         public bool isPaused = false; 
 
         public TweenManager()
         {
             Interpolation.Initialize();
             Tween.Init();
-            objects = new GenericArray<Tween>(20);
+            objects = new GenericArray<Tweenbase>(20);
         }
 
         /**
@@ -76,7 +76,7 @@ namespace  Sdx.Math
          *
          * @return The manager, for instruction chaining.
          */
-        public TweenManager Add(Tween object)
+        public TweenManager Add(Tweenbase object)
         {
             objects.Add(object);
             if (object.isAutoStartEnabled) 
@@ -94,7 +94,7 @@ namespace  Sdx.Math
         {
             for (int i=0, n=objects.length; i<n; i++) 
             {
-                Tween obj = objects.Get(i);
+                Tweenbase obj = objects.Get(i);
                 if (obj.ContainsTarget(target, tweenType)) return true;
             }
             return false;
