@@ -93,7 +93,7 @@ namespace Sdx
 	Sdx.Ui.Window ui;
 	Event evt;
 	InputMultiplexer inputProcessor;
-	Math.TweenManager tweenManager;
+	Math.TweenManager? tweenManager;
 
 	/**
 	 * Initialization
@@ -143,7 +143,6 @@ namespace Sdx
 		
 		MersenneTwister.InitGenrand((ulong)SDL.Timer.GetPerformanceCounter());
 		inputProcessor = new InputMultiplexer();
-		tweenManager = new Math.TweenManager();
 		return window;
 	}
 
@@ -155,6 +154,11 @@ namespace Sdx
 	public void SetAtlas(string path)
 	{
 		atlas = new Sdx.Graphics.TextureAtlas(Sdx.Files.Default(path));
+	}
+
+	public void SetTweenManager(Math.TweenManager manager)
+	{
+		tweenManager = manager;
 	}
 
 	public void AddInputProcessor(InputProcessor processor) 
@@ -212,7 +216,7 @@ namespace Sdx
 		ProcessEvents();
 		while (accumulator >= MS_PER_UPDATE) 
 		{
-			tweenManager.Update((float)MS_PER_UPDATE);
+			if (tweenManager != null) tweenManager.Update((float)MS_PER_UPDATE);
 			game.Update();
 			accumulator -= MS_PER_UPDATE;
 		}

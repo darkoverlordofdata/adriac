@@ -90,6 +90,110 @@ namespace  Sdx.Math
         {
             base();
             kind = TweenKind.TIMELINE;
+            Overrides();
+            Reset();
+        }
+
+        public void Setup(TimelineModes mode) 
+        {
+            this.mode = mode;
+            this.current = this;
+        }
+
+        // -------------------------------------------------------------------------
+        // Public API
+        // -------------------------------------------------------------------------
+
+        /**
+         * Adds a Tween to the current timeline.
+         * Nests a Timeline in the current one.
+         *
+         * @return The current timeline, for chaining instructions.
+         */
+        public Timeline Push(Tween tween) {
+            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
+            if (kind == TweenKind.TIMELINE)
+            {
+                if (tween.current != tween) 
+                    throw new Exception.RuntimeException("You forgot to call a few 'end()' statements in your pushed timeline");
+                tween.parent = current;
+            }
+            current.children.Add(tween);
+            return this;
+        }
+
+        /**
+         * Adds a pause to the timeline. The pause may be negative if you want to
+         * overlap the preceding and following children.
+         *
+         * @param time A positive or negative duration.
+         * @return The current timeline, for chaining instructions.
+         */
+        public Timeline PushPause(float time) {
+            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
+            current.children.Add(Tween.Mark().Delay(time));
+            return this;
+        }
+
+        /**
+         * Starts a nested timeline with a 'sequence' behavior. Don't forget to
+         * call {@link end()} to close this nested timeline.
+         *
+         * @return The current timeline, for chaining instructions.
+         */
+        public Timeline BeginSequence() {
+            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
+            var tl = pool.IsEmpty() ? new Timeline() : (Timeline)pool.Pop().Reset();
+            tl.parent = current;
+            tl.mode = TimelineModes.SEQUENCE;
+            current.children.Add(tl);
+            current = tl;
+            return this;
+        }
+
+        /**
+         * Starts a nested timeline with a 'parallel' behavior. Don't forget to
+         * call {@link end()} to close this nested timeline.
+         *
+         * @return The current timeline, for chaining instructions.
+         */
+        public Timeline BeginParallel() {
+            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
+            var tl = pool.IsEmpty() ? new Timeline() : (Timeline)pool.Pop().Reset();
+            tl.parent = current;
+            tl.mode = TimelineModes.PARALLEL;
+            current.children.Add(tl);
+            current = tl;
+            return this;
+        }
+
+        /**
+         * Closes the last nested timeline.
+         *
+         * @return The current timeline, for chaining instructions.
+         */
+        public Timeline End() {
+            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
+            if (current == this) throw new Exception.RuntimeException("Nothing to end...");
+            current = current.parent;
+            return this;
+        }
+
+        /**
+         * Gets a list of the timeline children. If the timeline is started, the
+         * list will be immutable.
+         */
+        public GenericArray<Tweenbase> GetChildren() {
+            //  if (isBuilt) return Collections.unmodifiableList(current.children);
+            //  else return current.children;
+            return current.children;            
+        }
+
+        // -------------------------------------------------------------------------
+        // Overrides
+        // -------------------------------------------------------------------------
+        public void Overrides()
+        {
             var Reset_ = Reset;
             var Start_ = Start;
             Reset = () => 
@@ -101,10 +205,6 @@ namespace  Sdx.Math
                 isBuilt = false;
                 return this;
             };
-
-            // -------------------------------------------------------------------------
-            // Overrides
-            // -------------------------------------------------------------------------
         
             Build = () =>
             {
@@ -235,102 +335,6 @@ namespace  Sdx.Math
                 return false;
             };
 
-            Reset();
-        }
-
-        public void Setup(TimelineModes mode) 
-        {
-            this.mode = mode;
-            this.current = this;
-        }
-
-        // -------------------------------------------------------------------------
-        // Public API
-        // -------------------------------------------------------------------------
-
-        /**
-         * Adds a Tween to the current timeline.
-         * Nests a Timeline in the current one.
-         *
-         * @return The current timeline, for chaining instructions.
-         */
-        public Timeline Push(Tween tween) {
-            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
-            if (kind == TweenKind.TIMELINE)
-            {
-                if (tween.current != tween) 
-                    throw new Exception.RuntimeException("You forgot to call a few 'end()' statements in your pushed timeline");
-                tween.parent = current;
-            }
-            current.children.Add(tween);
-            return this;
-        }
-
-        /**
-         * Adds a pause to the timeline. The pause may be negative if you want to
-         * overlap the preceding and following children.
-         *
-         * @param time A positive or negative duration.
-         * @return The current timeline, for chaining instructions.
-         */
-        public Timeline PushPause(float time) {
-            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
-            current.children.Add(Tween.Mark().Delay(time));
-            return this;
-        }
-
-        /**
-         * Starts a nested timeline with a 'sequence' behavior. Don't forget to
-         * call {@link end()} to close this nested timeline.
-         *
-         * @return The current timeline, for chaining instructions.
-         */
-        public Timeline BeginSequence() {
-            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
-            var tl = pool.IsEmpty() ? new Timeline() : (Timeline)pool.Pop().Reset();
-            tl.parent = current;
-            tl.mode = TimelineModes.SEQUENCE;
-            current.children.Add(tl);
-            current = tl;
-            return this;
-        }
-
-        /**
-         * Starts a nested timeline with a 'parallel' behavior. Don't forget to
-         * call {@link end()} to close this nested timeline.
-         *
-         * @return The current timeline, for chaining instructions.
-         */
-        public Timeline BeginParallel() {
-            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
-            var tl = pool.IsEmpty() ? new Timeline() : (Timeline)pool.Pop().Reset();
-            tl.parent = current;
-            tl.mode = TimelineModes.PARALLEL;
-            current.children.Add(tl);
-            current = tl;
-            return this;
-        }
-
-        /**
-         * Closes the last nested timeline.
-         *
-         * @return The current timeline, for chaining instructions.
-         */
-        public Timeline End() {
-            if (isBuilt) throw new Exception.RuntimeException("You can't push anything to a timeline once it is started");
-            if (current == this) throw new Exception.RuntimeException("Nothing to end...");
-            current = current.parent;
-            return this;
-        }
-
-        /**
-         * Gets a list of the timeline children. If the timeline is started, the
-         * list will be immutable.
-         */
-        public GenericArray<Tweenbase> GetChildren() {
-            //  if (isBuilt) return Collections.unmodifiableList(current.children);
-            //  else return current.children;
-            return current.children;            
         }
     }
 }

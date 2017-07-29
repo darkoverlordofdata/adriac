@@ -16,6 +16,8 @@
 namespace Sdx.Graphics 
 {
 
+	const string SPRITE_GUID = "63a69a42-2b3c-4e01-9b10-f0dfd9f15f3b";
+
 	public struct Scale 
 	{
 		float x;
@@ -26,13 +28,14 @@ namespace Sdx.Graphics
 	 */
 	public class Sprite : Object 
 	{
-
+		public static int uniqueId = 0;
 		public enum Kind 
 		{
 			AnimatedSprite, TextureSprite, AtlasSprite, 
 			NineSliceSprite, CompositeSprite, TextSprite
 		}
-		public static int uniqueId = 0;
+
+		public Guid* clsId = ClsId(SPRITE_GUID);
 		public int id = ++uniqueId;
 		public SDL.Video.Texture texture;
 		public int width;
@@ -311,7 +314,6 @@ namespace Sdx.Graphics
 				{
 					patch.texture.surface.BlitScaled(segment.source, surface, dest[i++]);
 				}
-				//  print("\npatch %d %d %d %d\n", patch.left, patch.top, patch.bottom, patch.right);
 				textSurface.BlitScaled(
 					{ 0, 0, width, height },
 					surface, 

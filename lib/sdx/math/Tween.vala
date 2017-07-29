@@ -15,6 +15,10 @@
  ******************************************************************************/
 namespace  Sdx.Math 
 {
+    public class Tweenable : Object
+    {
+        public Guid* clsId; // typeinfo
+    }
     /**
      * Core class of the Tween Engine. A Tween is basically an interpolation
      * between two values of an object attribute. However, the main interest of a
@@ -96,7 +100,8 @@ namespace  Sdx.Math
         public static void Init()
         {
             pool = new Stack<Tween>();
-            registeredAccessors = new GenericArray<TweenAccessor>();
+            //  registeredAccessors = new HashTable<string,TweenAccessor>(str_hash, str_equal);
+            registeredAccessors = new HashTable<Guid*,TweenAccessor>(null, null);
         }
 
         /**
@@ -140,12 +145,10 @@ namespace  Sdx.Math
          * @param defaultAccessor The accessor that will be used to tween any
          * object of klass "someClass".x`
          */
-        public static void RegisterAccessor(int tweenType, TweenAccessor defaultAccessor)
+        public static void RegisterAccessor(Guid* someClass, TweenAccessor defaultAccessor)
         {
-            if (registeredAccessors.length < tweenType)
-                registeredAccessors.length = tweenType+1;
-
-            registeredAccessors.Set(tweenType, defaultAccessor);
+            //  registeredAccessors.Set(someClass.ToString(), defaultAccessor);
+            registeredAccessors.Set(someClass, defaultAccessor);
         }
 
 
@@ -154,9 +157,10 @@ namespace  Sdx.Math
          *
          * @param someClass An object class.
          */
-        public static TweenAccessor GetRegisteredAccessor(int tweenType) 
+        public static TweenAccessor GetRegisteredAccessor(Guid* someClass) 
         {
-            return registeredAccessors.Get(tweenType);
+            //  return registeredAccessors.Get(someClass.ToString());
+            return registeredAccessors.Get(someClass);
         }
 
         // -------------------------------------------------------------------------
@@ -196,7 +200,6 @@ namespace  Sdx.Math
          */
         public static Tween To(void* target, int tweenType, float duration) 
         {
-            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, duration);
             tween.Ease(Interpolation.quadInOut);
@@ -235,7 +238,6 @@ namespace  Sdx.Math
          */
         public static Tween From(void* target, int tweenType, float duration) 
         {
-            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, duration);
             tween.Ease(Interpolation.quadInOut);
@@ -274,7 +276,6 @@ namespace  Sdx.Math
          */
         public static Tween Set(void* target, int tweenType)
         {
-            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
             tween.Setup(target, tweenType, 0);
             tween.Ease(Interpolation.quadInOut);
@@ -306,7 +307,6 @@ namespace  Sdx.Math
         public static Tween Call(TweenCallbackOnEvent callback)
         {
             var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
-            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             tween.Setup(null, -1, 0);
             tween.SetCallback(callback);
 		    tween.SetCallbackTriggers(TweenCallback.START);
@@ -325,7 +325,6 @@ namespace  Sdx.Math
         public static Tween Mark()
         {
             var tween = pool.IsEmpty() ? new Tween() : (Tween)pool.Pop().Reset();
-            //  var tween = (Tween)(pool.IsEmpty() ? new Tween() : pool.Pop().Reset());
             tween.Setup(null, -1, 0);
             return tween;
         }
@@ -337,11 +336,116 @@ namespace  Sdx.Math
         {
             base();
             kind = TweenKind.TWEEN;
+            Overrides();
+            Reset();
+
+        }
+
+        public void Setup(void* target, int tweenType, float duration)
+        {
+		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
+            this.target = target;
+            var tweenable = (Tweenable)target;
+            targetClass = tweenable.clsId;
+            this.type = tweenType;
+            this.duration = duration;
+        }
+
+
+        // -------------------------------------------------------------------------
+        // Public API
+        // -------------------------------------------------------------------------
+
+        /**
+         * Sets the easing equation of the tween. Existing equations are located in
+         * <i>aurelienribon.tweenengine.equations</i> package, but you can of course
+         * implement your owns, see {@link TweenEquation}. You can also use the
+         * {@link TweenEquations} static instances to quickly access all the
+         * equations. Default equation is Quad.INOUT.
+         * <p/>
+         *
+         * <b>Proposed equations are:</b><br/>
+         * - Linear.INOUT,<br/>
+         * - Quad.IN | OUT | INOUT,<br/>
+         * - Cubic.IN | OUT | INOUT,<br/>
+         * - Quart.IN | OUT | INOUT,<br/>
+         * - Quint.IN | OUT | INOUT,<br/>
+         * - Circ.IN | OUT | INOUT,<br/>
+         * - Sine.IN | OUT | INOUT,<br/>
+         * - Expo.IN | OUT | INOUT,<br/>
+         * - Back.IN | OUT | INOUT,<br/>
+         * - Bounce.IN | OUT | INOUT,<br/>
+         * - Elastic.IN | OUT | INOUT
+         *
+         * @return The current tween, for chaining instructions.
+         * @see TweenEquation
+         * @see TweenEquations
+         */
+        public Tween Ease(Interpolation easeEquation)
+        {
+            equation = easeEquation;
+            return this;
+        }
+
+        /**
+         * Sets the target values of the interpolation. The interpolation will run
+         * from the <b>values at start time (after the delay, if any)</b> to these
+         * target values.
+         * <p/>
+         *
+         * To sum-up:<br/>
+         * - start values: values at start time, after delay<br/>
+         * - end values: params
+         *
+         * @param targetValues The target values of the interpolation.
+         * @return The current tween, for chaining instructions.
+         */
+        public Tween Target(float[] targetValues)
+        {
+            this.targetValues = new float[targetValues.length];
+
+            for (var i=0; i < targetValues.length; i++) 
+            {
+                this.targetValues[i] = targetValues[i];
+            }
+            return this;
+        }
+
+        /**
+         * Sets the target values of the interpolation, relatively to the <b>values
+         * at start time (after the delay, if any)</b>.
+         * <p/>
+         *
+         * To sum-up:<br/>
+         * - start values: values at start time, after delay<br/>
+         * - end values: params + values at start time, after delay
+         *
+         * @param targetValues The relative target values of the interpolation.
+         * @return The current tween, for chaining instructions.
+         */
+        public Tween TargetRelative(float[] targetValues)
+        {
+            isRelative = true;
+            this.targetValues = new float[targetValues.length];
+
+            for (var i=0; i < targetValues.length; i++) 
+            {
+                this.targetValues[i] = isInitialized ? targetValues[i] + startValues[i] : targetValues[i];
+            }
+            return this;
+        }
+        
+        // -------------------------------------------------------------------------
+        // Overrides
+        // -------------------------------------------------------------------------
+        public void Overrides()
+        {
             var Reset_ = Reset;
             Reset = () => 
             {
                 Reset_();
                 target = null;
+                //  targetClass = { 0, 0 };
                 accessor = null;
                 type = -1;
                 equation = null;
@@ -354,14 +458,11 @@ namespace  Sdx.Math
                 return this;
             };
 
-            // -------------------------------------------------------------------------
-            // Overrides
-            // -------------------------------------------------------------------------
-        
             Build = () =>
             {
                 if (target == null) return this;
-                accessor = registeredAccessors.Get(type);
+                //  accessor = registeredAccessors.Get(targetClass.ToString());
+                accessor = registeredAccessors.Get(targetClass);
                 if (accessor != null) 
                     combinedAttrsCnt = accessor.GetValues(target, type, ref accessorBuffer);
                 else
@@ -466,98 +567,6 @@ namespace  Sdx.Math
                     : this.target == target && this.type == tweenType;
             };
 
-            Reset();
-        }
-        
-        public void Setup(void* target, int tweenType, float duration)
-        {
-		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
-            this.target = target;
-            this.type = tweenType;
-            this.duration = duration;
-        }
-
-        // -------------------------------------------------------------------------
-        // Public API
-        // -------------------------------------------------------------------------
-
-        /**
-         * Sets the easing equation of the tween. Existing equations are located in
-         * <i>aurelienribon.tweenengine.equations</i> package, but you can of course
-         * implement your owns, see {@link TweenEquation}. You can also use the
-         * {@link TweenEquations} static instances to quickly access all the
-         * equations. Default equation is Quad.INOUT.
-         * <p/>
-         *
-         * <b>Proposed equations are:</b><br/>
-         * - Linear.INOUT,<br/>
-         * - Quad.IN | OUT | INOUT,<br/>
-         * - Cubic.IN | OUT | INOUT,<br/>
-         * - Quart.IN | OUT | INOUT,<br/>
-         * - Quint.IN | OUT | INOUT,<br/>
-         * - Circ.IN | OUT | INOUT,<br/>
-         * - Sine.IN | OUT | INOUT,<br/>
-         * - Expo.IN | OUT | INOUT,<br/>
-         * - Back.IN | OUT | INOUT,<br/>
-         * - Bounce.IN | OUT | INOUT,<br/>
-         * - Elastic.IN | OUT | INOUT
-         *
-         * @return The current tween, for chaining instructions.
-         * @see TweenEquation
-         * @see TweenEquations
-         */
-        public Tween Ease(Interpolation easeEquation)
-        {
-            equation = easeEquation;
-            return this;
-        }
-
-        /**
-         * Sets the target values of the interpolation. The interpolation will run
-         * from the <b>values at start time (after the delay, if any)</b> to these
-         * target values.
-         * <p/>
-         *
-         * To sum-up:<br/>
-         * - start values: values at start time, after delay<br/>
-         * - end values: params
-         *
-         * @param targetValues The target values of the interpolation.
-         * @return The current tween, for chaining instructions.
-         */
-        public Tween Target(float[] targetValues)
-        {
-            this.targetValues = new float[targetValues.length];
-
-            for (var i=0; i < targetValues.length; i++) 
-            {
-                this.targetValues[i] = targetValues[i];
-            }
-            return this;
-        }
-
-        /**
-         * Sets the target values of the interpolation, relatively to the <b>values
-         * at start time (after the delay, if any)</b>.
-         * <p/>
-         *
-         * To sum-up:<br/>
-         * - start values: values at start time, after delay<br/>
-         * - end values: params + values at start time, after delay
-         *
-         * @param targetValues The relative target values of the interpolation.
-         * @return The current tween, for chaining instructions.
-         */
-        public Tween TargetRelative(float[] targetValues)
-        {
-            isRelative = true;
-            this.targetValues = new float[targetValues.length];
-
-            for (var i=0; i < targetValues.length; i++) 
-            {
-                this.targetValues[i] = isInitialized ? targetValues[i] + startValues[i] : targetValues[i];
-            }
-            return this;
         }
     }
 }

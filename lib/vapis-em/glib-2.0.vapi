@@ -4862,6 +4862,8 @@ namespace GLib {
 		public bool Remove (G data);
 		public bool remove (G data);
 		public void remove_index (uint index);
+		[CCode (cname = "g_ptr_array_remove_index")]
+		public void RemoveIndex (uint index);
 		public bool remove_fast (G data);
 		[CCode (cname = "g_ptr_array_remove_index_fast")]
 		public void RemoveFast (uint index);
