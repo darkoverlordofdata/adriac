@@ -31,13 +31,13 @@ template = (file, name, options) ->
 #{tab}\tunref_function = "#{pfx}_release"
 #{tab})]
 #{tab}public class #{$2}<#{$3}> {
-#{tab}\tpublic int _retainCount = 1;
+#{tab}\tpublic int ref_count = 1;
 #{tab}\tpublic unowned #{$2}<#{$3}> retain() {
-#{tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);
+#{tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);
 #{tab}\t\treturn this;
 #{tab}\t}
 #{tab}\tpublic void release() { 
-#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();
+#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();
 #{tab}\t}
 #{tab}\tpublic extern void free();\n\t\t
         """)
@@ -56,13 +56,13 @@ template = (file, name, options) ->
 #{tab}\tunref_function = "#{pfx}_release"
 #{tab})]
 #{tab}public class #{$2}<#{$3}> {
-#{tab}\tpublic int _retainCount = 1;
+#{tab}\tpublic int ref_count = 1;
 #{tab}\tpublic unowned #{$2}<#{$3}> retain() {
-#{tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);
+#{tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);
 #{tab}\t\treturn this;
 #{tab}\t}
 #{tab}\tpublic void release() { 
-#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();
+#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();
 #{tab}\t}
 #{tab}\tpublic extern void free();\n\t\t
         """)
@@ -81,13 +81,13 @@ template = (file, name, options) ->
 #{tab}\tunref_function = "#{pfx}_release"
 #{tab})]
 #{tab}public class #{$2} {
-#{tab}\tpublic int _retainCount = 1;
+#{tab}\tpublic int ref_count = 1;
 #{tab}\tpublic unowned #{$2} retain() {
-#{tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);
+#{tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);
 #{tab}\t\treturn this;
 #{tab}\t}
 #{tab}\tpublic void release() { 
-#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();
+#{tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();
 #{tab}\t}
 #{tab}\tpublic extern void free();\n\t\t
         """)

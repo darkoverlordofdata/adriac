@@ -41,7 +41,7 @@
         var n1, tab;
         tab = $1.replace(/\n/mg, "").replace("\t", "");
         n1 = namespace === "" ? "" : namespace + "_";
-        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2}<${$3}> {\n${tab}\tpublic int _retainCount = 1;\n${tab}\tpublic unowned ${$2}<${$3}> retain() {\n${tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
+        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2}<${$3}> {\n${tab}\tpublic int ref_count = 1;\n${tab}\tpublic unowned ${$2}<${$3}> retain() {\n${tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
       });
       return fs.writeFileSync(file, src);
     } else if (/^(\s*)public\s+class\s+\w*\s*\<\w\>\s*:\s*Object\s{*/mg.test(src)) {
@@ -49,7 +49,7 @@
         var n1, tab;
         tab = $1.replace(/\n/mg, "").replace("\t", "");
         n1 = namespace === "" ? "" : namespace + "_";
-        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2}<${$3}> {\n${tab}\tpublic int _retainCount = 1;\n${tab}\tpublic unowned ${$2}<${$3}> retain() {\n${tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
+        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2}<${$3}> {\n${tab}\tpublic int ref_count = 1;\n${tab}\tpublic unowned ${$2}<${$3}> retain() {\n${tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
       });
       return fs.writeFileSync(file, src);
     } else if (/^(\s*)public\s+class\s+\w*\s*:\s*Object\s{*/mg.test(src)) {
@@ -57,7 +57,7 @@
         var n1, tab;
         tab = $1.replace(/\n/mg, "").replace("\t", "");
         n1 = namespace === "" ? "" : namespace + "_";
-        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2} {\n${tab}\tpublic int _retainCount = 1;\n${tab}\tpublic unowned ${$2} retain() {\n${tab}\t\tGLib.AtomicInt.add (ref _retainCount, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref _retainCount)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
+        return `${tab}[Compact, CCode ( /** reference counting */\n${tab}\tref_function = \"${n1}${name}_retain\", \n${tab}\tunref_function = \"${n1}${name}_release\"\n${tab})]\n${tab}public class ${$2} {\n${tab}\tpublic int ref_count = 1;\n${tab}\tpublic unowned ${$2} retain() {\n${tab}\t\tGLib.AtomicInt.add (ref ref_count, 1);\n${tab}\t\treturn this;\n${tab}\t}\n${tab}\tpublic void release() { \n${tab}\t\tif (GLib.AtomicInt.dec_and_test (ref ref_count)) this.free ();\n${tab}\t}\n${tab}\tpublic extern void free();\n\t\t`;
       });
       return fs.writeFileSync(file, src);
     } else if (/^(\s*)public\s+class\s+\w*\s*:\s*\w+\s*{/mg.test(src)) {

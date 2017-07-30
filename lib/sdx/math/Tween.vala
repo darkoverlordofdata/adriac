@@ -17,7 +17,7 @@ namespace  Sdx.Math
 {
     public class Tweenable : Object
     {
-        public Guid* clsId; // typeinfo
+        public Class* klass; // weak referece to the Class
     }
     /**
      * Core class of the Tween Engine. A Tween is basically an interpolation
@@ -100,8 +100,7 @@ namespace  Sdx.Math
         public static void Init()
         {
             pool = new Stack<Tween>();
-            //  registeredAccessors = new HashTable<string,TweenAccessor>(str_hash, str_equal);
-            registeredAccessors = new HashTable<Guid*,TweenAccessor>(null, null);
+            registeredAccessors = new HashTable<void*,TweenAccessor>(null, null);
         }
 
         /**
@@ -145,9 +144,8 @@ namespace  Sdx.Math
          * @param defaultAccessor The accessor that will be used to tween any
          * object of klass "someClass".x`
          */
-        public static void RegisterAccessor(Guid* someClass, TweenAccessor defaultAccessor)
+        public static void RegisterAccessor(void* someClass, TweenAccessor defaultAccessor)
         {
-            //  registeredAccessors.Set(someClass.ToString(), defaultAccessor);
             registeredAccessors.Set(someClass, defaultAccessor);
         }
 
@@ -157,9 +155,8 @@ namespace  Sdx.Math
          *
          * @param someClass An object class.
          */
-        public static TweenAccessor GetRegisteredAccessor(Guid* someClass) 
+        public static TweenAccessor GetRegisteredAccessor(void* someClass) 
         {
-            //  return registeredAccessors.Get(someClass.ToString());
             return registeredAccessors.Get(someClass);
         }
 
@@ -346,7 +343,7 @@ namespace  Sdx.Math
 		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
             this.target = target;
             var tweenable = (Tweenable)target;
-            targetClass = tweenable.clsId;
+            targetClass = tweenable.klass;
             this.type = tweenType;
             this.duration = duration;
         }
@@ -445,7 +442,7 @@ namespace  Sdx.Math
             {
                 Reset_();
                 target = null;
-                //  targetClass = { 0, 0 };
+                targetClass = null;
                 accessor = null;
                 type = -1;
                 equation = null;
@@ -461,7 +458,6 @@ namespace  Sdx.Math
             Build = () =>
             {
                 if (target == null) return this;
-                //  accessor = registeredAccessors.Get(targetClass.ToString());
                 accessor = registeredAccessors.Get(targetClass);
                 if (accessor != null) 
                     combinedAttrsCnt = accessor.GetValues(target, type, ref accessorBuffer);

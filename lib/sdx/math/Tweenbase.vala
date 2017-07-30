@@ -98,7 +98,7 @@ namespace  Sdx.Math
         // Static -- tween accessors
         // -------------------------------------------------------------------------
         //  public static HashTable<string,TweenAccessor> registeredAccessors;
-        public static HashTable<Guid*,TweenAccessor> registeredAccessors;
+        public static HashTable<void*,TweenAccessor> registeredAccessors;
 
         // -------------------------------------------------------------------------
         // Attributes (Tween)
@@ -106,7 +106,7 @@ namespace  Sdx.Math
 
         // Main
         public void* target;
-        public Guid* targetClass;
+        public Class* targetClass;
         public TweenAccessor accessor;
         public int type;
         public Interpolation equation;

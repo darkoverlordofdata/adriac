@@ -37,12 +37,12 @@ module.exports = (file, options) ->
 \t\tunref_function = "#{namespace}_#{name}_release"
 \t)]
 \tclass #{klass}
-\t\tretainCount__: int = 1
+\t\tref_count: int = 1
 \t\tdef retain() : unowned #{klass}
-\t\t\tGLib.AtomicInt.add (ref retainCount__, 1)
+\t\t\tGLib.AtomicInt.add (ref ref_count, 1)
 \t\t\treturn this
 \t\tdef release() 
-\t\t\tif GLib.AtomicInt.dec_and_test (ref retainCount__) do this.free ()
+\t\t\tif GLib.AtomicInt.dec_and_test (ref ref_count) do this.free ()
 \t\tdef extern free()\n\t\t
         """)
         fs.writeFileSync(file, src)
@@ -54,12 +54,12 @@ module.exports = (file, options) ->
 	unref_function = "#{name}_release"
 )]
 class #{klass}
-	retainCount__: int = 1
+	ref_count: int = 1
 	def retain() : unowned #{klass}
-		GLib.AtomicInt.add (ref retainCount__, 1)
+		GLib.AtomicInt.add (ref ref_count, 1)
 		return this
 	def release() 
-		if GLib.AtomicInt.dec_and_test (ref retainCount__) do this.free ()
+		if GLib.AtomicInt.dec_and_test (ref ref_count) do this.free ()
 	def extern free()\n\t
         """)
         fs.writeFileSync(file, src)
