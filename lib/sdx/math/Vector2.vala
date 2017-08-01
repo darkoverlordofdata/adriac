@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace  Sdx.Math 
+using SDL.Video;
+
+ namespace  Sdx.Math 
 { 
 
+    [SimpleType]
+    public struct Point2 
+    {
+        public int x;
+        public int y;
+    }
+    
+    
     public inline float Clamp(float value, float low, float hi) 
     {
 	    return value < low ? low : value > hi ? hi : value;

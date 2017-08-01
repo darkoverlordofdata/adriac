@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,10 @@
  ******************************************************************************/
 namespace  Sdx.Math 
 {
-    /** Takes a linear value in the range of 0-1 and outputs a (usually) non-linear, interpolated value.
-     * @author Nathan Sweet */
+    /** 
+     * Takes a linear value in the range of 0-1 and outputs a (usually) non-linear, interpolated value.
+     * author Nathan Sweet 
+     */
     public class Interpolation : Object
     {
         public enum Kind 

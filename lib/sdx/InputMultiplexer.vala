@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,11 @@
  ******************************************************************************/
 namespace Sdx 
 {
-	/** An {@link InputProcessor} that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
+	/** 
+	 * An {link InputProcessor} that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
 	 * processor returns true, which indicates that the event was handled.
-	 * @author Nathan Sweet */
+	 * author Nathan Sweet 
+	 */
 	public class InputMultiplexer : Object
 	{
 		public GenericArray<InputProcessor> processors;

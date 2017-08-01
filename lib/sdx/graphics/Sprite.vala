@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+using Sdx.Math;
 namespace Sdx.Graphics 
 {
 
@@ -52,16 +53,22 @@ namespace Sdx.Graphics
 		public int layer = 0;
 		public string path;
 
+		//  public Sprite()
+		//  {
+		//  	var h = (void*)this;
+		//  	print("Sprite %08x\n", (uint32)h);
+		//  }
+
 		public class AnimatedSprite : Sprite 
 		{
 			/**
 			 * Animated Sprite
 			 * 
+			 * For each cell in spritesheet, draw the image from a cell
+			 * 
 			 * @param path to sprite sheet
 			 * @param width count of sprites horizontally on sheet
 			 * @param height count of sprites vertially on sheet
-			 * 
-			 * For each cell in spritesheet, draw the image from a cell
 			 */
 			public AnimatedSprite(string path, int width, int height) 
 			{
@@ -104,9 +111,8 @@ namespace Sdx.Graphics
 			/**
 			 * TextureSprite
 			 * 
-			 * @param path to single surface
-			 * 
 			 * Simple sprite, 1 image per file
+			 * @param path to single surface
 			 */
 			public TextureSprite(string path) 
 			{

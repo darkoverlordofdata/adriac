@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,27 +41,47 @@ namespace Sdx.Graphics {
          * add fields.
          */
         public int index;
-        /** The name of the original image file, up to the first underscore. Underscores denote special instructions to the texture
-        * packer. */
+        /** 
+         * The name of the original image file, up to the first underscore. Underscores denote special instructions to the texture
+         * packer. 
+         */
         public string name;
-        /** The offset from the left of the original image to the left of the packed image, after whitespace was removed for packing. */
+        /** 
+         * The offset from the left of the original image to the left of the packed image, after whitespace was removed for packing. 
+         */
         public int offsetX;
-        /** The offset from the bottom of the original image to the bottom of the packed image, after whitespace was removed for
-        * packing. */
+        /** 
+         * The offset from the bottom of the original image to the bottom of the packed image, after whitespace was removed for
+         * packing. 
+         */
         public int offsetY;
-        /** The width of the image, after whitespace was removed for packing. */
+        /** 
+         * The width of the image, after whitespace was removed for packing. 
+         */
         public int packedWidth;
-        /** The height of the image, after whitespace was removed for packing. */
+        /** 
+         * The height of the image, after whitespace was removed for packing. 
+         */
         public int packedHeight;
-        /** The width of the image, before whitespace was removed and rotation was applied for packing. */
+        /** 
+         * The width of the image, before whitespace was removed and rotation was applied for packing. 
+         */
         public int originalWidth;
-        /** The height of the image, before whitespace was removed for packing. */
+        /** 
+         * The height of the image, before whitespace was removed for packing. 
+         */
         public int originalHeight;
-        /** If true, the region has been rotated 90 degrees counter clockwise. */
+        /** 
+         * If true, the region has been rotated 90 degrees counter clockwise. 
+         */
         public bool rotate;
-        /** The ninepatch splits, or null if not a ninepatch. Has 4 elements: left, right, top, bottom. */
+        /** 
+         * The ninepatch splits, or null if not a ninepatch. Has 4 elements: left, right, top, bottom. 
+         */
         public int[] splits;
-        /** The ninepatch pads, or null if not a ninepatch or the has no padding. Has 4 elements: left, right, top, bottom. */
+        /** 
+         * The ninepatch pads, or null if not a ninepatch or the has no padding. Has 4 elements: left, right, top, bottom. 
+         */
         public int[] pads;
 
         public class FromTexture : TextureRegion {
@@ -92,17 +112,6 @@ namespace Sdx.Graphics {
 
 
         }
-
-        //  public TextureRegion(Surface.TextureSurface texture, int x=0, int y=0, int width=0, int height=0) {
-        //      width = width == 0 ? texture.width : width;
-        //      height = height == 0 ? texture.height : height;
-        //      this.texture = texture;
-        //      this.top = x;
-        //      this.left = y;
-        //      this.width = width;
-        //      this.height = height; 
-        //      SetRegionXY(x, y, width, height);
-        //  }
 
         public void SetRegion(float u, float v, float u2, float v2) {
             var texWidth = this.width;
@@ -202,7 +211,9 @@ namespace Sdx.Graphics {
             SetV(y /this.height);
         }
 
-        /** Returns the region's width. */
+        /** 
+         * Returns the region's width. 
+         */
         public int GetRegionWidth() {
             return regionWidth;
         }
@@ -215,7 +226,9 @@ namespace Sdx.Graphics {
         }
         
 
-        /** Returns the region's height. */
+        /** 
+         * Returns the region's height. 
+         */
         public int GetRegionHeight() {
             return regionHeight;
         }

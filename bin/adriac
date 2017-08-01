@@ -241,6 +241,10 @@ class Adriac {
 	static void build() {
 		valac = new StringBuilder("/usr/bin/valac ");
 		cc = new StringBuilder(@"$(cc_command) ");
+		if (cc_command == "clang" && output.index_of(".ll") != -1) {
+			cc.append("-S -emit-llvm ");	
+		}
+
 
 		vala_files = new StringBuilder();
 		c_files = new StringBuilder();

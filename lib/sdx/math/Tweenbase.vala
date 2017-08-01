@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,9 +28,9 @@ namespace  Sdx.Math
      * and for making sure that every callbacks are triggered, even if the update
      * engine gets a big delta time at once.
      *
+     * author Aurelien Ribon
      * @see Tween
      * @see Timeline
-     * @author Aurelien Ribon | http://www.aurelienribon.com/
      */
     public class Tweenbase : Object
     {
@@ -81,8 +81,8 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
 
         /**
-         * Used as parameter in {@link #repeat(int, float)} and
-         * {@link #repeatYoyo(int, float)} methods.
+         * Used as parameter in {link #repeat(int, float)} and
+         * {link #repeatYoyo(int, float)} methods.
          */
         public const int INFINITY = -1;
 
@@ -152,14 +152,14 @@ namespace  Sdx.Math
         public delegate Tweenbase TweenBuild();
         /**
          * Stops and resets the tween or timeline, and sends it to its pool, for
-         * later reuse. Note that if you use a {@link TweenManager}, this method
+         * later reuse. Note that if you use a {link TweenManager}, this method
          * is automatically called once the animation is finished.
          */
         public delegate void TweenFree();
         public delegate Tweenbase TweenStart(TweenManager? manager = null);
 
         
-        /** Virtual methods */
+        /* Virtual methods */
         public TweenReset Reset = () => {};
         public TweenBuild Build = () => {};
         public TweenFree Free = () => {};
@@ -191,7 +191,7 @@ namespace  Sdx.Math
                     /**
                      * Starts or restarts the object unmanaged. You will need to take care of
                      * its life-cycle. If you want the tween to be managed for you, use a
-                     * {@link TweenManager}.
+                     * {link TweenManager}.
                      *
                      * @return The current object, for chaining instructions.
                      */
@@ -220,7 +220,7 @@ namespace  Sdx.Math
         //          /**
         //           * Starts or restarts the object unmanaged. You will need to take care of
         //           * its life-cycle. If you want the tween to be managed for you, use a
-        //           * {@link TweenManager}.
+        //           * {link TweenManager}.
         //           *
         //           * @return The current object, for chaining instructions.
         //           */
@@ -316,7 +316,7 @@ namespace  Sdx.Math
         /**
          * Sets the callback. By default, it will be fired at the completion of the
          * tween or timeline (event COMPLETE). If you want to change this behavior
-         * and add more triggers, use the {@link setCallbackTriggers()} method.
+         * and add more triggers, use the {link setCallbackTriggers()} method.
          *
          * @see TweenCallback
          */
@@ -328,7 +328,7 @@ namespace  Sdx.Math
         
         /**
          * Changes the triggers of the callback. The available triggers, listed as
-         * members of the {@link TweenCallback} interface, are:
+         * members of the {link TweenCallback} interface, are:
          * <p/>
          *
          * <b>BEGIN</b>: right after the delay (if any)<br/>
@@ -341,13 +341,13 @@ namespace  Sdx.Math
          * <b>BACK_COMPLETE</b>: at last BACK_END event
          * <p/>
          *
-         * <pre> {@code
+         * {{{
          * forward :      BEGIN                                   COMPLETE
          * forward :      START    END      START    END      START    END
          * |--------------[XXXXXXXXXX]------[XXXXXXXXXX]------[XXXXXXXXXX]
          * backward:      bEND  bSTART      bEND  bSTART      bEND  bSTART
          * backward:      bCOMPLETE                                 bBEGIN
-         * }</pre>
+         * }}}
          *
          * @param flags one or more triggers, separated by the '|' operator.
          * @see TweenCallback
@@ -472,7 +472,7 @@ namespace  Sdx.Math
         /**
          * Returns true if the tween is finished (i.e. if the tween has reached
          * its end or has been killed). If you don't use a TweenManager, you may
-         * want to call {@link free()} to reuse the object later.
+         * want to call {link free()} to reuse the object later.
          */
         public bool IsFinished() 
         {

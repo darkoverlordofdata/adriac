@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,15 @@
  ******************************************************************************/
 namespace Sdx 
 {
-    /** <p>
+    /** 
+	 * <p>
      * Represents one of many application screens, such as a main menu, a settings menu, the game screen and so on.
      * </p>
      * <p>
-     * Note that {@link #dispose()} is not called automatically.
+     * Note that {link #dispose()} is not called automatically.
      * </p>
-     * @see Game */
+     * @see Game 
+	 */
 	public struct Screen 
 	{ 
 		public ScreenShow Show;
@@ -34,26 +36,40 @@ namespace Sdx
 	}
 
 	
-	/** Called when this screen becomes the current screen for a {@link Game}. */
+	/** 
+	 * Called when this screen becomes the current screen for a {link Game}. 
+	 */
 	public delegate void ScreenShow();
 	
-	/** Called when the screen should render itself.
-	 * @param delta The time in seconds since the last render. */
+	/** 
+	 * Called when the screen should render itself.
+	 * @param delta The time in seconds since the last render. 
+	 */
 	public delegate void ScreenRender(float delta);
 
-	/** @see ApplicationListener#resize(int, int) */
+	/** 
+	 * @see ApplicationListener#resize()
+	 */
 	public delegate void ScreenResize(int width, int height);
 
-	/** @see ApplicationListener#pause() */
+	/** 
+	 * @see ApplicationListener#pause() 
+	 */
 	public delegate void ScreenPause();
 
-	/** @see ApplicationListener#resume() */
+	/** 
+	 * @see ApplicationListener#resume() 
+	 */
 	public delegate void ScreenResume();
 
-	/** Called when this screen is no longer the current screen for a {@link Game}. */
+	/** 
+	 * Called when this screen is no longer the current screen for a {link Game}. 
+	 */
 	public delegate void ScreenHide();
 
-	/** Called when this screen should release all resources. */
+	/** 
+	 * Called when this screen should release all resources. 
+	 */
 	public delegate void ScreenDispose();
 	
 

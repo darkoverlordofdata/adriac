@@ -35,6 +35,10 @@ snakeCase = (str) ->  str.replace(/([A-Z])/g, ($0) -> "_"+$0.toLowerCase())
 inject = (file, options) ->
     src = fs.readFileSync(file, 'utf8')
     dst = ['/** updated by adriac */']
+
+    # if /typedef SDL_Point/.test(src)
+    #     dst.push '#include <SDL2/SDL_video.h>'
+
     flag = false
     # flag = true
     for line in src.split('\n')
@@ -77,6 +81,14 @@ inject = (file, options) ->
                 if !(///void\s+#{$2}_release\s+(#{type}*\s+self);///.test(src))
                     flag = true
                     dst.push "void #{$2}_release (#{type}* self);"
+
+        # #
+        # #   check for headers 
+        # #
+        # line.replace /using SDL.Video;/, ($0) ->
+        #     flag = true
+        #         dst.push "#{type}* #{$2}_retain (#{type}* self);"
+            
 
         # line.replace /\void\s+([_a-z0-9]+)_release\s+\((\w+)* self\)/, ($0, $1, $2) ->
         #     type = symtbl[$1]

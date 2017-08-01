@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  *# MIT License
  *
  * Copyright (c) 2015-2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
@@ -33,32 +33,33 @@ namespace Entitas
 	{
 		/**
 		 * A unique sequential index number assigned to each match
-		 * @type number */
+		 * type number 
+		 */
 		public static int uniqueId;
 		/**
 		 * Get the matcher id
-		 * @type number
-		 * @name entitas.Matcher#id */
+		 * type number
+		 */
 		public int id;
 		/**
 		 * A unique sequential index number assigned to each entity at creation
-		 * @type number
-		 * @name entitas.Matcher#allOfIndices */
+		 * type number
+		 */
 		public int[] allOfIndices;
 
 		public uint64 allOfMask;
 
 		/**
 		 * A unique sequential index number assigned to each entity at creation
-		 * @type number
-		 * @name entitas.Matcher#anyOfIndices */
+		 * type number
+		 */
 		public int[] anyOfIndices;
 
 		public uint64 anyOfMask;
 		/**
 		 * A unique sequential index number assigned to each entity at creation
-		 * @type number
-		 * @name entitas.Matcher#noneOfIndices */
+		 * type number
+		 */
 		public int[] noneOfIndices;
 
 		public uint64 noneOfMask;
@@ -95,20 +96,9 @@ namespace Entitas
 		}
 
 		/**
-		 * A list of the component ordinals that this matches
-		 * @type Array<number>
-		 * @name entitas.Matcher#indices */
-		public int[] GetIndices() 
-		{
-			if (indices == null)
-				indices = MergeIndices();
-			return indices;
-		}
-
-		/**
 		 * Check if the entity matches this matcher
-		 * @param entitas.IEntity entity	
-		 * @returns boolean
+		 * @param entity to match 
+		 * @return boolean true if matches else false
 		 */
 		public bool Matches(Entity* entity) 
 		{
@@ -121,7 +111,7 @@ namespace Entitas
 
 		/**
 		 * Merge list of component indices
-		 * @returns Array<number>
+		 * @return Array<number>
 		 */
 		public int[] MergeIndices() 
 		{
@@ -141,7 +131,7 @@ namespace Entitas
 
 		/**
 		 * toString representation of this matcher
-		 * @returns string
+		 * @return string
 		 */
 		public string ToString() 
 		{
@@ -195,8 +185,8 @@ namespace Entitas
 		}
 		/**
 		 * Get the set if distinct (non-duplicate) indices from a list
-		 * @param Array<number> indices
-		 * @returns Array<number>
+		 * @param indices array of indices to scrub
+		 * @return array of distint indices
 		 */
 		public static int[] DistinctIndices(int[] indices) 
 		{
@@ -215,38 +205,38 @@ namespace Entitas
 
 		/**
 		 * Matches noneOf the components/indices specified
-		 * @params Array<entitas.IMatcher>|Array<number> args
-		 * @returns entitas.Matcher
+		 * @param components list of components to match
+		 * @return new component matcher
 		 */
-		public static Matcher NoneOf(int[] args) 
+		public static Matcher NoneOf(int[] components) 
 		{
 			var matcher = new Matcher();
-			matcher.noneOfIndices = Matcher.DistinctIndices(args);
+			matcher.noneOfIndices = Matcher.DistinctIndices(components);
 			matcher.noneOfMask = Matcher.BuildMask(matcher.noneOfIndices);
 			return matcher;
 		}
 		/**
 		 * Matches allOf the components/indices specified
-		 * @params Array<entitas.IMatcher>|Array<number> args
-		 * @returns entitas.Matcher
+		 * @param components list of components to match
+		 * @return new component matcher
 		 */
-		public static Matcher AllOf(int[] args) 
+		public static Matcher AllOf(int[] components) 
 		{ 
 			var matcher = new Matcher();
-			matcher.allOfIndices = Matcher.DistinctIndices(args);
+			matcher.allOfIndices = Matcher.DistinctIndices(components);
 			matcher.allOfMask = Matcher.BuildMask(matcher.allOfIndices);
 			return matcher;
 		}
 
 		/**
 		 * Matches anyOf the components/indices specified
-		 * @params Array<entitas.IMatcher>|Array<number> args
-		 * @returns entitas.Matcher
+		 * @param components list of components to match
+		 * @return new component matcher
 		 */
-		public static Matcher AnyOf(int[] args) 
+		public static Matcher AnyOf(int[] components) 
 		{ 
 			var matcher = new Matcher();
-			matcher.anyOfIndices = Matcher.DistinctIndices(args);
+			matcher.anyOfIndices = Matcher.DistinctIndices(components);
 			matcher.anyOfMask = Matcher.BuildMask(matcher.anyOfIndices);
 			return matcher;
 		}

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ namespace Sdx.Utils
      * 
      * based on JSON.parse
      * 
-     * @see https://github.com/douglascrockford/JSON-js
+     * by [[Crockford]] [[https://github.com/douglascrockford/JSON-js]]
      */
     public errordomain JsonException 
     {

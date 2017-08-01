@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  *# MIT License
  *
  * Copyright (c) 2015-2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
@@ -29,24 +29,28 @@ namespace Entitas
         /**
          * Get a list of the entities in this group
          *
-         * @type List<Entity*>
+         * type List<Entity*>
          */
 		public List<Entity*> entities;
         /**
          * Get the Matcher for this group
-         * @type Entitas.Matcher */
+         * type Entitas.Matcher 
+		 */
  		public Matcher matcher;
        /**
          * Subscribe to IEntity Addded events
-         * @type Event.GroupChanged */
+         * type Event.GroupChanged 
+		 */
 		public Event.GroupChanged onEntityAdded;
         /**
          * Subscribe to IEntity Removed events
-         * @type Event.GroupChanged */
+         * type Event.GroupChanged 
+		 */
 		public Event.GroupChanged onEntityRemoved;
         /**
          * Subscribe to IEntity Updated events
-         * @type Event.GroupUpdated */
+         * type Event.GroupUpdated 
+		 */
 		public Event.GroupUpdated onEntityUpdated;
 		
 		
@@ -60,7 +64,7 @@ namespace Entitas
 
         /**
          * Handle adding and removing component from the entity without raising events
-         * @param entity
+         * @param entity to handle events for
          */
  		public void HandleEntitySilently(Entity* entity) 
 		{
@@ -72,9 +76,9 @@ namespace Entitas
 
         /**
          * Handle adding and removing component from the entity and raisieevents
-         * @param entity
-         * @param index
-         * @param component
+         * @param entity to handle events for
+         * @param index of component
+         * @param component address
          */
  		public void HandleEntity(Entity* entity, int index, void* component) 
 		{
@@ -86,7 +90,7 @@ namespace Entitas
 
         /**
          * Add entity without raising events
-         * @param entity
+         * @param entity to add to group
          */
 		public void AddEntitySilently(Entity* entity) 
 		{
@@ -99,9 +103,9 @@ namespace Entitas
 
         /**
          * Add entity and raise events
-         * @param entity
-         * @param index
-         * @param component
+         * @param entity to add
+         * @param index of component
+         * @param component address
          */
 		public void AddEntity(Entity* entity, int index, void* component) 
 		{
@@ -115,7 +119,7 @@ namespace Entitas
 
         /**
          * Remove entity without raising events
-         * @param entity
+         * @param entity to remove
          */
 		public void RemoveEntitySilently(Entity* entity) 
 		{
@@ -128,9 +132,9 @@ namespace Entitas
 
         /**
          * Remove entity and raise events
-         * @param entity
-         * @param index
-         * @param component
+         * @param entity to remove
+         * @param index of component
+         * @param component address
          */
 		public void RemoveEntity(Entity* entity, int index, void* component) 
 		{
@@ -145,8 +149,8 @@ namespace Entitas
         /**
          * Check if group has this entity
          *
-         * @param entity
-         * @returns boolean
+         * @param entity to look for
+         * @return boolean true if found, else false
          */
 		public bool ContainsEntity(Entity* entity)
 		{
@@ -157,7 +161,7 @@ namespace Entitas
          * Gets an entity singleton.
          * If a group has more than 1 entity, this is an error condition.
          *
-         * @returns entitas.IEntity
+         * @return entitas.IEntity
          */
 		public Entity* GetSingleEntity() 
 		{ 

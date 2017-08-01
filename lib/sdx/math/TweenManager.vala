@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,9 +24,9 @@ namespace  Sdx.Math
      * Just give it a bunch of tweens or timelines and call update() periodically,
      * you don't need to care for anything else! Relax and enjoy your animations.
      *
+     * author Aurelien Ribon
      * @see Tween
      * @see Timeline
-     * @author Aurelien Ribon | http://www.aurelienribon.com/
      */
     public class TweenManager : Object
     {
@@ -168,7 +168,7 @@ namespace  Sdx.Math
          * timeline. Note that a timeline only counts for 1 object, since it
          * manages its children itself.
          * <p/>
-         * To get the count of running tweens, see {@link #getRunningTweensCount()}.
+         * To get the count of running tweens, see {link #getRunningTweensCount()}.
          */
         public int Size() 
         {

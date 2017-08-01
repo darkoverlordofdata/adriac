@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,29 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-namespace Sdx 
+namespace Sdx {
 
-	exception IOException
+	errordomain IOException 
+	{
 		InvalidData
+	}
 
-	exception Exception 
-		IllegalArgumentException
+	errordomain Exception 
+	{
+		IllegalArgumentException,
 		RuntimeException
+	}
 
-	exception SdlException 
-		Initialization
-		ImageInitialization
-		TtfInitialization
-		TextureFilteringNotEnabled
-		OpenWindow
-		CreateRenderer
-		InvalidForPlatform
-		UnableToLoadResource
-		UnableToLoadSurface
-		UnableToLoadTexture
-		NullPointer
-		NoSuchElement
-		IllegalStateException
-		IllegalArgumentException
-		RuntimeException
+	errordomain SdlException 
+	{
+		Initialization,
+		ImageInitialization,
+		TtfInitialization,
+		TextureFilteringNotEnabled,
+		OpenWindow,
+		CreateRenderer,
+		InvalidForPlatform,
+		UnableToLoadResource,
+		UnableToLoadSurface,
+		UnableToLoadTexture,
+		NullPointer,
+		NoSuchElement,
+		IllegalStateException,
+		IllegalArgumentException,
+		RuntimeException,
 		NotReached
+	}
+}

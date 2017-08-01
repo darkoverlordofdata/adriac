@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -237,7 +237,9 @@ namespace Sdx.Graphics {
             return leftWidth;
         }
 
-        /** Set the draw-time width of the three left edge patches */
+        /** 
+         * Set the draw-time width of the three left edge patches 
+         */
         public void SetLeftWidth(float leftWidth) 
         { 
             this.leftWidth = leftWidth;
@@ -248,7 +250,9 @@ namespace Sdx.Graphics {
             return rightWidth;
         }
 
-        /** Set the draw-time width of the three right edge patches */
+        /** 
+         * Set the draw-time width of the three right edge patches 
+         */
         public void SetRightWidth(float rightWidth)
         { 
             this.rightWidth = rightWidth;
@@ -259,7 +263,9 @@ namespace Sdx.Graphics {
             return topHeight;
         }
 
-        /** Set the draw-time height of the three top edge patches */
+        /** 
+         * Set the draw-time height of the three top edge patches 
+         */
         public void SetTopHeight(float topHeight)
         { 
             this.topHeight = topHeight;
@@ -270,7 +276,9 @@ namespace Sdx.Graphics {
             return bottomHeight;
         }
 
-        /** Set the draw-time height of the three bottom edge patches */
+        /** 
+         * Set the draw-time height of the three bottom edge patches 
+         */
         public void SetBottomHeight(float bottomHeight)
         { 
             this.bottomHeight = bottomHeight;
@@ -281,9 +289,11 @@ namespace Sdx.Graphics {
             return middleWidth;
         }
 
-        /** Set the width of the middle column of the patch. At render time, this is implicitly the requested render-width of the
-        * entire nine patch, minus the left and right width. This value is only used for computing the @link #GetTotalWidth() default
-        * total width. */
+        /** 
+         * Set the width of the middle column of the patch. At render time, this is implicitly the requested render-width of the
+         * entire nine patch, minus the left and right width. This value is only used for computing the link #GetTotalWidth() default
+         * total width. 
+         */
         public void SetMiddleWidth(float middleWidth)
         { 
             this.middleWidth = middleWidth;
@@ -294,9 +304,11 @@ namespace Sdx.Graphics {
             return middleHeight;
         }
 
-        /** Set the height of the middle row of the patch. At render time, this is implicitly the requested render-height of the entire
-        * nine patch, minus the top and bottom height. This value is only used for computing the @link #GetTotalHeight() default
-        * total height. */
+        /** 
+         * Set the height of the middle row of the patch. At render time, this is implicitly the requested render-height of the entire
+         * nine patch, minus the top and bottom height. This value is only used for computing the link #GetTotalHeight() default
+         * total height. 
+         */
         public void SetMiddleHeight(float middleHeight) 
         { 
             this.middleHeight = middleHeight;
@@ -312,8 +324,10 @@ namespace Sdx.Graphics {
             return topHeight + middleHeight + bottomHeight;
         }
 
-        /** Set the padding for content inside this ninepatch. By default the padding is set to match the exterior of the ninepatch, so
-        * the content should fit exactly within the middle patch. */
+        /** 
+         * Set the padding for content inside this ninepatch. By default the padding is set to match the exterior of the ninepatch, so
+         * the content should fit exactly within the middle patch. 
+         */
         public void SetPadding(float left, float right, float top, float bottom)
         { 
             this.padLeft = left;
@@ -322,59 +336,77 @@ namespace Sdx.Graphics {
             this.padBottom = bottom;
         }
 
-        /** Returns the left padding if set, else returns @link #GetLeftWidth(). */
+        /** 
+         * Returns the left padding if set, else returns link #GetLeftWidth(). 
+         */
         public float GetPadLeft()
         {
             if (padLeft == -1) return GetLeftWidth();
             return padLeft;
         }
 
-        /** See @link #setPadding(float, float, float, float) */
+        /** 
+         * See link #setPadding(float, float, float, float) 
+         */
         public void SetPadLeft(float left)
         { 
             this.padLeft = left;
         }
 
-        /** Returns the right padding if set, else returns @link #GetRightWidth(). */
+        /** 
+         * Returns the right padding if set, else returns link #GetRightWidth(). 
+         */
         public float GetPadRight()
         {
             if (padRight == -1) return GetRightWidth();
             return padRight;
         }
 
-        /** See @link #setPadding(float, float, float, float) */
+        /** 
+         * See link #setPadding(float, float, float, float) 
+         */
         public void SetPadRight(float right)
         { 
             this.padRight = right;
         }
 
-        /** Returns the top padding if set, else returns @link #GetTopHeight(). */
+        /** 
+         * Returns the top padding if set, else returns link #GetTopHeight(). 
+         */
         public float GetPadTop()
         {
             if (padTop == -1) return GetTopHeight();
             return padTop;
         }
 
-        /** See @link #setPadding(float, float, float, float) */
+        /** 
+         * See link #setPadding(float, float, float, float) 
+         */
         public void SetPadTop(float top)
         { 
             this.padTop = top;
         }
 
-        /** Returns the bottom padding if set, else returns @link #GetBottomHeight(). */
+        /** 
+         * Returns the bottom padding if set, else returns link #GetBottomHeight(). 
+         */
         public float GetPadBottom()
         {
             if (padBottom == -1) return GetBottomHeight();
             return padBottom;
         }
 
-        /** See @link #setPadding(float, float, float, float) */
+        /** 
+         * See link #setPadding(float, float, float, float) 
+         */
         public void SetPadBottom(float bottom)
         { 
             this.padBottom = bottom;
         }
 
-        /** Multiplies the top/left/bottom/right sizes and padding by the specified amount. */
+        /** 
+         * Multiplies the top/left/bottom/right sizes and padding by the specified amount. 
+         */
         public void Scale(float scaleX, float scaleY) 
         { 
             leftWidth *= scaleX;

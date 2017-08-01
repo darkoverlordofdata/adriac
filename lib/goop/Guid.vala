@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 public errordomain GuidException
 {
 	StringTooShort,
 	InvalidHexDigit
 }
  
-/** Globally Unique Identifier */
+/** 
+ * Globally Unique Identifier 
+ * 
+ * holds 128 bit guid data
+ */
 [SimpleType, Immutable]
 public struct Guid 
 {
@@ -34,6 +37,10 @@ public struct Guid
 		return "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x".printf(data1, data2, data3, 
 			data4[0], data4[1], data4[2], data4[3], data4[4], data4[5], data4[6], data4[7]);
 	}
+
+	/**
+	 * Generate a new binary guid
+	 */
 	public static string Generate()
 	{
         var d0 = MersenneTwister.GenrandInt32();
@@ -43,7 +50,7 @@ public struct Guid
 		d1 = d1 & 0xffff0fff | 0x00004000;
 		d2 = d2 & 0x3fffffff | 0x80000000;
 
-		return Guid(){
+		return Guid() {
 			data1 = (uint32)d0,
 			data2 = (uint16)(d1 >> 16),
 			data3 = (uint16)(d1 & 0x0000ffff),
@@ -59,8 +66,10 @@ public struct Guid
 			}
 		}.ToString();
 	}
+
 	/**
-	 * Parse a Guid string "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+	 * Generate a binary guid by 
+	 * parsing a Guid string "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	 */
 	public static Guid Parse(string v4)
 	{

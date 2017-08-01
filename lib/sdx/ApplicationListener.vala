@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,9 @@
 namespace Sdx 
 {
 
-    /** <p>
-     * An <code>ApplicationListener</code> is called when the {@link Application} is created, resumed, rendering, paused or destroyed.
+    /** 
+	 * <p>
+     * An <code>ApplicationListener</code> is called when the Application is created, resumed, rendering, paused or destroyed.
      * All methods are called in a thread that has the OpenGL context current. You can thus safely create and manipulate graphics
      * resources.
      * </p>
@@ -27,7 +28,8 @@ namespace Sdx
      * accordingly.
      * </p>
      * 
-     * @author mzechner */
+     * author mzechner 
+	 */
 	public struct ApplicationListener 
 	{ 
 		public ApplicationListenerCreate Create;
@@ -37,27 +39,39 @@ namespace Sdx
 		public ApplicationListenerResume Resume;
 		public ApplicationListenerDispose Dispose;
 	}
-	/** Called when the {@link Application} is first created. */
+	/** 
+	 * Called when the Application is first created. 
+	 */
 	public delegate void ApplicationListenerCreate();
 
-	/** Called when the {@link Application} is resized. This can happen at any point during a non-paused state but will never happen
-	 * before a call to {@link #create()}.
+	/** 
+	 * Called when the Application is resized. This can happen at any point during a non-paused state but will never happen
+	 * before a call to {link #create()}.
 	 * 
 	 * @param width the new width in pixels
-	 * @param height the new height in pixels */
+	 * @param height the new height in pixels 
+	 */
 	public delegate void ApplicationListenerResize(int width, int height);
 
-	/** Called when the {@link Application} should render itself. */
+	/** 
+	 * Called when the Application should render itself. 
+	 */
 	public delegate void ApplicationListenerRender();
 
-	/** Called when the {@link Application} is paused, usually when it's not active or visible on screen. An Application is also
-	 * paused before it is destroyed. */
+	/** 
+	 * Called when the Application is paused, usually when it's not active or visible on screen. An Application is also
+	 * paused before it is destroyed. 
+	 */
 	public delegate void ApplicationListenerPause();
 
-	/** Called when the {@link Application} is resumed from a paused state, usually when it regains focus. */
+	/** 
+	 * Called when the Application is resumed from a paused state, usually when it regains focus. 
+	 */
 	public delegate void ApplicationListenerResume();
 
-	/** Called when the {@link Application} is destroyed. Preceded by a call to {@link #pause()}. */
+	/** 
+	 * Called when the Application is destroyed. Preceded by a call to {link #pause()}. 
+	 */
 	public delegate void ApplicationListenerDispose();
 
 }

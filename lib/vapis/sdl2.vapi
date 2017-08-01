@@ -83,11 +83,11 @@ namespace SDL {
 	 * SDL.init (0);
 	 * }}}
 	 *
-	 * followed by {@link SDL.init_subsystem} with the desired subsystem flag.
+	 * followed by {link SDL.init_subsystem} with the desired subsystem flag.
 	 *
 	 * @param flags subsystem initialization flags.
 	 *
-	 * @return Returns 0 on success or a negative error code on failure; call {@link SDL.get_error} for more information.
+	 * @return Returns 0 on success or a negative error code on failure; call {link SDL.get_error} for more information.
 	 */
 	[CCode (cname = "SDL_Init")]
 	public static int Init (uint32 flags = SDL.InitFlag.EVERYTHING);
@@ -95,16 +95,16 @@ namespace SDL {
 	/**
 	 * Use this function to initialize specific SDL subsystems.
 	 *
-	 * {@link SDL.init} initializes assertions and crash protection and then calls {@link SDL.init_subsystem}.
-	 * If you want to bypass those protections you can call {@link SDL.init_subsystem} directly.
+	 * {link SDL.init} initializes assertions and crash protection and then calls {link SDL.init_subsystem}.
+	 * If you want to bypass those protections you can call {link SDL.init_subsystem} directly.
 	 *
-	 * Subsystem initialization is ref-counted, you must call {@link SDL.quit_subsystem} for each {@link SDL.init_subsystem}
-	 * to correctly shutdown a subsystem manually (or call {@link SDL.quit} to force shutdown).
+	 * Subsystem initialization is ref-counted, you must call {link SDL.quit_subsystem} for each {link SDL.init_subsystem}
+	 * to correctly shutdown a subsystem manually (or call {link SDL.quit} to force shutdown).
 	 * If a subsystem is already loaded then this call will increase the ref-count and return.
 	 *
-	 * @param flags any of the flags used by {@link SDL.init}.
+	 * @param flags any of the flags used by {link SDL.init}.
 	 *
-	 * @return Returns 0 on success or a negative error code on failure; call {@link SDL.get_error} for more information.
+	 * @return Returns 0 on success or a negative error code on failure; call {link SDL.get_error} for more information.
 	 */
 	[CCode (cname = "SDL_InitSubSystem")]
 	public static int InitSubsystem (uint32 flags);
@@ -131,10 +131,10 @@ namespace SDL {
 	 *  //Video and Audio is initialized
 	 * }}}
 	 *
-	 * @param flags any of the flags used by {@link SDL.init}.
+	 * @param flags any of the flags used by {link SDL.init}.
 	 *
 	 * @return If flags is 0 it returns a mask of all initialized subsystems, otherwise it returns the initialization status of the specified subsystems.
-	 * The return value does not include {@link SDL.InitFlag.NOPARACHUTE}.
+	 * The return value does not include {link SDL.InitFlag.NOPARACHUTE}.
 	 */
 	[CCode (cname = "SDL_WasInit")]
 	public static uint32 GetInitialized (uint32 flags);
@@ -143,12 +143,12 @@ namespace SDL {
 	/**
 	 * Use this function to clean up all initialized subsystems. You should call it upon all exit conditions.
 	 *
-	 * You should call this function even if you have already shutdown each initialized subsystem with {@link SDL.quit_subsystem}.
+	 * You should call this function even if you have already shutdown each initialized subsystem with {link SDL.quit_subsystem}.
 	 * It is safe to call this function even in the case of errors in initialization.
 	 *
-	 * If you start a subsystem using a call to that subsystem's init function (for example {@link SDL.Video.init})
-	 * instead of {@link SDL.init} or {@link SDL.init_subsystem}, then you must use that subsystem's quit function ({@link SDL.Video.quit})
-	 * to shut it down before calling {@link SDL.quit}.
+	 * If you start a subsystem using a call to that subsystem's init function (for example {link SDL.Video.init})
+	 * instead of {link SDL.init} or {link SDL.init_subsystem}, then you must use that subsystem's quit function ({link SDL.Video.quit})
+	 * to shut it down before calling {link SDL.quit}.
 	 */
 	[CCode (cname = "SDL_Quit")]
 	public static void Quit ();
@@ -156,7 +156,7 @@ namespace SDL {
 	/**
 	 * Use this function to shut down specific SDL subsystems.
 	 *
-	 * @param flags any of the flags used by {@link SDL.init}.
+	 * @param flags any of the flags used by {link SDL.init}.
 	 */
 	[CCode (cname = "SDL_QuitSubSystem")]
 	public static void QuitSubsystem (uint32 flags);
@@ -593,9 +593,9 @@ namespace SDL {
 		public const string VIDEO_WIN_D3DCOMPILER;
 
 		/**
-		 * A variable that is the address of another {@link SDL.Video.Window} (as a hex string formatted with "%p"
+		 * A variable that is the address of another {link SDL.Video.Window} (as a hex string formatted with "%p"
 		 *
-		 * If this hint is set before {@link SDL.Video.Window.Window.from_native} and the Window it is set to has
+		 * If this hint is set before {link SDL.Video.Window.Window.from_native} and the Window it is set to has
 		 * WINDOW_OPENGL set (and running on WGL only, currently), then two things will occur on the newly
 		 * created Window:
 		 *
@@ -660,7 +660,7 @@ namespace SDL {
 		 * initialization, preferably before any calls to SDL_Init.
 		 *
 		 * For additional information on linking to a privacy policy, see the documentation for
-		 * {@link SDL.Hint.WINRT_PRIVACY_POLICY_URL}.
+		 * {link SDL.Hint.WINRT_PRIVACY_POLICY_URL}.
 		 */
 		[Version (since = "2.0.3")]
 		[CCode (cname = "SDL_HINT_WINRT_PRIVACY_POLICY_LABEL")]
@@ -720,9 +720,9 @@ namespace SDL {
 		/**
 		 * A hint that specifies the Android APK expansion patch file version.
 		 *
-		 * This hint must be set together with the hint {@link Hint.ANDROID_APK_EXPANSION_MAIN_FILE_VERSION}.
+		 * This hint must be set together with the hint {link Hint.ANDROID_APK_EXPANSION_MAIN_FILE_VERSION}.
 		 *
-		 * If both hints were set then {@link RWops.RWops.from_file} will look into expansion files after a given relative path was not found in the internal storage and assets.
+		 * If both hints were set then {link RWops.RWops.from_file} will look into expansion files after a given relative path was not found in the internal storage and assets.
 		 *
 		 * This hint should be set with the Android APK expansion patch file version (should be a string number like "1", "2" etc.)
 		 *
@@ -735,9 +735,9 @@ namespace SDL {
 		/**
 		 * A hint that specifies the Android APK expansion main file version.
 		 *
-		 * This hint must be set together with the hint {@link Hint.ANDROID_APK_EXPANSION_PATCH_FILE_VERSION}.
+		 * This hint must be set together with the hint {link Hint.ANDROID_APK_EXPANSION_PATCH_FILE_VERSION}.
 		 *
-		 * If both hints were set then {@link RWops.RWops.from_file} will look into expansion files after a given relative path was not found in the internal storage and assets.
+		 * If both hints were set then {link RWops.RWops.from_file} will look into expansion files after a given relative path was not found in the internal storage and assets.
 		 *
 		 * This hint should be set with the Android APK expansion patch file version (should be a string number like "1", "2" etc.)
 		 *
@@ -838,7 +838,7 @@ namespace SDL {
 		 * The variable can be set to the following values:
 		 *
 		 *  * "0"    - The window message loop is not run
-		 *  * "1"    - The window message loop is processed in {@link SDL.Event.pump}
+		 *  * "1"    - The window message loop is processed in {link SDL.Event.pump}
 		 *
 		 * By default SDL will process the windows message loop.
 		*/
@@ -847,11 +847,11 @@ namespace SDL {
 		public const string WINDOWS_ENABLE_MESSAGELOOP;
 
 		/**
-		 * A hint that specifies that SDL should not to generate an {@link SDL.WindowEvent} of type {@link SDL.WindowEventType.CLOSE} for Alt+F4 on Microsoft Windows.
+		 * A hint that specifies that SDL should not to generate an {link SDL.WindowEvent} of type {link SDL.WindowEventType.CLOSE} for Alt+F4 on Microsoft Windows.
 		 *
 		 * The variable can be set to the following values:
 		 *
-		 *  * "0"    - generate an {@link SDL.WindowEvent} of type {@link SDL.WindowEventType.CLOSE} for Alt+F4 (default)
+		 *  * "0"    - generate an {link SDL.WindowEvent} of type {link SDL.WindowEventType.CLOSE} for Alt+F4 (default)
 		 *  * "1"    - Do not generate event and only do normal key handling for Alt+F4
 		 *
 		 * By default SDL will process the windows message loop.
@@ -865,7 +865,7 @@ namespace SDL {
 		 *
 		 * This hint is for backwards compatibility only and will be removed in SDL 2.1
 		 *
-		 * The default value is "0". This hint must be set before {@link SDL.init}.
+		 * The default value is "0". This hint must be set before {link SDL.init}.
 		 *
 		 * The variable can be set to the following values:
 		 *
@@ -895,7 +895,7 @@ namespace SDL {
 		/**
 		 * A hint that specifies whether the X11 _NET_WM_PING protocol should be supported.
 		 *
-		 * The hint is checked in the {@link Video.Window} constructor
+		 * The hint is checked in the {link Video.Window} constructor
 		 *
 		 * The variable can be set to the following values:
 		 *
@@ -976,7 +976,7 @@ namespace SDL {
 		/**
 		 * A callback used to watch hints.
 		 *
-		 * @param name What was passed as name to {@link Hint.add_callback}.
+		 * @param name What was passed as name to {link Hint.add_callback}.
 		 * @param old_value The old value.
 		 * @param new_value The new value.
 		 */
@@ -1007,7 +1007,7 @@ namespace SDL {
 		 * Use this function to add a function to watch a particular hint.
 		 *
 		 * @param name The hint to watch.
-		 * @param callback The delegate of {@link Hint.HintFunc} type to call when the hint value changes.
+		 * @param callback The delegate of {link Hint.HintFunc} type to call when the hint value changes.
 		 *
 		 * @since 2.0.0
 		 */
@@ -1019,7 +1019,7 @@ namespace SDL {
 		 * Use this function to remove a function watching a particular hint.
 		 *
 		 * @param name The hint being watched.
-		 * @param callback The delegate of {@link Hint.HintFunc} type being called when the hint value changes.
+		 * @param callback The delegate of {link Hint.HintFunc} type being called when the hint value changes.
 		 */
 		[Version (since = "2.0.0")]
 		[CCode (cname = "SDL_DelHintCallback", cheader_filename = "SDL2/SDL_hints.h")]
@@ -1029,10 +1029,10 @@ namespace SDL {
 		 * Use this function to set a hint with normal priority.
 		 *
 		 * Hints will not be set if there is an existing override hint or environment
-		 * variable that takes precedence. You can use {@link set_hint_with_priority}
+		 * variable that takes precedence. You can use {link set_hint_with_priority}
 		 * to set the hint with override priority instead.
 		 *
-		 * @param name The hint to set. Use one of the string constans from the {@link Hint} class.
+		 * @param name The hint to set. Use one of the string constans from the {link Hint} class.
 		 * @param hint_value The value of the hint variable.
 		 *
 		 * @return true if the hint was set. false otherwise.
@@ -1043,7 +1043,7 @@ namespace SDL {
 		/**
 		 * Use this function to get the value of a hint.
 		 *
-		 * @param name The hint to query. Use the constans from the {@link Hint} class.
+		 * @param name The hint to query. Use the constans from the {link Hint} class.
 		 *
 		 * @return Returns the string value of a hint or null if the hint isn't set.
 		 */
@@ -1060,7 +1060,7 @@ namespace SDL {
 		/**
 		 * Use this function to clear all hints.
 		 *
-		 * This function is automatically called during {@link SDL.quit}.
+		 * This function is automatically called during {link SDL.quit}.
 		 */
 		[CCode (cname = "SDL_ClearHints", cheader_filename = "SDL2/SDL_hints.h")]
 		public static void ClearAll ();
@@ -1068,9 +1068,9 @@ namespace SDL {
 		/**
 		 * Use this function to set a hint with a specific priority.
 		 *
-		 * @param name The hint to set. Use the constans from the {@link Hint} class.
+		 * @param name The hint to set. Use the constans from the {link Hint} class.
 		 * @param hint_value The value of the hint variable.
-		 * @param priority The {@link Hint.Priority} level for the hint.
+		 * @param priority The {link Hint.Priority} level for the hint.
 		 *
 		 * @return true if the hint was set. false otherwise.
 		 */
@@ -2344,7 +2344,7 @@ namespace SDL {
 		}// SysWMmsg
 
 		/**
-		 * Remember to always check the {@link SysWMType} before accesing any field
+		 * Remember to always check the {link SysWMType} before accesing any field
 		*/
 		[CCode (cname = "SDL_SysWMinfo", cheader_filename = "SDL2/SDL_syswm.h")]
 		public struct SysWMInfo {
@@ -2412,7 +2412,7 @@ namespace SDL {
 			public uint uikit_framebuffer;
 
 			/**
-			 * the GL view's color Renderbuffer Object; it must be bound when {@link GL.swap_window} is called (>= SDL 2.0.4)
+			 * the GL view's color Renderbuffer Object; it must be bound when {link GL.swap_window} is called (>= SDL 2.0.4)
 			 */
 			[Version (since = "2.0.4")]
 			[CCode (cname = "uikit.colorbuffer")]
@@ -2507,17 +2507,17 @@ namespace SDL {
 			 * Create a window that can be shaped with the specified position, dimensions, and flags.
 			 *
 			 * @param title The title of the window, in UTF-8 encoding.
-			 * @param x     The x position of the window, {@link POS_CENTERED}, or
-			 *               {@link POS_UNDEFINED}.
-			 * @param y     The y position of the window, {@link POS_CENTERED}, or
-			 *               {@link POS_UNDEFINED}.
+			 * @param x     The x position of the window, {link POS_CENTERED}, or
+			 *               {link POS_UNDEFINED}.
+			 * @param y     The y position of the window, {link POS_CENTERED}, or
+			 *               {link POS_UNDEFINED}.
 			 * @param w     The width of the window.
 			 * @param h     The height of the window.
-			 * @param flags The flags for the window, a mask of {@link WindowFlags.BORDERLESS} with any of the following:<<BR>>
-			 *     {@link WindowFlags.OPENGL},  {@link WindowFlags.INPUT_GRABBED},<<BR>>
-			 *     {@link WindowFlags.HIDDEN},  {@link WindowFlags.RESIZABLE} <<BR>>
-			 *     {@link WindowFlags.MAXIMIZED},  {@link WindowFlags.MINIMIZED} <<BR>><<BR>>
-			 * {@link WindowFlags.BORDERLESS} is always set, and {@link WindowFlags.FULLSCREEN} is always unset.
+			 * @param flags The flags for the window, a mask of {link WindowFlags.BORDERLESS} with any of the following:<<BR>>
+			 *     {link WindowFlags.OPENGL},  {link WindowFlags.INPUT_GRABBED},<<BR>>
+			 *     {link WindowFlags.HIDDEN},  {link WindowFlags.RESIZABLE} <<BR>>
+			 *     {link WindowFlags.MAXIMIZED},  {link WindowFlags.MINIMIZED} <<BR>><<BR>>
+			 * {link WindowFlags.BORDERLESS} is always set, and {link WindowFlags.FULLSCREEN} is always unset.
 			 *
 			 * @return The window created, or null if window creation failed.
 			 *
@@ -2698,8 +2698,8 @@ namespace SDL {
 			/**
 			 * Set the shape and parameters of a shaped window.
 			 *
-			 * @param shape A {@link Surface} encoding the desired shape for the window.
-			 * @param mode The {@link ShapeMode} with the parameters to set for the shaped window.
+			 * @param shape A {link Surface} encoding the desired shape for the window.
+			 * @param mode The {link ShapeMode} with the parameters to set for the shaped window.
 			 * 
 			 * @throws ShapeError if there's any error
 			 * @see ShapeMode
@@ -2731,7 +2731,7 @@ namespace SDL {
 			/**
 			 * Get the shape parameters of a shaped window.
 			 *
-			 * @return The current {@link ShapeMode}
+			 * @return The current {link ShapeMode}
 			 *
 			 * @throws ShapeError if there's any error
 			 * @see ShapeMode
@@ -2950,7 +2950,7 @@ namespace SDL {
 			public struct ButtonData {
 
 				/**
-				 * A field composed of {@link MessageBox.ButtonFlags}
+				 * A field composed of {link MessageBox.ButtonFlags}
 				 */
 				public uint32 flags;
 				/** 
@@ -2976,7 +2976,7 @@ namespace SDL {
 			public struct Data {
 				
 				/**
-				 * A field composed of {@link MessageBox.Flags}
+				 * A field composed of {link MessageBox.Flags}
 				 */
 				public uint32 flags;
 				

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  *# MIT License
  *
  * Copyright (c) 2015-2017 Bruce Davidson &lt;darkoverlordofdata@gmail.com&gt;
@@ -28,47 +28,56 @@ namespace Entitas
 	{
 		/**
 		 * A unique sequential index number assigned to each entity
-		 * @type int */
+		 * type int 
+		 */
 		public int id = 0;
 
 		/**
 		 * Pool of prebuilt entities
-		 * @type Entity[] */
+		 * type Entity[] 
+		 */
 		public Entity[] pool;
 
 		/**
 		 * Systems to run
-		 * @type ISystem[] */
+		 * type ISystem[] 
+		 */
 		public ISystem[] systems;
 
 		/**
 		 * Cache of unused Entity* in poool
-		 * @type Queue<Entity*>[] */
+		 * type Queue<Entity*>[] 
+		 */
 		public Stack<Entity*>[] cache;
 
 		/**
 		 * List of active groups
-		 * @type List<Group> */
+		 * type List<Group> 
+		 */
 		public List<Group> groups;
 
         /**
          * Subscribe to Entity Created Event
-         * @type Event.WorldChanged */
+         * type Event.WorldChanged 
+		 */
 		public Event.WorldChanged onEntityCreated;
 
         /**
          * Subscribe to Entity Will Be Destroyed Event
-         * @type Event.WorldChanged */
+         * type Event.WorldChanged 
+		 */
 		public Event.WorldChanged onEntityWillBeDestroyed;
 
         /**
          * Subscribe to Entity Destroyed Event
-         * @type Event.WorldChanged */
+         * type Event.WorldChanged 
+		 */
 		public Event.WorldChanged onEntityDestroyed;
 
         /**
          * Subscribe to Group Created Event
-         * @type Event.GroupsChanged */
+         * type Event.GroupsChanged 
+		 */
 		public Event.GroupsChanged onGroupCreated;
 
 		public World() 
@@ -99,7 +108,7 @@ namespace Entitas
         /**
          * add System
          * @param entitas.ISystem|Function
-         * @returns entitas.ISystem
+         * @return entitas.ISystem
          */
 		public World AddSystem(System system) 
 		{
@@ -168,7 +177,7 @@ namespace Entitas
         /**
          * Create a new entity
          * @param string name
-         * @returns entitas.Entity
+         * @return entitas.Entity
          */
 		public Entity* CreateEntity(string name, int pool, bool active) 
 		{
@@ -185,7 +194,7 @@ namespace Entitas
          * Gets all of the entities that match
          *
          * @param entias.IMatcher matcher
-         * @returns entitas.Group
+         * @return entitas.Group
          */
  		public Group GetGroup(Matcher matcher) 
 		{

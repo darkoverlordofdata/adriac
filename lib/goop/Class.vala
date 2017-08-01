@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,19 @@
 /**
  * Class metadata
  */
+#if (!NOGOBJECT)
+public class Object {}
+#endif
+
 public errordomain Exception
 {
 	ClassNotRegistered,
 	ClassAlreadyRegistered
+}
+
+public class Klass : Object
+{
+	public Class* klass; // weak referece to the Class
 }
 
 public class Class : Object
@@ -38,7 +47,7 @@ public class Class : Object
 		if (klass == null)
 		{
 			string uuid = guid==null ? Guid.Generate() : guid;
-			klass = new Class(name, uuid);
+			klass = new Class(name, uuid); 
 			classes.Set(name, klass);
 			registry.Set(klass.clsId, klass);
 		}

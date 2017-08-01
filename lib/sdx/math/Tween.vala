@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,6 @@
  ******************************************************************************/
 namespace  Sdx.Math 
 {
-    public class Tweenable : Object
-    {
-        public Class* klass; // weak referece to the Class
-    }
     /**
      * Core class of the Tween Engine. A Tween is basically an interpolation
      * between two values of an object attribute. However, the main interest of a
@@ -55,17 +51,17 @@ namespace  Sdx.Math
      * restart from this registered position).
      * <p/>
      *
-     * <pre> {@code
+     * {{{
      * Tween.to(myObject, POSITION_XY, 0.5f)
      *      .target(200, 300)
      *      .ease(Quad.INOUT)
      *      .delay(1.0f)
      *      .repeat(2, 0.2f)
      *      .start(myManager);
-     * }</pre>
+     * }}}
      *
      * Tween life-cycles can be automatically managed for you, thanks to the
-     * {@link TweenManager} class. If you choose to manage your tween when you start
+     * {link TweenManager} class. If you choose to manage your tween when you start
      * it, then you don't need to care about it anymore. <b>Tweens are
      * <i>fire-and-forget</i>: don't think about them anymore once you started
      * them (if they are managed of course).</b>
@@ -73,23 +69,23 @@ namespace  Sdx.Math
      *
      * You need to periodicaly update the tween engine, in order to compute the new
      * values. If your tweens are managed, only update the manager; else you need
-     * to call {@link #update()} on your tweens periodically.
+     * to call {link #update()} on your tweens periodically.
      * <p/>
      *
      * <h2>Example - setting up the engine</h2>
      *
      * The engine cannot directly change your objects attributes, since it doesn't
      * know them. Therefore, you need to tell him how to get and set the different
-     * attributes of your objects: <b>you need to implement the {@link
+     * attributes of your objects: <b>you need to implement the {link
      * TweenAccessor} interface for each object class you will animate</b>. Once
      * done, don't forget to register these implementations, using the static method
-     * {@link registerAccessor()}, when you start your application.
+     * {link registerAccessor()}, when you start your application.
      *
+     * author Aurelien Ribon
      * @see TweenAccessor
      * @see TweenManager
      * @see TweenEquation
      * @see Timeline
-     * @author Aurelien Ribon | http://www.aurelienribon.com/
      */
     public class Tween : Tweenbase
     {
@@ -104,8 +100,8 @@ namespace  Sdx.Math
         }
 
         /**
-         * Used as parameter in {@link #repeat(int, float)} and
-         * {@link #repeatYoyo(int, float)} methods.
+         * Used as parameter in {link #repeat(int, float)} and
+         * {link #repeatYoyo(int, float)} methods.
          */
         public const int INFINITY = -1;
         
@@ -180,12 +176,12 @@ namespace  Sdx.Math
          * automatically, and cleaned once finished. Common call:
          * <br/><br/>
          *
-         * <pre> {@code
+         * {{{
          * Tween.to(myObject, POSITION, 1.0f)
          *      .target(50, 70)
          *      .ease(Quad.INOUT)
          *      .start(myManager);
-         * }</pre>
+         * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
          * the tween.
@@ -218,12 +214,12 @@ namespace  Sdx.Math
          * automatically, and cleaned once finished. Common call:
          * <br/><br/>
          *
-         * <pre> {@code
+         * {{{
          * Tween.from(myObject, POSITION, 1.0f)
          *      .target(0, 0)
          *      .ease(Quad.INOUT)
          *      .start(myManager);
-         * }</pre>
+         * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
          * the tween.
@@ -257,12 +253,12 @@ namespace  Sdx.Math
          * automatically, and cleaned once finished. Common call:
          * <br/><br/>
          *
-         * <pre> {@code
+         * {{{
          * Tween.set(myObject, POSITION)
          *      .target(50, 70)
          *      .delay(1.0f)
          *      .start(myManager);
-         * }</pre>
+         * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
          * the tween.
@@ -289,12 +285,12 @@ namespace  Sdx.Math
          * automatically, and cleaned once finished. Common call:
          * <br/><br/>
          *
-         * <pre> {@code
+         * {{{
          * Tween.call(myCallback)
          *      .delay(1.0f)
          *      .repeat(10, 1000)
          *      .start(myManager);
-         * }</pre>
+         * }}}
          *
          * @param callback The callback that will be triggered on each iteration
          * start.
@@ -312,7 +308,7 @@ namespace  Sdx.Math
 
         /**
          * Convenience method to create an empty tween. Such object is only useful
-         * when placed inside animation sequences (see {@link Timeline}), in which
+         * when placed inside animation sequences (see {link Timeline}), in which
          * it may act as a beacon, so you can set a callback on it in order to
          * trigger some action at the right moment.
          *
@@ -342,7 +338,7 @@ namespace  Sdx.Math
         {
 		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
             this.target = target;
-            var tweenable = (Tweenable)target;
+            var tweenable = (Klass)target;
             targetClass = tweenable.klass;
             this.type = tweenType;
             this.duration = duration;
@@ -356,8 +352,8 @@ namespace  Sdx.Math
         /**
          * Sets the easing equation of the tween. Existing equations are located in
          * <i>aurelienribon.tweenengine.equations</i> package, but you can of course
-         * implement your owns, see {@link TweenEquation}. You can also use the
-         * {@link TweenEquations} static instances to quickly access all the
+         * implement your owns, see {link TweenEquation}. You can also use the
+         * {link TweenEquations} static instances to quickly access all the
          * equations. Default equation is Quad.INOUT.
          * <p/>
          *

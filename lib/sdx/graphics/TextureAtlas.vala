@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -119,39 +119,18 @@ namespace Sdx.Graphics {
 
     }
 
-    /** Describes the region of a packed image and provides information about the original image before it was packed. */
+    /** 
+     * Describes the region of a packed image and provides information about the original image before it was packed. 
+     */
     public class AtlasRegion : TextureRegion.FromTexture {
         
-        //  public TextureRegion rg;
-        /** The number at the end of the original image file name, or -1 if none.<br>
-        * <br>
-        * When sprites are packed, if the original file name ends with a number, it is stored as the index and is not considered as
-        * part of the sprite's name. This is useful for keeping animation frames in order.
-        * @see TextureAtlas#findRegions(String) */
-        //  public int index;
-        //  /** The name of the original image file, up to the first underscore. Underscores denote special instructions to the texture
-        //  * packer. */
-        //  public string name;
-        //  /** The offset from the left of the original image to the left of the packed image, after whitespace was removed for packing. */
-        //  public int offsetX;
-        //  /** The offset from the bottom of the original image to the bottom of the packed image, after whitespace was removed for
-        //  * packing. */
-        //  public int offsetY;
-        //  /** The width of the image, after whitespace was removed for packing. */
-        //  public int packedWidth;
-        //  /** The height of the image, after whitespace was removed for packing. */
-        //  public int packedHeight;
-        //  /** The width of the image, before whitespace was removed and rotation was applied for packing. */
-        //  public int originalWidth;
-        //  /** The height of the image, before whitespace was removed for packing. */
-        //  public int originalHeight;
-        //  /** If true, the region has been rotated 90 degrees counter clockwise. */
-        //  public bool rotate;
-        //  /** The ninepatch splits, or null if not a ninepatch. Has 4 elements: left, right, top, bottom. */
-        //  public int[] splits;
-        //  /** The ninepatch pads, or null if not a ninepatch or the has no padding. Has 4 elements: left, right, top, bottom. */
-        //  public int[] pads;
-
+        /** 
+         * The number at the end of the original image file name, or -1 if none.<br>
+         * <br>
+         * When sprites are packed, if the original file name ends with a number, it is stored as the index and is not considered as
+         * part of the sprite's name. This is useful for keeping animation frames in order.
+         * @see TextureAtlas#findRegions(String) 
+         */
         public AtlasRegion(Surface.TextureSurface texture, int x, int y, int width, int height) {
             base(texture, x, y, width, height);
         }
@@ -222,10 +201,14 @@ namespace Sdx.Graphics {
     }
 
     public class TextureAtlasData : Object {
-        /** tuple used to return the parsed values */
+        /** 
+         * tuple used to return the parsed values 
+         */
         public static TextureAtlasData instance;
         public static string[] tuple;
-	    /** Returns the number of tuple values read (1, 2 or 4). */
+	    /** 
+         * Returns the number of tuple values read (1, 2 or 4). 
+         */
         public static int ReadTuple(DataInputStream reader) {
             var line = reader.ReadLine();
             var ts = line.Split(":");
@@ -237,7 +220,9 @@ namespace Sdx.Graphics {
             return tuple.length;
         }
 
-        /** Returns the single value */
+        /** 
+         * Returns the single value 
+         */
         public static string ReadValue(DataInputStream reader) {
             var line = reader.ReadLine();
             var ts = line.Split(":");
@@ -251,7 +236,7 @@ namespace Sdx.Graphics {
         /**
          * @param packFile the atlas file
          * @param imagesDir for the bitmap(s)
-         * @param flip
+         * @param flip vert|horz|none
          */
         public TextureAtlasData(FileHandle packFile, FileHandle imagesDir, bool flip) {
             pages = new List<Page>();

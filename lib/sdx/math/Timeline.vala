@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2017 darkoverlordofdata.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,7 @@ namespace  Sdx.Math
      * iteration:
      * <br/><br/>
      *
-     * <pre> {@code
+     * {{{
      * Timeline.createSequence()
      *     .push(Tween.set(myObject, OPACITY).target(0))
      *     .push(Tween.set(myObject, SCALE).target(0, 0))
@@ -47,12 +47,12 @@ namespace  Sdx.Math
      *     .push(Tween.to(myObject, ROTATION, 0.5f).target(360).ease(Quad.INOUT))
      *     .repeat(5, 0.5f)
      *     .start(myManager);
-     * }</pre>
+     * }}}
      *
+     * author Aurelien Ribon 
      * @see Tween
      * @see TweenManager
      * @see TweenCallback
-     * @author Aurelien Ribon | http://www.aurelienribon.com/
      */
     public class Timeline : Tweenbase
     {
@@ -137,7 +137,7 @@ namespace  Sdx.Math
 
         /**
          * Starts a nested timeline with a 'sequence' behavior. Don't forget to
-         * call {@link end()} to close this nested timeline.
+         * call {link end()} to close this nested timeline.
          *
          * @return The current timeline, for chaining instructions.
          */
@@ -153,7 +153,7 @@ namespace  Sdx.Math
 
         /**
          * Starts a nested timeline with a 'parallel' behavior. Don't forget to
-         * call {@link end()} to close this nested timeline.
+         * call {link end()} to close this nested timeline.
          *
          * @return The current timeline, for chaining instructions.
          */
