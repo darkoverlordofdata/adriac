@@ -19,12 +19,11 @@ namespace  Sdx.Math
      * A TweenManager updates all your tweens and timelines at once.
      * Its main interest is that it handles the tween/timeline life-cycles for you,
      * as well as the pooling constraints (if object pooling is enabled).
-     * <p/>
      *
      * Just give it a bunch of tweens or timelines and call update() periodically,
      * you don't need to care for anything else! Relax and enjoy your animations.
      *
-     * author Aurelien Ribon
+     * based on code by  Aurelien Ribon
      * @see Tween
      * @see Timeline
      */
@@ -177,9 +176,9 @@ namespace  Sdx.Math
 
         /**
          * Gets the number of running tweens. This number includes the tweens
-         * located inside timelines (and nested timelines).
-         * <p/>
-         * <b>Provided for debug purpose only.</b>
+         * located inside timelines (and nested timelin
+         * 
+         * ''Provided for debug purpose only.''
          */
         public int GetRunningTweensCount() 
         {

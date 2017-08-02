@@ -24,30 +24,35 @@
  */
 namespace Entitas.Event
 {
-    public delegate void OnGroupChanged(Group g, Entity* e, int index,  void* component);
-    
     public class GroupChanged : Object 
     {
         public class Listener : Object 
         {
-            public OnGroupChanged event;
-            public Listener(OnGroupChanged event)
+            public Handler event;
+            public Listener(Handler event)
             {
                 this.event = event;
             }
         }
         public GenericArray<Listener> listeners;
+        public delegate void Handler(Group g, Entity* e, int index,  void* component);
+        public Handler Dispatch = (g, e, index, component) => {};
+    
         public GroupChanged() 
         {
             listeners = new GenericArray<Listener>();
+            Dispatch = (g, e, index, component) => 
+            {
+                listeners.ForEach(listener => listener.event(g, e, index, component));
+            };
         }
 
-        public void Add(OnGroupChanged event) 
+        public void Add(Handler event) 
         {
             listeners.Add(new Listener(event));
         }
 
-        public void Remove(OnGroupChanged event)
+        public void Remove(Handler event)
         {
             for (var i=0; i<listeners.length; i++) 
             {
@@ -63,9 +68,5 @@ namespace Entitas.Event
             listeners.RemoveRange(0, listeners.length);
         }
 
-        public void Dispatch(Group g, Entity* e, int index, void* component)
-        {
-            listeners.ForEach(listener => listener.event(g, e, index, component));
-        }
     }
 }

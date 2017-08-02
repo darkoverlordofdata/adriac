@@ -17,18 +17,14 @@ namespace Sdx
 {
 
     /** 
-	 * <p>
-     * An <code>ApplicationListener</code> is called when the Application is created, resumed, rendering, paused or destroyed.
+     * An ``ApplicationListener`` is called when the Application is created, resumed, rendering, paused or destroyed.
      * All methods are called in a thread that has the OpenGL context current. You can thus safely create and manipulate graphics
      * resources.
-     * </p>
      * 
-     * <p>
-     * The <code>ApplicationListener</code> interface follows the standard Android activity life-cycle and is emulated on the desktop
+     * The ``ApplicationListener`` interface follows the standard Android activity life-cycle and is emulated on the desktop
      * accordingly.
-     * </p>
      * 
-     * author mzechner 
+     * based on code by  mzechner 
 	 */
 	public struct ApplicationListener 
 	{ 

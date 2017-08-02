@@ -28,7 +28,7 @@ namespace  Sdx.Math
      * and for making sure that every callbacks are triggered, even if the update
      * engine gets a big delta time at once.
      *
-     * author Aurelien Ribon
+     * based on code by  Aurelien Ribon
      * @see Tween
      * @see Timeline
      */
@@ -329,17 +329,15 @@ namespace  Sdx.Math
         /**
          * Changes the triggers of the callback. The available triggers, listed as
          * members of the {link TweenCallback} interface, are:
-         * <p/>
          *
-         * <b>BEGIN</b>: right after the delay (if any)<br/>
-         * <b>START</b>: at each iteration beginning<br/>
-         * <b>END</b>: at each iteration ending, before the repeat delay<br/>
-         * <b>COMPLETE</b>: at last END event<br/>
-         * <b>BACK_BEGIN</b>: at the beginning of the first backward iteration<br/>
-         * <b>BACK_START</b>: at each backward iteration beginning, after the repeat delay<br/>
-         * <b>BACK_END</b>: at each backward iteration ending<br/>
-         * <b>BACK_COMPLETE</b>: at last BACK_END event
-         * <p/>
+         *  * ''BEGIN'': right after the delay (if any)
+         *  * ''START'': at each iteration beginning
+         *  * ''END'': at each iteration ending, before the repeat delay
+         *  * ''COMPLETE'': at last END event
+         *  * ''BACK_BEGIN'': at the beginning of the first backward iteration
+         *  * ''BACK_START'': at each backward iteration beginning, after the repeat delay
+         *  * ''BACK_END'': at each backward iteration ending
+         *  * ''BACK_COMPLETE'': at last BACK_END event
          *
          * {{{
          * forward :      BEGIN                                   COMPLETE
@@ -411,9 +409,9 @@ namespace  Sdx.Math
         /**
          * Returns the complete duration, including initial delay and repetitions.
          * The formula is as follows:
-         * <pre>
+         * {{{
          * fullDuration = delay + duration + (repeatDelay + duration) * repeatCnt
-         * </pre>
+         * }}}
          */
         public float GetFullDuration() 
         {
@@ -430,13 +428,13 @@ namespace  Sdx.Math
         }
 
         /**
-         * Gets the id of the current step. Values are as follows:<br/>
-         * <ul>
-         * <li>even numbers mean that an iteration is playing,<br/>
-         * <li>odd numbers mean that we are between two iterations,<br/>
-         * <li>-2 means that the initial delay has not ended,<br/>
-         * <li>-1 means that we are before the first iteration,<br/>
-         * <li>repeatCount*2 + 1 means that we are after the last iteration
+         * Gets the id of the current step. Values are as follows:
+         * 
+         *  * even numbers mean that an iteration is playing,
+         *  * odd numbers mean that we are between two iterations,
+         *  * -2 means that the initial delay has not ended,
+         *  * -1 means that we are before the first iteration,
+         *  * repeatCount*2 + 1 means that we are after the last iteration
          */
         public int GetStep() 
         {
@@ -560,8 +558,8 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
 
         /**
-         * Updates the tween or timeline state. <b>You may want to use a
-         * TweenManager to update objects for you.</b>
+         * Updates the tween or timeline state. 
+         * ''You may want to use a TweenManager to update objects for you.''
          *
          * Slow motion, fast motion and backward play can be easily achieved by
          * tweaking this delta time. Multiply it by -1 to play the animation

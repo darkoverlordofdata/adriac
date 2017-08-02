@@ -125,8 +125,8 @@ namespace Sdx.Graphics {
     public class AtlasRegion : TextureRegion.FromTexture {
         
         /** 
-         * The number at the end of the original image file name, or -1 if none.<br>
-         * <br>
+         * The number at the end of the original image file name, or -1 if none.
+         * 
          * When sprites are packed, if the original file name ends with a number, it is stored as the index and is not considered as
          * part of the sprite's name. This is useful for keeping animation frames in order.
          * @see TextureAtlas#findRegions(String) 

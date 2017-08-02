@@ -46,9 +46,9 @@ namespace Entitas
 		/* ============================ */
 
 		public Entity(int id, 
-			Event.OnEntityChanged? ComponentAddedOrRemoved = null, 
-			Event.OnEntityReleased? ComponentEntityReleased = null, 
-			Event.OnComponentReplaced? ComponentComponentReplaced = null)
+			Event.EntityChanged.Handler? ComponentAddedOrRemoved = null, 
+			Event.EntityReleased.Handler? ComponentEntityReleased = null, 
+			Event.ComponentReplaced.Handler? ComponentComponentReplaced = null)
 		{
 
 			this.id = id;

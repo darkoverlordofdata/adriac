@@ -16,12 +16,9 @@
 namespace Sdx 
 {
     /** 
-	 * <p>
      * Represents one of many application screens, such as a main menu, a settings menu, the game screen and so on.
-     * </p>
-     * <p>
+	 * 
      * Note that {link #dispose()} is not called automatically.
-     * </p>
      * @see Game 
 	 */
 	public struct Screen 

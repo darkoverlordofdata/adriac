@@ -24,30 +24,37 @@
  */
 namespace Entitas.Event
 {
-    public delegate void OnComponentReplaced(Entity* e, int index, void* component, void* replacement);
     
     public class ComponentReplaced : Object 
     {
         public class Listener : Object 
         {
-            public OnComponentReplaced event;
-            public Listener(OnComponentReplaced event)
+            public Handler event;
+            public Listener(Handler event)
             {
                 this.event = event;
             }
         }
+
+        public delegate void Handler(Entity* e, int index, void* component, void* replacement);
+        public Handler Dispatch = (e, index, component, replacement) => {};
         public GenericArray<Listener> listeners;
+
         public ComponentReplaced() 
         {
             listeners = new GenericArray<Listener>();
+            Dispatch = (e, index, component, replacement) => 
+            {
+                listeners.ForEach(listener => listener.event(e, index, component, replacement));
+            };
         }
 
-        public void Add(OnComponentReplaced event) 
+        public void Add(Handler event) 
         {
             listeners.Add(new Listener(event));
         }
 
-        public void Remove(OnComponentReplaced event)
+        public void Remove(Handler event)
         {
             for (var i=0; i<listeners.length; i++) 
             {
@@ -61,11 +68,6 @@ namespace Entitas.Event
         public void Clear()
         {
             listeners.RemoveRange(0, listeners.length);
-        }
-
-        public void Dispatch(Entity* e, int index,  void* component, void* replacement)
-        {
-            listeners.ForEach(listener => listener.event(e, index, component, replacement));
         }
     }
 }

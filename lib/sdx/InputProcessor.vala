@@ -21,7 +21,7 @@ namespace Sdx
 	 * call to {link ApplicationListener#render()}. Each method returns a boolean in case you want to use this with the
 	 * {link InputMultiplexer} to chain input processors.
 	 * 
-	 * author mzechner 
+	 * based on code by  mzechner 
 	 */
 	public class InputProcessor : Object
 	{

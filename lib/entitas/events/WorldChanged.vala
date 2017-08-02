@@ -24,30 +24,35 @@
  */
 namespace Entitas.Event
 {
-    public delegate void OnWorldChanged(World w, Entity* e);
-    
     public class WorldChanged : Object 
     {
         public class Listener : Object 
         {
-            public OnWorldChanged event;
-            public Listener(OnWorldChanged event)
+            public Handler event;
+            public Listener(Handler event)
             {
                 this.event = event;
             }
         }
         public GenericArray<Listener> listeners;
+        public delegate void Handler(World w, Entity* e);
+        public Handler Dispatch = (w, e) => {};
+    
         public WorldChanged() 
         {
             listeners = new GenericArray<Listener>();
+            Dispatch = (w, e) => 
+            {
+                listeners.ForEach(listener => listener.event(w, e));
+            };
         }
 
-        public void Add(OnWorldChanged event) 
+        public void Add(Handler event) 
         {
             listeners.Add(new Listener(event));
         }
 
-        public void Remove(OnWorldChanged event)
+        public void Remove(Handler event)
         {
             for (var i=0; i<listeners.length; i++) 
             {
@@ -61,11 +66,6 @@ namespace Entitas.Event
         public void Clear()
         {
             listeners.RemoveRange(0, listeners.length);
-        }
-
-        public void Dispatch(World w, Entity* e)
-        {
-            listeners.ForEach(listener => listener.event(w, e));
         }
     }
 }

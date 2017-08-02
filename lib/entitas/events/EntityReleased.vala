@@ -24,30 +24,36 @@
  */
 namespace Entitas.Event
 {
-    public delegate void OnEntityReleased(Entity* e);
     
     public class EntityReleased : Object 
     {
         public class Listener : Object 
         {
-            public OnEntityReleased event;
-            public Listener(OnEntityReleased event)
+            public Handler event;
+            public Listener(Handler event)
             {
                 this.event = event;
             }
         }
+        public delegate void Handler(Entity* e);
+        public Handler Dispatch = (e) => {};
         public GenericArray<Listener> listeners;
+
         public EntityReleased() 
         {
             listeners = new GenericArray<Listener>();
+            Dispatch = (e) => 
+            {
+                listeners.ForEach(listener => listener.event(e));
+            };
         }
 
-        public void Add(OnEntityReleased event) 
+        public void Add(Handler event) 
         {
             listeners.Add(new Listener(event));
         }
 
-        public void Remove(OnEntityReleased event)
+        public void Remove(Handler event)
         {
             for (var i=0; i<listeners.length; i++) 
             {
@@ -61,11 +67,6 @@ namespace Entitas.Event
         public void Clear()
         {
             listeners.RemoveRange(0, listeners.length);
-        }
-
-        public void Dispatch(Entity* e)
-        {
-            listeners.ForEach(listener => listener.event(e));
         }
     }
 }

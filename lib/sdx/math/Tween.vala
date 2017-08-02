@@ -21,7 +21,6 @@ namespace  Sdx.Math
      * Tween is that you can apply an easing formula on this interpolation, in
      * order to smooth the transitions or to achieve cool effects like springs or
      * bounces.
-     * <p/>
      *
      * The Universal Tween Engine is called "universal" because it is able to apply
      * interpolations on every attribute from every possible object. Therefore,
@@ -29,59 +28,52 @@ namespace  Sdx.Math
      * not matter if your application is a game, a desktop interface or even a
      * console program! If it makes sense to animate something, then it can be
      * animated through this engine.
-     * <p/>
      *
      * This class contains many static factory methods to create and instantiate
      * new interpolations easily. The common way to create a Tween is by using one
      * of these factories:
-     * <p/>
      *
-     * - Tween.to(...)<br/>
-     * - Tween.from(...)<br/>
-     * - Tween.set(...)<br/>
-     * - Tween.call(...)
-     * <p/>
+     *  * Tween.To(...)
+     *  * Tween.From(...)
+     *  * Tween.Set(...)
+     *  * Tween.Call(...)
      *
-     * <h2>Example - firing a Tween</h2>
+     * == Example - firing a Tween ==
      *
      * The following example will move the target horizontal position from its
      * current value to x=200 and y=300, during 500ms, but only after a delay of
      * 1000ms. The animation will also be repeated 2 times (the starting position
      * is registered at the end of the delay, so the animation will automatically
      * restart from this registered position).
-     * <p/>
      *
      * {{{
-     * Tween.to(myObject, POSITION_XY, 0.5f)
-     *      .target(200, 300)
-     *      .ease(Quad.INOUT)
-     *      .delay(1.0f)
-     *      .repeat(2, 0.2f)
-     *      .start(myManager);
+     * Tween.To(myObject, POSITION_XY, 0.5f)
+     *      .Target({ 200, 300 })
+     *      .Ease(Interpolation.QuadIn)
+     *      .Delay(1.0f)
+     *      .Repeat(2, 0.2f)
+     *      .Start(myManager);
      * }}}
      *
      * Tween life-cycles can be automatically managed for you, thanks to the
      * {link TweenManager} class. If you choose to manage your tween when you start
-     * it, then you don't need to care about it anymore. <b>Tweens are
-     * <i>fire-and-forget</i>: don't think about them anymore once you started
-     * them (if they are managed of course).</b>
-     * <p/>
+     * it, then you don't need to care about it anymore. 
+     * ''Tweens are //fire-and-forget//: don't think about them anymore once you started them (if they are managed of course).''
      *
      * You need to periodicaly update the tween engine, in order to compute the new
      * values. If your tweens are managed, only update the manager; else you need
      * to call {link #update()} on your tweens periodically.
-     * <p/>
      *
-     * <h2>Example - setting up the engine</h2>
+     * == Example - setting up the engine ==
      *
      * The engine cannot directly change your objects attributes, since it doesn't
      * know them. Therefore, you need to tell him how to get and set the different
-     * attributes of your objects: <b>you need to implement the {link
-     * TweenAccessor} interface for each object class you will animate</b>. Once
-     * done, don't forget to register these implementations, using the static method
+     * attributes of your objects: 
+     * ''you need to implement the {link TweenAccessor} interface for each object class you will animate''. 
+     * Once done, don't forget to register these implementations, using the static method
      * {link registerAccessor()}, when you start your application.
      *
-     * author Aurelien Ribon
+     * based on code by  Aurelien Ribon
      * @see TweenAccessor
      * @see TweenManager
      * @see TweenEquation
@@ -164,23 +156,20 @@ namespace  Sdx.Math
          * Factory creating a new standard interpolation. This is the most common
          * type of interpolation. The starting values are retrieved automatically
          * after the delay (if any).
-         * <br/><br/>
          *
-         * <b>You need to set the target values of the interpolation by using one
-         * of the target() methods</b>. The interpolation will run from the
+         * ''You need to set the target values of the interpolation by using one of the target() methods''. 
+         * The interpolation will run from the
          * starting values to these target values.
-         * <br/><br/>
          *
          * The common use of Tweens is "fire-and-forget": you do not need to care
          * for tweens once you added them to a TweenManager, they will be updated
          * automatically, and cleaned once finished. Common call:
-         * <br/><br/>
          *
          * {{{
-         * Tween.to(myObject, POSITION, 1.0f)
-         *      .target(50, 70)
-         *      .ease(Quad.INOUT)
-         *      .start(myManager);
+         * Tween.To(myObject, POSITION, 1.0f)
+         *      .Target({ 50, 70 })
+         *      .Ease(Interpolation.QuadInOut)
+         *      .Start(myManager);
          * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
@@ -202,23 +191,19 @@ namespace  Sdx.Math
         /**
          * Factory creating a new reversed interpolation. The ending values are
          * retrieved automatically after the delay (if any).
-         * <br/><br/>
          *
-         * <b>You need to set the starting values of the interpolation by using one
-         * of the target() methods</b>. The interpolation will run from the
+         * ''You need to set the starting values of the interpolation by using one of the target() methods''. The interpolation will run from the
          * starting values to these target values.
-         * <br/><br/>
          *
          * The common use of Tweens is "fire-and-forget": you do not need to care
          * for tweens once you added them to a TweenManager, they will be updated
          * automatically, and cleaned once finished. Common call:
-         * <br/><br/>
          *
          * {{{
-         * Tween.from(myObject, POSITION, 1.0f)
-         *      .target(0, 0)
-         *      .ease(Quad.INOUT)
-         *      .start(myManager);
+         * Tween.From(myObject, POSITION, 1.0f)
+         *      .Target({ 0, 0 })
+         *      .Ease(Interpolation.QuadInOut)
+         *      .Start(myManager);
          * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
@@ -241,23 +226,19 @@ namespace  Sdx.Math
         /**
          * Factory creating a new instantaneous interpolation (thus this is not
          * really an interpolation).
-         * <br/><br/>
          *
-         * <b>You need to set the target values of the interpolation by using one
-         * of the target() methods</b>. The interpolation will set the target
+         * ''You need to set the target values of the interpolation by using one of the target() methods''. The interpolation will set the target
          * attribute to these values after the delay (if any).
-         * <br/><br/>
          *
          * The common use of Tweens is "fire-and-forget": you do not need to care
          * for tweens once you added them to a TweenManager, they will be updated
          * automatically, and cleaned once finished. Common call:
-         * <br/><br/>
          *
          * {{{
-         * Tween.set(myObject, POSITION)
-         *      .target(50, 70)
-         *      .delay(1.0f)
-         *      .start(myManager);
+         * Tween.Set(myObject, POSITION)
+         *      .Target({ 50, 70 })
+         *      .Delay(1.0f)
+         *      .Start(myManager);
          * }}}
          *
          * Several options such as delay, repetitions and callbacks can be added to
@@ -278,18 +259,16 @@ namespace  Sdx.Math
         /**
          * Factory creating a new timer. The given callback will be triggered on
          * each iteration start, after the delay.
-         * <br/><br/>
          *
          * The common use of Tweens is "fire-and-forget": you do not need to care
          * for tweens once you added them to a TweenManager, they will be updated
          * automatically, and cleaned once finished. Common call:
-         * <br/><br/>
          *
          * {{{
-         * Tween.call(myCallback)
-         *      .delay(1.0f)
-         *      .repeat(10, 1000)
-         *      .start(myManager);
+         * Tween.Call(myCallback)
+         *      .Delay(1.0f)
+         *      .Tepeat(10, 1000)
+         *      .Start(myManager);
          * }}}
          *
          * @param callback The callback that will be triggered on each iteration
@@ -351,24 +330,24 @@ namespace  Sdx.Math
 
         /**
          * Sets the easing equation of the tween. Existing equations are located in
-         * <i>aurelienribon.tweenengine.equations</i> package, but you can of course
+         * //aurelienribon.tweenengine.equations// package, but you can of course
          * implement your owns, see {link TweenEquation}. You can also use the
          * {link TweenEquations} static instances to quickly access all the
-         * equations. Default equation is Quad.INOUT.
-         * <p/>
+         * equations. Default equation is Interpolation.QuadInOut.
          *
-         * <b>Proposed equations are:</b><br/>
-         * - Linear.INOUT,<br/>
-         * - Quad.IN | OUT | INOUT,<br/>
-         * - Cubic.IN | OUT | INOUT,<br/>
-         * - Quart.IN | OUT | INOUT,<br/>
-         * - Quint.IN | OUT | INOUT,<br/>
-         * - Circ.IN | OUT | INOUT,<br/>
-         * - Sine.IN | OUT | INOUT,<br/>
-         * - Expo.IN | OUT | INOUT,<br/>
-         * - Back.IN | OUT | INOUT,<br/>
-         * - Bounce.IN | OUT | INOUT,<br/>
-         * - Elastic.IN | OUT | INOUT
+         * ''Proposed equations are:''
+         * 
+         *  * Linear.INOUT,
+         *  * Quad.IN | OUT | INOUT,
+         *  * Cubic.IN | OUT | INOUT,
+         *  * Quart.IN | OUT | INOUT,
+         *  * Quint.IN | OUT | INOUT,
+         *  * Circ.IN | OUT | INOUT,
+         *  * Sine.IN | OUT | INOUT,
+         *  * Expo.IN | OUT | INOUT,
+         *  * Back.IN | OUT | INOUT,
+         *  * Bounce.IN | OUT | INOUT,
+         *  * Elastic.IN | OUT | INOUT
          *
          * @return The current tween, for chaining instructions.
          * @see TweenEquation
@@ -382,13 +361,13 @@ namespace  Sdx.Math
 
         /**
          * Sets the target values of the interpolation. The interpolation will run
-         * from the <b>values at start time (after the delay, if any)</b> to these
+         * from the ''values at start time (after the delay, if any)'' to these
          * target values.
-         * <p/>
          *
-         * To sum-up:<br/>
-         * - start values: values at start time, after delay<br/>
-         * - end values: params
+         * To sum-up:
+         * 
+         *  * start values: values at start time, after delay
+         *  * end values: params
          *
          * @param targetValues The target values of the interpolation.
          * @return The current tween, for chaining instructions.
@@ -405,13 +384,13 @@ namespace  Sdx.Math
         }
 
         /**
-         * Sets the target values of the interpolation, relatively to the <b>values
-         * at start time (after the delay, if any)</b>.
-         * <p/>
+         * Sets the target values of the interpolation, relatively to the 
+         * ''values at start time (after the delay, if any)''.
          *
-         * To sum-up:<br/>
-         * - start values: values at start time, after delay<br/>
-         * - end values: params + values at start time, after delay
+         * To sum-up:
+         * 
+         *  * start values: values at start time, after delay
+         *  * end values: params + values at start time, after delay
          *
          * @param targetValues The relative target values of the interpolation.
          * @return The current tween, for chaining instructions.

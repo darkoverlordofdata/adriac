@@ -18,38 +18,34 @@ namespace  Sdx.Math
     /**
      * A Timeline can be used to create complex animations made of sequences and
      * parallel sets of Tweens.
-     * <p/>
      *
      * The following example will create an animation sequence composed of 5 parts:
-     * <p/>
      *
-     * 1. First, opacity and scale are set to 0 (with Tween.set() calls).<br/>
-     * 2. Then, opacity and scale are animated in parallel.<br/>
-     * 3. Then, the animation is paused for 1s.<br/>
-     * 4. Then, position is animated to x=100.<br/>
-     * 5. Then, rotation is animated to 360°.
-     * <p/>
+     *  1. First, opacity and scale are set to 0 (with Tween.set() calls).
+     *  1. Then, opacity and scale are animated in parallel.
+     *  1. Then, the animation is paused for 1s.
+     *  1. Then, position is animated to x=100.
+     *  1. Then, rotation is animated to 360°.
      *
      * This animation will be repeated 5 times, with a 500ms delay between each
      * iteration:
-     * <br/><br/>
      *
      * {{{
-     * Timeline.createSequence()
-     *     .push(Tween.set(myObject, OPACITY).target(0))
-     *     .push(Tween.set(myObject, SCALE).target(0, 0))
-     *     .beginParallel()
-     *          .push(Tween.to(myObject, OPACITY, 0.5f).target(1).ease(Quad.INOUT))
-     *          .push(Tween.to(myObject, SCALE, 0.5f).target(1, 1).ease(Quad.INOUT))
-     *     .end()
-     *     .pushPause(1.0f)
-     *     .push(Tween.to(myObject, POSITION_X, 0.5f).target(100).ease(Quad.INOUT))
-     *     .push(Tween.to(myObject, ROTATION, 0.5f).target(360).ease(Quad.INOUT))
-     *     .repeat(5, 0.5f)
-     *     .start(myManager);
+     * Timeline.CreateSequence()
+     *     .Push(Tween.Set(myObject, OPACITY).Target({ 0 }))
+     *     .Push(Tween.Set(myObject, SCALE).Target({ 0, 0 }))
+     *     .BeginParallel()
+     *          .Push(Tween.To(myObject, OPACITY, 0.5f).Target({ 1 }).Ease(Interpolation.QuadInOut))
+     *          .Push(Tween.To(myObject, SCALE, 0.5f).Target({ 1, 1 }).Ease(Interpolation.QuadInOut))
+     *     .End()
+     *     .PushPause(1.0f)
+     *     .Push(Tween.To(myObject, POSITION_X, 0.5f).Target({ 100 }).Ease(Interpolation.QuadInOut))
+     *     .Push(Tween.To(myObject, ROTATION, 0.5f).Target({ 360 }).Ease(Interpolation.QuadInOut))
+     *     .Repeat(5, 0.5f)
+     *     .Start(myManager);
      * }}}
      *
-     * author Aurelien Ribon 
+     * based on code by  Aurelien Ribon 
      * @see Tween
      * @see TweenManager
      * @see TweenCallback
