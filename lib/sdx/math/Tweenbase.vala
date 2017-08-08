@@ -48,29 +48,29 @@ namespace  Sdx.Math
             ANY = 0xFF
         }
 
-        public TweenKind kind;
+        protected TweenKind kind;
 	    // General
-        public int step;
-        public int repeatCnt;
-        public bool isIterationStep;
-        public bool isYoyo;
+        private int step;
+        private int repeatCnt;
+        private bool isIterationStep;
+        private bool isYoyo;
 
         // Timings
-        public float delay;
-        public float duration;
-        public float repeatDelay;
-        public float currentTime;
-        public float deltaTime;
-        public bool isStarted;  // true when the object is started
-        public bool isInitialized; // true after the delay
-        public bool isFinished; // true when all repetitions are done
-        public bool isKilled;   // true when kill was called
-        public bool isPaused;   // true when pause was called
+        protected float delay;
+        protected float duration;
+        private float repeatDelay;
+        private float currentTime;
+        private float deltaTime;
+        private bool isStarted;  // true when the object is started
+        private bool isInitialized; // true after the delay
+        private bool isFinished; // true when all repetitions are done
+        private bool isKilled;   // true when kill was called
+        private bool isPaused;   // true when pause was called
 
 	    // Misc
-        public TweenCallbackOnEvent callback;
-        public int callbackTriggers;
-        public void* userData;
+        private TweenCallbackOnEvent callback;
+        private int callbackTriggers;
+        private void* userData;
 
 	    // Package access
         public bool isAutoRemoveEnabled;
@@ -84,10 +84,8 @@ namespace  Sdx.Math
          * Used as parameter in {link #repeat(int, float)} and
          * {link #repeatYoyo(int, float)} methods.
          */
-        public const int INFINITY = -1;
-
-        public static int combinedAttrsLimit = 3;
-        public static int waypointsLimit = 0;
+        protected static int combinedAttrsLimit = 3;
+        protected static int waypointsLimit = 0;
 
         // -------------------------------------------------------------------------
         // Static -- pool
@@ -105,24 +103,24 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
 
         // Main
-        public void* target;
-        public Class* targetClass;
-        public TweenAccessor accessor;
-        public int type;
-        public Interpolation equation;
+        protected void* target;
+        protected Class* targetClass;
+        protected TweenAccessor accessor;
+        protected int type;
+        protected Interpolation equation;
 
     	// General
-        public bool isFrom;
-        public bool isRelative;
-        public int combinedAttrsCnt;
-        public int waypointsCnt;
+        protected bool isFrom;
+        protected bool isRelative;
+        protected int combinedAttrsCnt;
+        protected int waypointsCnt;
     
         // Values
-        public float[] startValues = new float[combinedAttrsLimit];
-        public float[] targetValues = new float[combinedAttrsLimit];
+        protected float[] startValues = new float[combinedAttrsLimit];
+        protected float[] targetValues = new float[combinedAttrsLimit];
 
     	// Buffers
-	    public float[] accessorBuffer = new float[combinedAttrsLimit];
+	    protected float[] accessorBuffer = new float[combinedAttrsLimit];
 
         
         // -------------------------------------------------------------------------
@@ -130,11 +128,11 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         //  public enum Modes {SEQUENCE, PARALLEL}
 
-        public GenericArray<Tweenbase> children;
-        public Tweenbase current;
-        public Tweenbase parent;
-        public TimelineModes mode;
-        public bool isBuilt;
+        protected GenericArray<Tweenbase> children;
+        protected Tweenbase current;
+        protected Tweenbase parent;
+        protected TimelineModes mode;
+        protected bool isBuilt;
 
         public delegate Tweenbase TweenReset();
 
@@ -160,7 +158,7 @@ namespace  Sdx.Math
 
         
         /* Virtual methods */
-        public TweenReset Reset = () => {};
+        protected TweenReset Reset = () => {};
         public TweenBuild Build = () => {};
         public TweenFree Free = () => {};
         public TweenStart Start = (manager) => {};
@@ -501,8 +499,8 @@ namespace  Sdx.Math
         public delegate void TweenForceEndValues();
         public delegate bool TweenContainsTarget(void* target, int tweenType=-1);
        
-        public TweenForceStartValues ForceStartValues = () => {};
-        public TweenForceEndValues ForceEndValues = () => {};
+        protected TweenForceStartValues ForceStartValues = () => {};
+        protected TweenForceEndValues ForceEndValues = () => {};
         public TweenContainsTarget ContainsTarget = (target, tweenType) => {};
 
         // -------------------------------------------------------------------------
@@ -511,10 +509,10 @@ namespace  Sdx.Math
         public delegate void TweenInitializeOverride();
         public delegate void TweenUpdateOverride(int step, int lastStep, bool isIterationStep, float delta);
 
-        public TweenInitializeOverride InitializeOverride = () => {}; 
-        public TweenUpdateOverride UpdateOverride = (step, lastStep, isIterationStep, delta) => {}; 
+        protected TweenInitializeOverride InitializeOverride = () => {}; 
+        protected TweenUpdateOverride UpdateOverride = (step, lastStep, isIterationStep, delta) => {}; 
 
-        public void ForceToStart() 
+        protected void ForceToStart() 
         {
             currentTime = -delay;
             step = -1;
@@ -523,7 +521,7 @@ namespace  Sdx.Math
             else ForceStartValues();
         }
 
-        public void ForceToEnd(float time) 
+        protected void ForceToEnd(float time) 
         {
             currentTime = time - GetFullDuration();
             step = repeatCnt*2 + 1;
@@ -532,19 +530,19 @@ namespace  Sdx.Math
             else ForceEndValues();
         }
         
-        public void CallCallback(int type) 
+        protected void CallCallback(int type) 
         {
             //  print("CallCallback %d\n", type);
             if (callback != null && (callbackTriggers & type) > 0) callback(type, this);
         }
         
 
-        public bool IsReverse(int step) 
+        protected bool IsReverse(int step) 
         {
             return isYoyo && GLib.Math.fabs(step%4) == 2;
         }
 
-        public bool IsValid(int step) 
+        protected bool IsValid(int step) 
         {
             return (step >= 0 && step <= repeatCnt*2) || repeatCnt < 0;
         }
@@ -591,7 +589,7 @@ namespace  Sdx.Math
 
         }
 
-        public void Initialize() 
+        private void Initialize() 
         {
             if (currentTime+deltaTime >= delay) 
             {
@@ -606,7 +604,7 @@ namespace  Sdx.Math
             }
         }
         
-        public void TestRelaunch() 
+        private void TestRelaunch() 
         {
             if (!isIterationStep && repeatCnt >= 0 && step < 0 && currentTime+deltaTime >= 0) 
             {
@@ -635,7 +633,7 @@ namespace  Sdx.Math
             }
         }
 
-        public void UpdateStep() 
+        private void UpdateStep() 
         {
             while (IsValid(step)) 
             {
@@ -718,7 +716,7 @@ namespace  Sdx.Math
             }
         }
             
-        public void TestCompletion() 
+        private void TestCompletion() 
         {
             isFinished = repeatCnt >= 0 && (step > repeatCnt*2 || step < 0);
         }

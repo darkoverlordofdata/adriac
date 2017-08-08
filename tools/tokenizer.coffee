@@ -1,3 +1,6 @@
+##
+## Simple parsing
+##
 module.exports = class StringTokenizer
 
     currentPosition: 0

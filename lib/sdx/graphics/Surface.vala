@@ -24,8 +24,8 @@ namespace Sdx.Graphics
 	public class Surface : Object 
 	{
 		public static int uniqueId = 0;
-		public SDL.Video.Surface? surface;
-		public int id = ++uniqueId;
+		internal SDL.Video.Surface? surface;
+		private int id = ++uniqueId;
 		public string path;
 
         public int width 

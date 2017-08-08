@@ -247,7 +247,7 @@ g_list_free (GList *list)
 	current = list;
 	while (current) {
 		tmp = current->next;
-		free(current);
+		g_free(current);
 		current = tmp;
 	}
 }

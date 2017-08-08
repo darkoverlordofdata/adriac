@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+/**
+ * Sdx Math
+ * 
+ * Gemometry, Vectors, Movement
+ */
 namespace  Sdx.Math 
 {
     /** 
      * Takes a linear value in the range of 0-1 and outputs a (usually) non-linear, interpolated value.
-     * based on code by  Nathan Sweet 
+     * based on code by  Nathan Sweet & Aurelien Ribon
      */
     public class Interpolation : Object
     {
+        /**
+         * Merges together formulae from libGDX and Universal Tween Engine
+         */
         public enum Kind 
         {
             Linear, Smooth, Smooth2, Smoother,
@@ -143,6 +151,7 @@ namespace  Sdx.Math
             quadInOut = new QuadInOut();
         }
 
+        
         public class Linear : Interpolation
         {
             public Linear() { Apply = (a) => { return a; }; }

@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
+/**
+ * Sdx Files
+ * 
+ * Use SDL2 for file io
+ */
 namespace Sdx.Files {
 
 	public FileHandle GetHandle(string path, FileType type) {

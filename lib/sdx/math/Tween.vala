@@ -96,9 +96,6 @@ namespace  Sdx.Math
          * {link #repeatYoyo(int, float)} methods.
          */
         public const int INFINITY = -1;
-        
-        public static int combinedAttrsLimit = 3;
-        public static int waypointsLimit = 0;
         /**
          * Changes the limit for combined attributes. Defaults to 3 to reduce
          * memory footprint.
@@ -304,7 +301,7 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         // Setup
         // -------------------------------------------------------------------------
-        public Tween()
+        private Tween()
         {
             base();
             kind = TweenKind.TWEEN;
@@ -313,7 +310,7 @@ namespace  Sdx.Math
 
         }
 
-        public void Setup(void* target, int tweenType, float duration)
+        protected void Setup(void* target, int tweenType, float duration)
         {
 		    if (duration < 0) throw new Exception.RuntimeException("Duration can't be negative");
             this.target = target;
@@ -337,17 +334,17 @@ namespace  Sdx.Math
          *
          * ''Proposed equations are:''
          * 
-         *  * Linear.INOUT,
-         *  * Quad.IN | OUT | INOUT,
-         *  * Cubic.IN | OUT | INOUT,
-         *  * Quart.IN | OUT | INOUT,
-         *  * Quint.IN | OUT | INOUT,
-         *  * Circ.IN | OUT | INOUT,
-         *  * Sine.IN | OUT | INOUT,
-         *  * Expo.IN | OUT | INOUT,
-         *  * Back.IN | OUT | INOUT,
-         *  * Bounce.IN | OUT | INOUT,
-         *  * Elastic.IN | OUT | INOUT
+         *  || Linear.INOUT ||
+         *  || Quad.IN || OUT || INOUT ||
+         *  || Cubic.IN || OUT || INOUT ||
+         *  || Quart.IN || OUT || INOUT ||
+         *  || Quint.IN || OUT || INOUT ||
+         *  || Circ.IN || OUT || INOUT ||
+         *  || Sine.IN || OUT || INOUT ||
+         *  || Expo.IN || OUT || INOUT ||
+         *  || Back.IN || OUT || INOUT ||
+         *  || Bounce.IN || OUT || INOUT ||
+         *  || Elastic.IN || OUT || INOUT ||
          *
          * @return The current tween, for chaining instructions.
          * @see TweenEquation
@@ -402,7 +399,7 @@ namespace  Sdx.Math
 
             for (var i=0; i < targetValues.length; i++) 
             {
-                this.targetValues[i] = isInitialized ? targetValues[i] + startValues[i] : targetValues[i];
+                this.targetValues[i] = IsInitialized() ? targetValues[i] + startValues[i] : targetValues[i];
             }
             return this;
         }

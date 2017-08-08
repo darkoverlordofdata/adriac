@@ -13,8 +13,15 @@
 //   * See the License for the specific language governing permissions and
 //   * limitations under the License.
 //   ******************************************************************************/
-//  namespace Sdx.Ui 
-//  {
+/**
+ * Sdx Ui
+ * 
+ * UI Components -
+ * Label, Button, etc
+ * 
+ */
+namespace Sdx.Ui 
+{
 //      /**
 //       * A Button is like a label with events
 //       */
@@ -99,4 +106,4 @@
 
 
     
-//  }
+}

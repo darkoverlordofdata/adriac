@@ -13,9 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-public errordomain GuidException
+
+/**
+ * Guid Exceptions
+ */
+ public errordomain GuidException
 {
+	/**
+	 * Thrown when a guid string containes fewer than 32 digits 
+	 */
 	StringTooShort,
+	/**
+	 * Thrown when a guid string containes an invalid digit 
+	 */
 	InvalidHexDigit
 }
  
@@ -32,6 +42,10 @@ public struct Guid
 	public uint16 data3; 
 	public uint8 data4[8];
 
+	/**
+	 * String representation of a Guid, 
+	 * formatted as "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+	 */
 	public string ToString()
 	{
 		return "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x".printf(data1, data2, data3, 

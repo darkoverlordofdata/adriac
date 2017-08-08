@@ -77,10 +77,7 @@ namespace Sdx.Graphics {
             return null;
         }
 
-        /**
-         * @param data config to load images from
-         */
-        public void Load(TextureAtlasData data) {
+        private void Load(TextureAtlasData data) {
         
             Surface.TextureSurface? texture = null;
             var pageToTexture = new Surface.TextureSurface[0];

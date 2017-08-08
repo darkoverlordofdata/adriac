@@ -19,15 +19,15 @@ namespace Sdx.Utils
     public class StringTokenizer : Object 
     {
 
-        public int currentPosition;
-        public int newPosition;
-        public int maxPosition;
-        public string str;
-        public string delimiters;
-        public bool retDelims;
-        public bool delimsChanged;
-        public int maxDelimCodePoint;
-        public int[] delimiterCodePoints;
+        private int currentPosition;
+        private int newPosition;
+        private int maxPosition;
+        private string str;
+        private string delimiters;
+        private bool retDelims;
+        private bool delimsChanged;
+        private int maxDelimCodePoint;
+        private int[] delimiterCodePoints;
 
         public StringTokenizer(string str, string delim = " \t\n\r\f", bool returnDelims = false) 
         {

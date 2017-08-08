@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+/**
+ * Sdx Graphics
+ * 
+ * 2D Sprites, Texts, and Images
+ */
 namespace Sdx.Graphics { 
 	public struct Blit {
 		SDL.Video.Rect source;

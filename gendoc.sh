@@ -9,12 +9,12 @@ valadoc --directory=docs \
     --pkg=SDL2_ttf \
     --pkg=gio-2.0 \
     --pkg=sdl2 \
+    lib/entitas/entitas.vala \
     lib/components.vala \
     lib/entity.vala \
     lib/entitas/Group.vala \
     lib/entitas/Matcher.vala \
     lib/entitas/World.vala \
-    lib/entitas/entitas.vala \
     lib/entitas/events/ComponentReplaced.vala \
     lib/entitas/events/EntityChanged.vala \
     lib/entitas/events/EntityReleased.vala \
@@ -24,6 +24,7 @@ valadoc --directory=docs \
     lib/entitas/events/WorldChanged.vala \
     lib/goop/Class.vala \
     lib/goop/Guid.vala\
+    lib/sdx/sdx.vala \
     lib/sdx/ApplicationListener.vala \
     lib/sdx/Color.vala \
     lib/sdx/Files.vala \
@@ -31,11 +32,12 @@ valadoc --directory=docs \
     lib/sdx/InputMultiplexer.vala \
     lib/sdx/InputProcessor.vala \
     lib/sdx/Screen.vala \
-    lib/sdx/audio/Sound.vala \
     lib/sdx/audio/audio.vala \
+    lib/sdx/audio/Sound.vala \
     lib/sdx/exceptions.vala \
-    lib/sdx/files/FileHandle.vala \
     lib/sdx/files/files.vala \
+    lib/sdx/files/FileHandle.vala \
+    lib/sdx/graphics/graphics.vala \
     lib/sdx/graphics/BitmapFont.vala \
     lib/sdx/graphics/Camera.vala \
     lib/sdx/graphics/NinePatch.vala \
@@ -44,7 +46,6 @@ valadoc --directory=docs \
     lib/sdx/graphics/TextureAtlas.vala \
     lib/sdx/graphics/TextureEnums.vala \
     lib/sdx/graphics/TextureRegion.vala \
-    lib/sdx/graphics/graphics.vala \
     lib/sdx/math/Interpolation.vala \
     lib/sdx/math/Timeline.vala \
     lib/sdx/math/Tween.vala \
@@ -52,12 +53,12 @@ valadoc --directory=docs \
     lib/sdx/math/TweenManager.vala \
     lib/sdx/math/Tweenbase.vala \
     lib/sdx/math/Vector2.vala \
-    lib/sdx/sdx.vala \
     lib/sdx/ui/Button.vala \
     lib/sdx/ui/Component.vala \
     lib/sdx/ui/Label.vala \
+    lib/sdx/utils/utils.vala \
     lib/sdx/utils/Cache.vala \
     lib/sdx/utils/File.vala \
     lib/sdx/utils/Json.vala \
-    lib/sdx/utils/StringTokenizer.vala \
-    lib/sdx/utils/utils.vala 
+    lib/sdx/utils/StringTokenizer.vala
+    

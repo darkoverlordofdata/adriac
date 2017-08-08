@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+/**
+ * Sdx Color
+ * 
+ * RGBA Color constants
+ */
 using SDL.Video;
 namespace Sdx.Color
 {

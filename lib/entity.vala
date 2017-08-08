@@ -5,6 +5,9 @@
  */
 namespace Entitas 
 {
+	/**
+	 * Entity - container for components
+	 */
 	public struct Entity 
 	{			   	
 											/* Core component: */  

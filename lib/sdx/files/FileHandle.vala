@@ -21,11 +21,11 @@ namespace Sdx.Files
 	 */	
 	public class FileHandle : Object 
 	{
-		public Utils.File file;
-		public string path;
-		public FileType type;
+		private Utils.File file;
+		private string path;
+		private FileType type;
 
-		public FileHandle(string path, FileType type) 
+		protected FileHandle(string path, FileType type) 
 		{
 			this.path = path;
 			this.type = type;

@@ -4,6 +4,14 @@
 ## GPL3
 ##
 ###
+
+##
+## n.b - using 'class' in comments can cause the regex at line 32 to fail.
+## use 'klass' instead.
+##
+##
+
+
 fs = require 'fs'
 path = require 'path'
 StringTokenizer = require './tokenizer'
@@ -18,6 +26,12 @@ template = (file, name, options) ->
 
     src = fs.readFileSync(file, 'utf8')
     return src if src.indexOf("[Adriac]") >= 0
+
+    ##
+    ##  Force all accessors to 'public' 
+    ##
+    src = src.replace(/^(\s*)(private|internal|protected)(\s+)/mg, ($0, $1, $2, $3) -> "#{$1}public#{$3}")
+
 
     ##
     ##  class Name <K,V> : Object {
@@ -128,15 +142,16 @@ for arg in args
     src = fs.readFileSync(arg, 'utf8')
 
     t = new StringTokenizer(src, " \t\n\r\f,=[]{}():", true)
-    a = t.toArray(" \t\n\r\f") # src.split(/\s+/)
+    a = t.toArray(" \t\n\r\f")
     i = 0
     level = 0
+    dirty = false
     while i<a.length
         switch a[i]
-            when '{' #then l++
+            when '{' 
                 level++
                 
-            when '}' #then l--
+            when '}'
                 level--
 
             when 'namespace'

@@ -22,9 +22,20 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+/**
+ * Entitas
+ * 
+ * An ECS (entity component system) 
+ * based on: [[https://github.com/sschmid/Entitas-CSharp|Entitas-CSharp]]
+ * 
+ */
 namespace Entitas 
 {
 
+	/**
+	 * ECS Exceptions
+	 */
 	public errordomain Exception 
 	{
 		EntityIsNotEnabled,
@@ -36,8 +47,24 @@ namespace Entitas
 		WorldDoesNotContainEntity
 	}
 
+	/**
+	 * Factory method - create an entity
+	 */
 	public delegate Entity* EntityFactory();
+	/**
+	 * Calls Initialize() on all IInitializeSystem and other
+	 * nested Systems instances in the order you added them.
+	 */
+	public delegate void SystemInitialize();
+	/**
+	 * Calls Execute() on all IExecuteSystem and other
+	 * nested Systems instances in the order you added them.
+	 */
+	public delegate void SystemExecute(float delta);
 
+	/**
+	 * Describe the cache buffer for a factory
+	 */
 	public struct Buffer 
 	{
 		public int pool;		   		// pool index
@@ -51,25 +78,39 @@ namespace Entitas
 		}
 	}
 
+    /**
+	 * This is the base interface for all systems
+	 */
+	public struct ISystem 
+	{ 
+		public SystemInitialize Initialize;
+		public SystemExecute Execute;
+	}
 
+
+
+    /**
+	 * Systems provide a convenient way to group systems.
+     * All systems will be initialized and executed based on the order
+     * you added them.
+	 */
 	public class System : Object 
 	{
 		public ISystem ISystem 
 		{ 
 			get { return { Initialize, Execute }; } 
 		}
+        /**
+		 * Calls Initialize() on all IInitializeSystem and other
+		 * nested Systems instances in the order you added them.
+		 */
 		public SystemInitialize Initialize = () => {};
+        /**
+         * Calls Execute() on all IExecuteSystem and other
+         * nested Systems instances in the order you added them.
+ 		 */
 		public SystemExecute Execute = (delta) => {};
 	}	
-
-	public struct ISystem 
-	{ 
-		public SystemInitialize Initialize;
-		public SystemExecute Execute;
-	}
-	public delegate void SystemInitialize();
-	public delegate void SystemExecute(float delta);
-
 
 
 	/**

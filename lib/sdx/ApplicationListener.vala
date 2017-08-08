@@ -28,11 +28,34 @@ namespace Sdx
 	 */
 	public struct ApplicationListener 
 	{ 
+		/** 
+		 * Called when the Application is first created. 
+		 */
 		public ApplicationListenerCreate Create;
+		/** 
+		 * Called when the Application is resized. This can happen at any point during a non-paused state but will never happen
+		 * before a call to {@link ApplicationListener.Create()}.
+		 * 
+		 * @param width the new width in pixels
+		 * @param height the new height in pixels 
+		 */
 		public ApplicationListenerResize Resize;
+		/** 
+		 * Called when the Application should render itself. 
+		 */
 		public ApplicationListenerRender Render;
+		/** 
+		 * Called when the Application is paused, usually when it's not active or visible on screen. An Application is also
+		 * paused before it is destroyed. 
+		 */
 		public ApplicationListenerPause Pause;
+		/** 
+		 * Called when the Application is resumed from a paused state, usually when it regains focus. 
+		 */
 		public ApplicationListenerResume Resume;
+		/** 
+		 * Called when the Application is destroyed. Preceded by a call to {link #pause()}. 
+		 */
 		public ApplicationListenerDispose Dispose;
 	}
 	/** 
@@ -42,7 +65,7 @@ namespace Sdx
 
 	/** 
 	 * Called when the Application is resized. This can happen at any point during a non-paused state but will never happen
-	 * before a call to {link #create()}.
+	 * before a call to {@link ApplicationListener.Create()}.
 	 * 
 	 * @param width the new width in pixels
 	 * @param height the new height in pixels 

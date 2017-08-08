@@ -23,13 +23,13 @@ using Sdx.Graphics;
 namespace Sdx.Graphics {
 
     public class TextureRegion : Object {
-        public Surface.TextureSurface? texture;
+        internal Surface.TextureSurface? texture;
         public int top;
         public int left;
         public int width;
         public int height;
-        public int regionWidth;
-        public int regionHeight;
+        private int regionWidth;
+        private int regionHeight;
         public float u;
         public float v;
         public float u2;

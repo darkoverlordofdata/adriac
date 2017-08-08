@@ -24,6 +24,14 @@
  */
 namespace Entitas 
 {
+    /** 
+	 * Use world.GetGroup(matcher) to get a group of entities which match
+     * the specified matcher. Calling world.GetGroup(matcher) with the
+     * same matcher will always return the same instance of the group.
+     * The created group is managed by the world and will always be up to date.
+     * It will automatically add entities that match the matcher or
+     * remove entities as soon as they don't match the matcher anymore.
+	 */
 	public class Group : Object 
 	{
         /**

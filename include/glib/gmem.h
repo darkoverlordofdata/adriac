@@ -4,7 +4,6 @@
 #define SIZE_OVERFLOWS(a,b) (G_UNLIKELY ((b) > 0 && (a) > G_MAXSIZE / (b)))
 
 #define g_free free
-
 /**
  * g_malloc:
  * @n_bytes: the number of bytes to allocate

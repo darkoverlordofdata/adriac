@@ -54,10 +54,10 @@ namespace Sdx.Utils
         public static string gap;
         public static string indent;
         
-        public int at;
-        public char ch;
-        public string text;
-        public JsDelegate Replacer;
+        private int at;
+        private char ch;
+        private string text;
+        private JsDelegate Replacer;
 
 
         public Json(JsDelegate Replacer = null) 

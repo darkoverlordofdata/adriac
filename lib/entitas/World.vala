@@ -24,6 +24,10 @@
  */
 namespace Entitas 
 {	
+    /**
+	 * A world manages the lifecycle of entities and groups.
+     * You can create and destroy entities and get groups of entities.
+]	 */
 	public class World : Object 
 	{
 		/**

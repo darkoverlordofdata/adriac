@@ -17,8 +17,14 @@ using SDL;
 using SDL.Video;
 using SDLImage;
 
+/**
+ * Sdx
+ * 
+ * An SDL2 wrapper inspired by libGDX 
+ */
 namespace Sdx 
 {
+
 
 	public class AbstractPlatform : Object 
 	{
@@ -35,6 +41,9 @@ namespace Sdx
 		}
 	}
 
+	/**
+	 * Base game klass
+	 */
 	public class AbstractGame : Object 
 	{
 		public int width;
@@ -73,33 +82,33 @@ namespace Sdx
 	const int pixelFactor = 1;
 	FileType platform = FileType.Relative;
 #endif
-	Renderer renderer;
-	Sdx.Font font;
-	Sdx.Font smallFont;
-	Sdx.Font largeFont;
-	SDL.Video.Display display;
-	SDL.Video.DisplayMode displayMode;
-	SDL.Video.Color bgdColor;
-	Sdx.Graphics.TextureAtlas atlas;
-	float fps = 60f;
-	float delta = 1.0f/60.0f;
-	bool running;
-	string resourceBase;
-	double currentTime;
-	double accumulator;
-	double freq;
-	int width;
-	int height;
-	Sdx.Ui.Window ui;
-	Event evt;
-	InputMultiplexer inputProcessor;
-	Math.TweenManager? tweenManager;
+	public Renderer renderer;
+	public Sdx.Font font;
+	public Sdx.Font smallFont;
+	public Sdx.Font largeFont;
+	public SDL.Video.Display display;
+	public SDL.Video.DisplayMode displayMode;
+	public SDL.Video.Color bgdColor;
+	public Sdx.Graphics.TextureAtlas atlas;
+	public float fps = 60f;
+	public float delta = 1.0f/60.0f;
+	public bool running;
+	public string resourceBase;
+	public double currentTime;
+	public double accumulator;
+	public double freq;
+	public int width;
+	public int height;
+	public Sdx.Ui.Window ui;
+	public Event evt;
+	public InputMultiplexer inputProcessor;
+	public Math.TweenManager? tweenManager;
 
 	/**
 	 * Initialization
 	 * 
 	 */
-	Window Initialize(int width, int height, string name) 
+	public Window Initialize(int width, int height, string name) 
 	{
 		Sdx.height = height;
 		Sdx.width = width;
@@ -146,7 +155,7 @@ namespace Sdx
 		return window;
 	}
 
-	double GetRandom() 
+	public double GetRandom() 
 	{
 		return MersenneTwister.GenrandReal2();
 	}
@@ -171,39 +180,39 @@ namespace Sdx
 		inputProcessor.Remove(processor);
 	}
 
-	void SetResourceBase(string path) 
+	public void SetResourceBase(string path) 
 	{
 		Sdx.resourceBase = path;
 	}
 
-	void SetDefaultFont(string path, int size) 
+	public void SetDefaultFont(string path, int size) 
 	{
 		font = new Sdx.Font(path, size);
 	}
 
-	void SetSmallFont(string path, int size) 
+	public void SetSmallFont(string path, int size) 
 	{
 		smallFont = new Sdx.Font(path, size);
 	}
 
-	void SetLargeFont(string path, int size) 
+	public void SetLargeFont(string path, int size) 
 	{
 		largeFont = new Sdx.Font(path, size);
 	}
 
 
-	double GetNow() 
+	public double GetNow() 
 	{
 		return (double)SDL.Timer.GetPerformanceCounter()/freq;
 	} 
 
-	void Start() 
+	public void Start() 
 	{
 		currentTime = GetNow();
 		running = true;
 	}
 
-	void GameLoop(AbstractGame game) 
+	public void GameLoop(AbstractGame game) 
 	{
 		
 		double newTime = GetNow();
@@ -224,7 +233,7 @@ namespace Sdx
 	}
 
 
-	void ProcessEvents() 
+	public void ProcessEvents() 
 	{
 		while (SDL.Event.poll(out evt) != 0) 
 		{
@@ -305,18 +314,18 @@ namespace Sdx
 		}
 	}
 	
-	void Begin() 
+	public void Begin() 
 	{
 		renderer.SetDrawColor(bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
 		renderer.Clear();
 	}
 
-	void End() 
+	public void End() 
 	{
 		renderer.Present();
 	}
 
-	void Log(string text) 
+	public void Log(string text) 
 	{
 #if (ANDROID)
 		Android.LogWrite(Android.LogPriority.ERROR, "SDX", text);

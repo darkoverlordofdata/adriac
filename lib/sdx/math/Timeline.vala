@@ -82,7 +82,7 @@ namespace  Sdx.Math
         // Setup
         // -------------------------------------------------------------------------
 
-        public Timeline()
+        private Timeline()
         {
             base();
             kind = TweenKind.TIMELINE;
@@ -90,7 +90,7 @@ namespace  Sdx.Math
             Reset();
         }
 
-        public void Setup(TimelineModes mode) 
+        protected void Setup(TimelineModes mode) 
         {
             this.mode = mode;
             this.current = this;
@@ -188,7 +188,7 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
         // Overrides
         // -------------------------------------------------------------------------
-        public void Overrides()
+        private void Overrides()
         {
             var Reset_ = Reset;
             var Start_ = Start;

@@ -1,10 +1,10 @@
-/**
- * Comoponents
- * 
- * 
- */
 namespace Entitas 
 { 
+	/**
+	 * Transform Component
+	 * 
+	 * a core component
+	 */
 	public struct Transform 
 	{
 		public Sdx.Math.Vector2? scale;
@@ -22,18 +22,33 @@ namespace Entitas
 	}
 
 
+	/**
+	 * Layer Component
+	 * 
+	 * a core component
+	 */
 	[SimpleType]
 	public struct Layer 
 	{
 		public int value; 
     }
 
+	/**
+	 * Show Component
+	 * 
+	 * a core component
+	 */
 	[SimpleType, Immutable]
 	public struct Show 
 	{
 		public bool active;
     }
 
+	/**
+	 * Tint Component
+	 * 
+	 * a core component
+	 */
 	[SimpleType]
 	public struct Tint 
 	{
@@ -43,6 +58,11 @@ namespace Entitas
         public int a;
     }
 
+	/**
+	 * Velocity Component
+	 * 
+	 * a core component
+	 */
 	[SimpleType]
 	public struct Velocity 
 	{
@@ -50,20 +70,17 @@ namespace Entitas
 		public float y; 
     }
 
-	/**
-	 *  Component bit masks
-	 */
-	const uint64 UNKNOWN		= 0x0000000000000000;
-	const uint64 LAYER 			= 0x0000000000000001;
-	const uint64 SHOW 			= 0x0000000000000002;
-	const uint64 TINT 			= 0x0000000000000004;
-	const uint64 VELOCITY 		= 0x0000000000000008;
-	const uint64 ACTIVE 		= 0x8000000000000000;
+	public const uint64 UNKNOWN			= 0x0000000000000000;
+	public const uint64 LAYER 			= 0x0000000000000001;
+	public const uint64 SHOW 			= 0x0000000000000002;
+	public const uint64 TINT 			= 0x0000000000000004;
+	public const uint64 VELOCITY 		= 0x0000000000000008;
+	public const uint64 ACTIVE 			= 0x8000000000000000;
 
 	/**
-	* Component names
+	* List of component names
 	*/
-	const string[] ComponentString = 
+	public const string[] ComponentString = 
 	{
 		"Unknown",
 		"Layer",
@@ -73,7 +90,7 @@ namespace Entitas
 	};
 
 	/**
-	* Components
+	* Component index
 	*/
 	public enum Components 
 	{

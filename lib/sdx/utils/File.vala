@@ -27,9 +27,9 @@ namespace Sdx.Utils
 	{
 
 		//  public Posix.Stat? stat;
-		public SDL.RWops file;
-		public string path;
-		public string[] files;
+		private SDL.RWops file;
+		private string path;
+		private string[] files;
 
 		public File(string path) 
 		{

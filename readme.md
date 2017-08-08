@@ -20,8 +20,12 @@ Adriac is a Wrapper for valac, it performs an out of tree build using ZeroG
 Additional pre and post processing steps:
 
 * pre processing 
+    
     Reference counting code is injected into vala classes
+
+    All access modifierd are changed to 'public'
 * post processing
+    
     Forward references to injected code is added to resulting c code
 
 ## install

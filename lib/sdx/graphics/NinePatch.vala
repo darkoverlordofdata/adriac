@@ -17,7 +17,6 @@
  * NinePatch.gs
  *
  */
-
 namespace Sdx.Graphics {
     /**
      *  load a 9patch image
@@ -25,48 +24,48 @@ namespace Sdx.Graphics {
     public class NinePatch : Object {
  
 
-        const int TOP_LEFT = 0;
-        const int TOP_CENTER = 1;
-        const int TOP_RIGHT = 2;
-        const int MIDDLE_LEFT = 3;
-        const int MIDDLE_CENTER = 4;
-        const int MIDDLE_RIGHT = 5;
-        const int BOTTOM_LEFT = 6;
-        const int BOTTOM_CENTER = 7;
-        const int BOTTOM_RIGHT = 8;
+        private const int TOP_LEFT = 0;
+        private const int TOP_CENTER = 1;
+        private const int TOP_RIGHT = 2;
+        private const int MIDDLE_LEFT = 3;
+        private const int MIDDLE_CENTER = 4;
+        private const int MIDDLE_RIGHT = 5;
+        private const int BOTTOM_LEFT = 6;
+        private const int BOTTOM_CENTER = 7;
+        private const int BOTTOM_RIGHT = 8;
 
         public Surface.TextureSurface? texture;
-        public int bottomLeft = -1;
-        public int bottomCenter = -1;
-        public int bottomRight = -1;
-        public int middleLeft = -1;
-        public int middleCenter = -1;
-        public int middleRight = -1;
-        public int topLeft = -1;
-        public int topCenter = -1;
-        public int topRight = -1;
+        private int bottomLeft = -1;
+        private int bottomCenter = -1;
+        private int bottomRight = -1;
+        private int middleLeft = -1;
+        private int middleCenter = -1;
+        private int middleRight = -1;
+        private int topLeft = -1;
+        private int topCenter = -1;
+        private int topRight = -1;
         public int top;
         public int left;
         public int right;
         public int bottom;
 
-        public float leftWidth;
-        public float rightWidth;
-        public float middleWidth;
-        public float middleHeight;
-        public float topHeight;
-        public float bottomHeight;
+        private float leftWidth;
+        private float rightWidth;
+        private float middleWidth;
+        private float middleHeight;
+        private float topHeight;
+        private float bottomHeight;
 
         public Blit slice[9];
-        public int idx;
-        public SDL.Video.Color color = Color.White;
-        public float padLeft = -1;
-        public float padRight = -1;
-        public float padTop = -1;
-        public float padBottom = -1;
+        private int idx;
+        private SDL.Video.Color color = Color.White;
+        private float padLeft = -1;
+        private float padRight = -1;
+        private float padTop = -1;
+        private float padBottom = -1;
 
-        public int sourceTop;
-        public int sourceLeft;
+        private int sourceTop;
+        private int sourceLeft;
 
         public NinePatch(TextureRegion region, int left, int right, int top, int bottom)
         {
@@ -124,7 +123,7 @@ namespace Sdx.Graphics {
             Load(patches);
         }   
 
-        public void Load(TextureRegion[] patches) 
+        private void Load(TextureRegion[] patches) 
         {
             var color = Color.White;
 
@@ -185,7 +184,7 @@ namespace Sdx.Graphics {
         }
             
         
-        public int Add(TextureRegion region, SDL.Video.Color color, bool isStretchW, bool isStretchH) {
+        private int Add(TextureRegion region, SDL.Video.Color color, bool isStretchW, bool isStretchH) {
             if (texture == null)
                 texture = region.texture;
             else if (texture != region.texture) //

@@ -147,7 +147,6 @@ namespace  Sdx.Math
          * manager. The delta time represents the elapsed time between now and the
          * last update call. Each tween or timeline manages its local time, and adds
          * this delta to its local time to update itself.
-         * <p/>
          *
          * Slow motion, fast motion and backward play can be easily achieved by
          * tweaking this delta time. Multiply it by -1 to play the animation
@@ -166,7 +165,7 @@ namespace  Sdx.Math
          * Gets the number of managed objects. An object may be a tween or a
          * timeline. Note that a timeline only counts for 1 object, since it
          * manages its children itself.
-         * <p/>
+         * 
          * To get the count of running tweens, see {link #getRunningTweensCount()}.
          */
         public int Size() 

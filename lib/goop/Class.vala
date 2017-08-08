@@ -13,24 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+#if (!NOGOBJECT && !EMSCRIPTEN)
 /**
- * Class metadata
+ * Base class to replace GLib.Object
  */
-#if (!NOGOBJECT)
 public class Object {}
 #endif
 
+/**
+ * Class Registration Exceptions
+ */
 public errordomain Exception
 {
+	/**
+	 * Thrown when referening a class that is not registered
+	 */
 	ClassNotRegistered,
+	/**
+	 * Thrown when registering a class that is already registered.
+	 */
 	ClassAlreadyRegistered
 }
 
+/**
+ * Core Class bits
+ */
 public class Klass : Object
 {
-	public Class* klass; // weak referece to the Class
+	/**
+	 * a weak referece to the Class for this object
+	 */
+	public Class* klass; 
 }
 
+/**
+ * Class metadata header
+ */
 public class Class : Object
 {
 	/**
@@ -88,6 +106,9 @@ public class Class : Object
 		clsId = &ClsId;
 	}
 
+	/**
+	 * String representation of the klass
+	 */
 	public string ToString()
 	{
 		return uuid;
