@@ -98,6 +98,17 @@ Dark Vala style guide:
 
 I prefer this for readabliity, and it ensures this code will not be mistaken for standard vala.
 
+## Demos
+
+### [<del>ShmupWarz II</del> Better Than Shmup](https://darkoverlordofdata.com/zerog-shmupwarz/)
+
+### [Match3](https://darkoverlordofdata.com/zerog-match3/)
+
+### [Platformer](https://darkoverlordofdata.com/zerog-platformer/)
+
+
+
+
 
 ## License
 Various licences apply. 
