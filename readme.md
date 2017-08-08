@@ -101,10 +101,13 @@ I prefer this for readabliity, and it ensures this code will not be mistaken for
 ## Demos
 
 ### [<del>ShmupWarz II</del> Better Than Shmup](https://darkoverlordofdata.com/zerog-shmupwarz/)
+[The old standby](https://github.com/darkoverlordofdata/zerog-shmupwarz)
 
-### [Match3](https://darkoverlordofdata.com/zerog-match3/) - wip
+### [Match3](https://darkoverlordofdata.com/zerog-match3/)
+[wip](https://github.com/darkoverlordofdata/zerog-match3)
 
-### [Platformer](https://darkoverlordofdata.com/zerog-platformer/) - wip
+### [Platformer](https://darkoverlordofdata.com/zerog-platformer/)
+[wip](https://github.com/darkoverlordofdata/zerog-platformer)
 
 
 
