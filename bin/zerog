@@ -43,6 +43,7 @@ if [ $1 == "init" ]; then
     cp -v -f $ZEROG/src/sample.bmp ./android/assets/assets/sample.bmp
 
     ln -sv $ZEROG/lib/entitas ./src/entitas
+    ln -sv $ZEROG/lib/goop ./src/goop
     ln -sv $ZEROG/lib/sdx ./src/sdx
     ln -sv $ZEROG/lib/vapis ./src/vapis
     ln -sv $ZEROG/lib/vapis-em ./src/vapis-em
