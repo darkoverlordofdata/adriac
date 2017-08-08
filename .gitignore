@@ -12,7 +12,7 @@ android/jni/SDL2_ttf
 android/jni/SDL2_mixer
 android/jni/libmikmod*
 android/jni/smpeg*
-docs
+
 
 web/shmupwarz.*
 # Compiled source #

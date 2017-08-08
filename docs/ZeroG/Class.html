@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Class &ndash; ZeroG &ndash; Vala Binding Reference</title>
+    <link href="../style.css" rel="stylesheet" type="text/css"/><script src="../scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">Class &ndash; ZeroG Reference Manual</div>
+    <div class="site_body">
+      <div class="site_navigation">
+        <ul class="navi_main">
+          <li class="package_index"><a href="../index.html">Packages</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="package"><a href="index.htm">ZeroG</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="class">Class</li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="static_method"><a href="Class.Get.html">Get</a></li>
+          <li class="static_method"><a href="Class.Register.html">Register</a></li>
+          <li class="creation_method"><a href="Class.Class.html">Class</a></li>
+          <li class="method"><a href="Class.ToString.html">ToString</a></li>
+          <li class="field"><a href="Class.ClsId.html">ClsId</a></li>
+          <li class="field"><a href="Class.classes.html">classes</a></li>
+          <li class="field"><a href="Class.clsId.html">clsId</a></li>
+          <li class="field"><a href="Class.name.html">name</a></li>
+          <li class="field"><a href="Class.registry.html">registry</a></li>
+          <li class="field"><a href="Class.uuid.html">uuid</a></li>
+        </ul>
+      </div>
+      <div class="site_content">
+        <h1 class="main_title">Class</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Object Hierarchy:</h2>
+        <img class="main_diagram" usemap="#Class" alt="Object hierarchy for Class" src="img/Class.png"/>
+
+      <map id="Class" name="Class">
+<area shape="rect" id="node1" href="Class.html" title="Class" alt="" coords="5,101,77,149"/>
+<area shape="rect" id="node2" href="Object.html" title="Object" alt="" coords="5,5,77,53"/>
+</map>
+
+        <h2 class="main_title">Description:</h2>
+        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">class</span> <b><span class="class">Class</span></b> : <span class="main_type"><a href="Object.html" class="class">Object</a></span>
+        </div>
+        <div class="description">
+          <p>Class metadata header</p>
+        </div><br/>
+        <div class="package_note"><b>Package:</b> <a href="index.htm">ZeroG</a>
+        </div>
+        <h2 class="main_title">Content:</h2>
+        <h3 class="main_title">Static methods:</h3>
+        <ul class="navi_inline">
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">Class</span></span> <b><a href="Class.Register.html" class="static_method">Register</a></b> (<span class="main_basic_type"><span class="class">string</span></span> name, <span class="main_basic_type"><span class="class">string</span></span>? guid = <span class="main_literal">null</span>)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Registers a classid and returns the unique rehash</span>
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">Class</span></span> <b><a href="Class.Get.html" class="static_method">Get</a></b> (<span class="main_basic_type"><span class="class">string</span></span> name)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+        </ul>
+        <h3 class="main_title">Creation methods:</h3>
+        <ul class="navi_inline">
+          <li class="creation_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Class.Class.html" class="creation_method">Class</a></b> (<span class="main_basic_type"><span class="class">string</span></span> name, <span class="main_basic_type"><span class="class">string</span></span> uuid)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Parse a binary guid from string Creates a unique re-hash that fits in 
+                one word.</span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Methods:</h3>
+        <ul class="navi_inline">
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Class.ToString.html" class="method">ToString</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">String representation of the klass</span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Fields:</h3>
+        <ul class="navi_inline">
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">HashTable</span></span>&lt;<span class="main_type"><a href="Guid.html" class="struct">Guid</a></span>*,<span class="main_type"><span class="class">Class</span></span>&gt; <b><a href="Class.registry.html" class="field">registry</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Provides typeinfo for registered classes.</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">HashTable</span></span>&lt;<span class="main_basic_type"><span class="class">string</span></span>,<span class="main_type"><span class="class">Class</span></span>&gt; <b><a href="Class.classes.html" class="field">classes</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Guid.html" class="struct">Guid</a></span>? <b><a href="Class.ClsId.html" class="field">ClsId</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Guid.html" class="struct">Guid</a></span>* <b><a href="Class.clsId.html" class="field">clsId</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Class.uuid.html" class="field">uuid</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Class.name.html" class="field">name</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+        </ul>
+      </div>
+    </div><br/>
+    <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+    </div>
+  </body>
+</html>

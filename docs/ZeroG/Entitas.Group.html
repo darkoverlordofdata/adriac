@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Entitas.Group &ndash; ZeroG &ndash; Vala Binding Reference</title>
+    <link href="../style.css" rel="stylesheet" type="text/css"/><script src="../scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">Entitas.Group &ndash; ZeroG Reference Manual</div>
+    <div class="site_body">
+      <div class="site_navigation">
+        <ul class="navi_main">
+          <li class="package_index"><a href="../index.html">Packages</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="package"><a href="index.htm">ZeroG</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="namespace"><a href="Entitas.html">Entitas</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="class">Group</li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="creation_method"><a href="Entitas.Group.Group.html">Group</a></li>
+          <li class="method"><a href="Entitas.Group.AddEntity.html">AddEntity</a></li>
+          <li class="method"><a href="Entitas.Group.AddEntitySilently.html">AddEntitySilently</a></li>
+          <li class="method"><a href="Entitas.Group.ContainsEntity.html">ContainsEntity</a></li>
+          <li class="method"><a href="Entitas.Group.GetSingleEntity.html">GetSingleEntity</a></li>
+          <li class="method"><a href="Entitas.Group.HandleEntity.html">HandleEntity</a></li>
+          <li class="method"><a href="Entitas.Group.HandleEntitySilently.html">HandleEntitySilently</a></li>
+          <li class="method"><a href="Entitas.Group.RemoveEntity.html">RemoveEntity</a></li>
+          <li class="method"><a href="Entitas.Group.RemoveEntitySilently.html">RemoveEntitySilently</a></li>
+          <li class="field"><a href="Entitas.Group.entities.html">entities</a></li>
+          <li class="field"><a href="Entitas.Group.matcher.html">matcher</a></li>
+          <li class="field"><a href="Entitas.Group.onEntityAdded.html">onEntityAdded</a></li>
+          <li class="field"><a href="Entitas.Group.onEntityRemoved.html">onEntityRemoved</a></li>
+          <li class="field"><a href="Entitas.Group.onEntityUpdated.html">onEntityUpdated</a></li>
+        </ul>
+      </div>
+      <div class="site_content">
+        <h1 class="main_title">Group</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Object Hierarchy:</h2>
+        <img class="main_diagram" usemap="#Entitas.Group" alt="Object hierarchy for Group" src="img/Entitas.Group.png"/>
+
+      <map id="Entitas.Group" name="Entitas.Group">
+<area shape="rect" id="node1" href="Entitas.Group.html" title="Entitas.Group" alt="" coords="5,101,128,149"/>
+<area shape="rect" id="node2" href="Object.html" title="Object" alt="" coords="31,5,103,53"/>
+</map>
+
+        <h2 class="main_title">Description:</h2>
+        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">class</span> <b><span class="class">Group</span></b> : <span class="main_type"><a href="Object.html" class="class">Object</a></span>
+        </div>
+        <div class="description">
+          <p>Use world.GetGroup(matcher) to get a group of entities which match the specified matcher. Calling world.GetGroup(matcher) with the same 
+            matcher will always return the same instance of the group. The created group is managed by the world and will always be up to date. It 
+            will automatically add entities that match the matcher or remove entities as soon as they don't match the matcher anymore.</p>
+        </div><br/>
+        <div class="namespace_note"><b>Namespace:</b> <a href="Entitas.html">Entitas</a>
+        </div>
+        <div class="package_note"><b>Package:</b> <a href="index.htm">ZeroG</a>
+        </div>
+        <h2 class="main_title">Content:</h2>
+        <h3 class="main_title">Creation methods:</h3>
+        <ul class="navi_inline">
+          <li class="creation_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Entitas.Group.Group.html" class="creation_method">Group</a></b> (<span class="main_type"><a href="Entitas.Matcher.html" class="class">Matcher</a></span> matcher)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+        </ul>
+        <h3 class="main_title">Methods:</h3>
+        <ul class="navi_inline">
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.HandleEntitySilently.html" class="method">HandleEntitySilently</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Handle adding and removing component from the entity without raising 
+                events</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.HandleEntity.html" class="method">HandleEntity</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity, <span class="main_basic_type"><span class="struct">int</span></span> index, <span class="main_keyword">void</span>* component)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Handle adding and removing component from the entity and raisieevents
+              </span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.AddEntitySilently.html" class="method">AddEntitySilently</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Add entity without raising events</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.AddEntity.html" class="method">AddEntity</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity, <span class="main_basic_type"><span class="struct">int</span></span> index, <span class="main_keyword">void</span>* component)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Add entity and raise events</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.RemoveEntitySilently.html" class="method">RemoveEntitySilently</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Remove entity without raising events</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">void</span> <b><a href="Entitas.Group.RemoveEntity.html" class="method">RemoveEntity</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity, <span class="main_basic_type"><span class="struct">int</span></span> index, <span class="main_keyword">void</span>* component)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Remove entity and raise events</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">bool</span></span> <b><a href="Entitas.Group.ContainsEntity.html" class="method">ContainsEntity</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Check if group has this entity</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* <b><a href="Entitas.Group.GetSingleEntity.html" class="method">GetSingleEntity</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Gets an entity singleton. If a group has more than 1 entity, this is 
+                an error condition.</span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Fields:</h3>
+        <ul class="navi_inline">
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><span class="class">List</span></span>&lt;<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>*&gt; <b><a href="Entitas.Group.entities.html" class="field">entities</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Get a list of the entities in this group</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Entitas.Matcher.html" class="class">Matcher</a></span> <b><a href="Entitas.Group.matcher.html" class="field">matcher</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Get the Matcher for this group type Entitas.Matcher</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Entitas.Event.GroupChanged.html" class="class">GroupChanged</a></span> <b><a href="Entitas.Group.onEntityAdded.html" class="field">onEntityAdded</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Subscribe to IEntity Addded events type Event.GroupChanged</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Entitas.Event.GroupChanged.html" class="class">GroupChanged</a></span> <b><a href="Entitas.Group.onEntityRemoved.html" class="field">onEntityRemoved</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Subscribe to IEntity Removed events type Event.GroupChanged</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><a href="Entitas.Event.GroupUpdated.html" class="class">GroupUpdated</a></span> <b><a href="Entitas.Group.onEntityUpdated.html" class="field">onEntityUpdated</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Subscribe to IEntity Updated events type Event.GroupUpdated</span>
+            </div></li>
+        </ul>
+      </div>
+    </div><br/>
+    <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+    </div>
+  </body>
+</html>

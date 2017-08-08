@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Entitas &ndash; ZeroG &ndash; Vala Binding Reference</title>
+    <link href="../style.css" rel="stylesheet" type="text/css"/><script src="../scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">Entitas &ndash; ZeroG Reference Manual</div>
+    <div class="site_body">
+      <div class="site_navigation">
+        <ul class="navi_main">
+          <li class="package_index"><a href="../index.html">Packages</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="package"><a href="index.htm">ZeroG</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="namespace">Entitas</li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="namespace"><a href="Entitas.Event.html">Event</a></li>
+          <li class="enum"><a href="Entitas.Components.html">Components</a></li>
+          <li class="class"><a href="Entitas.Group.html">Group</a></li>
+          <li class="class"><a href="Entitas.Matcher.html">Matcher</a></li>
+          <li class="class"><a href="Entitas.System.html">System</a></li>
+          <li class="class"><a href="Entitas.World.html">World</a></li>
+          <li class="struct"><a href="Entitas.Buffer.html">Buffer</a></li>
+          <li class="struct"><a href="Entitas.Entity.html">Entity</a></li>
+          <li class="struct"><a href="Entitas.ISystem.html">ISystem</a></li>
+          <li class="struct"><a href="Entitas.Layer.html">Layer</a></li>
+          <li class="struct"><a href="Entitas.Show.html">Show</a></li>
+          <li class="struct"><a href="Entitas.Tint.html">Tint</a></li>
+          <li class="struct"><a href="Entitas.Transform.html">Transform</a></li>
+          <li class="struct"><a href="Entitas.Velocity.html">Velocity</a></li>
+          <li class="constant"><a href="Entitas.ACTIVE.html">ACTIVE</a></li>
+          <li class="constant"><a href="Entitas.ComponentString.html">ComponentString</a></li>
+          <li class="constant"><a href="Entitas.LAYER.html">LAYER</a></li>
+          <li class="constant"><a href="Entitas.SHOW.html">SHOW</a></li>
+          <li class="constant"><a href="Entitas.TINT.html">TINT</a></li>
+          <li class="constant"><a href="Entitas.UNKNOWN.html">UNKNOWN</a></li>
+          <li class="constant"><a href="Entitas.VELOCITY.html">VELOCITY</a></li>
+          <li class="delegate"><a href="Entitas.EntityFactory.html">EntityFactory</a></li>
+          <li class="delegate"><a href="Entitas.SystemExecute.html">SystemExecute</a></li>
+          <li class="delegate"><a href="Entitas.SystemInitialize.html">SystemInitialize</a></li>
+        </ul>
+      </div>
+      <div class="site_content">
+        <h1 class="main_title">Entitas</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Description:</h2>
+        <div class="description">
+          <p>Entitas</p>
+          <p>An ECS (entity component system) based on: <a href="https://github.com/sschmid/Entitas-CSharp" target="_blank">Entitas-CSharp</a></p>
+        </div>
+        <h2 class="main_title">Content:</h2>
+        <h3 class="main_title">Namespaces:</h3>
+        <ul class="navi_inline">
+          <li class="namespace"><a href="Entitas.Event.html">Event</a> - <span class="brief_description">Lifecycle events:</span></li>
+        </ul>
+        <h3 class="main_title">Classes:</h3>
+        <ul class="navi_inline">
+          <li class="class"><a href="Entitas.System.html">System</a> - <span class="brief_description">Systems provide a convenient way to group 
+              systems. All systems will be initialized and executed based on the order you added them.</span></li>
+          <li class="class"><a href="Entitas.Group.html">Group</a> - <span class="brief_description">Use world.GetGroup(matcher) to get a group of 
+              entities which match the specified matcher. Calling world.GetGroup(matcher) with the same matcher will always return the same instance 
+              of the group. The created group is managed by the world and will always be up to date. It will automatically add entities that match the
+              matcher or remove entities as soon as they don't match the matcher anymore.</span></li>
+          <li class="class"><a href="Entitas.Matcher.html">Matcher</a> - <span class="brief_description">Match entities by component complile list of 
+              components to bit array for fast comparison</span></li>
+          <li class="class"><a href="Entitas.World.html">World</a> - <span class="brief_description">A world manages the lifecycle of entities and 
+              groups. You can create and destroy entities and get groups of entities.</span></li>
+        </ul>
+        <h3 class="main_title">Structs:</h3>
+        <ul class="navi_inline">
+          <li class="struct"><a href="Entitas.Buffer.html">Buffer</a> - <span class="brief_description">Describe the cache buffer for a factory</span>
+          </li>
+          <li class="struct"><a href="Entitas.ISystem.html">ISystem</a> - <span class="brief_description">This is the base interface for all systems
+            </span></li>
+          <li class="struct"><a href="Entitas.Transform.html">Transform</a> - <span class="brief_description">Transform Component</span></li>
+          <li class="struct"><a href="Entitas.Layer.html">Layer</a> - <span class="brief_description">Layer Component</span></li>
+          <li class="struct"><a href="Entitas.Show.html">Show</a> - <span class="brief_description">Show Component</span></li>
+          <li class="struct"><a href="Entitas.Tint.html">Tint</a> - <span class="brief_description">Tint Component</span></li>
+          <li class="struct"><a href="Entitas.Velocity.html">Velocity</a> - <span class="brief_description">Velocity Component</span></li>
+          <li class="struct"><a href="Entitas.Entity.html">Entity</a> - <span class="brief_description">Entity - container for components</span></li>
+        </ul>
+        <h3 class="main_title">Enums:</h3>
+        <ul class="navi_inline">
+          <li class="enum"><a href="Entitas.Components.html">Components</a> - <span class="brief_description">Component index</span></li>
+        </ul>
+        <h3 class="main_title">Error domains:</h3>
+        <ul class="navi_inline">
+          <li class="errordomain"><a href="Entitas.Exception.html">Exception</a> - <span class="brief_description">ECS Exceptions</span></li>
+        </ul>
+        <h3 class="main_title">Constants:</h3>
+        <ul class="navi_inline">
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.UNKNOWN.html" class="constant">UNKNOWN</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.LAYER.html" class="constant">LAYER</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.SHOW.html" class="constant">SHOW</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.TINT.html" class="constant">TINT</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.VELOCITY.html" class="constant">VELOCITY</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.ACTIVE.html" class="constant">ACTIVE</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="constant"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">const</span> <span class="main_keyword">unowned</span> (<span class="main_keyword">unowned</span> <span class="main_basic_type"><span class="class">string</span></span>)[] <b><a href="Entitas.ComponentString.html" class="constant">ComponentString</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">List of component names</span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Delegates:</h3>
+        <ul class="navi_inline">
+          <li class="delegate"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">delegate</span> <span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* <b><a href="Entitas.EntityFactory.html" class="delegate">EntityFactory</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Factory method - create an entity</span>
+            </div></li>
+          <li class="delegate"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">delegate</span> <span class="main_keyword">void</span> <b><a href="Entitas.SystemInitialize.html" class="delegate">SystemInitialize</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Calls Initialize() on all IInitializeSystem and other nested Systems 
+                instances in the order you added them.</span>
+            </div></li>
+          <li class="delegate"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">delegate</span> <span class="main_keyword">void</span> <b><a href="Entitas.SystemExecute.html" class="delegate">SystemExecute</a></b> (<span class="main_basic_type"><span class="struct">float</span></span> delta)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Calls Execute() on all IExecuteSystem and other nested Systems 
+                instances in the order you added them.</span>
+            </div></li>
+        </ul>
+      </div>
+    </div><br/>
+    <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+    </div>
+  </body>
+</html>
