@@ -102,9 +102,9 @@ I prefer this for readabliity, and it ensures this code will not be mistaken for
 
 ### [<del>ShmupWarz II</del> Better Than Shmup](https://darkoverlordofdata.com/zerog-shmupwarz/)
 
-### [Match3](https://darkoverlordofdata.com/zerog-match3/)
+### [Match3](https://darkoverlordofdata.com/zerog-match3/) - wip
 
-### [Platformer](https://darkoverlordofdata.com/zerog-platformer/)
+### [Platformer](https://darkoverlordofdata.com/zerog-platformer/) - wip
 
 
 
