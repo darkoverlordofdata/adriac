@@ -11,34 +11,6 @@
 
     Lightweight replacement for Vala runtime GLib
 
-## ZeroG and the Dark Vala
-
-ZeroG is a lightweight replacement for Vala runtime GLib.
-This supports a subset of Vala.
-
-Code is based on portions of the original GLib, but only includes parts required for vala, plus some data strutures. These are ported to static inline code for inclusion as *.h header files.
-
-GObject is replaced with reference counted compact class. This limits the available oop semantics, and Genie is not fully supported.
-
-Implements:
-
-* GList & GSList
-* GHashTable
-* GString
-* GArray
-* GNode
-* GQue
-
-Dark Vala style guide:
-[Based on](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions)
-
-* Do use casing instead of underscores.
-* Do use Pascal casing for all public member, type, and namespace names.
-* Do use camel casing for parameter, field and variable names.
-* Do use UPPER_CASE for constants.
-
-I prefer this for readabliity, and it ensures this code will not be mistaken for standard vala.
-
 ## Demos
 
 ### [<del>ShmupWarz II</del> Better Than Shmup](https://darkoverlordofdata.com/zerog-shmupwarz/)
@@ -49,6 +21,31 @@ I prefer this for readabliity, and it ensures this code will not be mistaken for
 
 ### [Platformer](https://darkoverlordofdata.com/zerog-platformer/)
 [wip](https://github.com/darkoverlordofdata/zerog-platformer)
+
+
+## Vala Subset
+
+ZeroG supports a subset of Vala based on Compact classes. This limits oop functionality, and Genie is not well supported. It requires a different coding style, and to set it appart, I'm altering the syle guide. I call it Dark Vala.
+
+Dark Vala style guide:
+[Based on msn](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions)
+
+* Do use casing instead of underscores.
+* Do use Pascal casing for all public member, type, and namespace names.
+* Do use camel casing for parameter, field and variable names.
+* Do use UPPER_CASE for constants.
+
+
+Parts of zerog are based on the original GLib. There is no GObject. 
+
+Implemented:
+
+* GList & GSList
+* GHashTable
+* GString
+* GArray
+* GNode
+* GQue
 
 
 
@@ -87,9 +84,9 @@ update ./bashrc
 
 ## use
 
-    zerog init match3 com.darkoverlordofdata.match3
+    zerog init myproject com.darkoverlordofdata.myproject
 
-    cd match3
+    cd myproject
 
     autovala refresh
     autovala cmake
