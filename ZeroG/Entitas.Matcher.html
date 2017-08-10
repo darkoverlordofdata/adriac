@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Entitas.Matcher &ndash; ZeroG &ndash; Vala Binding Reference</title>
+    <link href="../style.css" rel="stylesheet" type="text/css"/><script src="../scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">Entitas.Matcher &ndash; ZeroG Reference Manual</div>
+    <div class="site_body">
+      <div class="site_navigation">
+        <ul class="navi_main">
+          <li class="package_index"><a href="../index.html">Packages</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="package"><a href="index.htm">ZeroG</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="namespace"><a href="Entitas.html">Entitas</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="class">Matcher</li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="static_method"><a href="Entitas.Matcher.AllOf.html">AllOf</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.AnyOf.html">AnyOf</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.BuildMask.html">BuildMask</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.ComponentsToString.html">ComponentsToString</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.DistinctIndices.html">DistinctIndices</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.ListToArray.html">ListToArray</a></li>
+          <li class="static_method"><a href="Entitas.Matcher.NoneOf.html">NoneOf</a></li>
+          <li class="creation_method"><a href="Entitas.Matcher.Matcher.html">Matcher</a></li>
+          <li class="method"><a href="Entitas.Matcher.Matches.html">Matches</a></li>
+          <li class="method"><a href="Entitas.Matcher.MergeIndices.html">MergeIndices</a></li>
+          <li class="method"><a href="Entitas.Matcher.ToString.html">ToString</a></li>
+          <li class="field"><a href="Entitas.Matcher.allOfIndices.html">allOfIndices</a></li>
+          <li class="field"><a href="Entitas.Matcher.allOfMask.html">allOfMask</a></li>
+          <li class="field"><a href="Entitas.Matcher.anyOfIndices.html">anyOfIndices</a></li>
+          <li class="field"><a href="Entitas.Matcher.anyOfMask.html">anyOfMask</a></li>
+          <li class="field"><a href="Entitas.Matcher.id.html">id</a></li>
+          <li class="field"><a href="Entitas.Matcher.indices.html">indices</a></li>
+          <li class="field"><a href="Entitas.Matcher.noneOfIndices.html">noneOfIndices</a></li>
+          <li class="field"><a href="Entitas.Matcher.noneOfMask.html">noneOfMask</a></li>
+          <li class="field"><a href="Entitas.Matcher.toStringCache.html">toStringCache</a></li>
+          <li class="field"><a href="Entitas.Matcher.uniqueId.html">uniqueId</a></li>
+        </ul>
+      </div>
+      <div class="site_content">
+        <h1 class="main_title">Matcher</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Object Hierarchy:</h2>
+        <img class="main_diagram" usemap="#Entitas.Matcher" alt="Object hierarchy for Matcher" src="img/Entitas.Matcher.png"/>
+
+      <map id="Entitas.Matcher" name="Entitas.Matcher">
+<area shape="rect" id="node1" href="Entitas.Matcher.html" title="Entitas.Matcher" alt="" coords="5,101,144,149"/>
+<area shape="rect" id="node2" href="Object.html" title="Object" alt="" coords="39,5,111,53"/>
+</map>
+
+        <h2 class="main_title">Description:</h2>
+        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">class</span> <b><span class="class">Matcher</span></b> : <span class="main_type"><a href="Object.html" class="class">Object</a></span>
+        </div>
+        <div class="description">
+          <p>Match entities by component complile list of components to bit array for fast comparison</p>
+        </div><br/>
+        <div class="namespace_note"><b>Namespace:</b> <a href="Entitas.html">Entitas</a>
+        </div>
+        <div class="package_note"><b>Package:</b> <a href="index.htm">ZeroG</a>
+        </div>
+        <h2 class="main_title">Content:</h2>
+        <h3 class="main_title">Static methods:</h3>
+        <ul class="navi_inline">
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Entitas.Matcher.ComponentsToString.html" class="static_method">ComponentsToString</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] indexArray)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.ListToArray.html" class="static_method">ListToArray</a></b> (<span class="main_type"><span class="class">List</span></span>&lt;<span class="main_basic_type"><span class="struct">int</span></span>&gt; list)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.DistinctIndices.html" class="static_method">DistinctIndices</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] indices)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Get the set if distinct (non-duplicate) indices from a list</span>
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">Matcher</span></span> <b><a href="Entitas.Matcher.NoneOf.html" class="static_method">NoneOf</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] components)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Matches noneOf the components/indices specified</span>
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">Matcher</span></span> <b><a href="Entitas.Matcher.AllOf.html" class="static_method">AllOf</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] components)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Matches allOf the components/indices specified</span>
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_type"><span class="class">Matcher</span></span> <b><a href="Entitas.Matcher.AnyOf.html" class="static_method">AnyOf</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] components)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Matches anyOf the components/indices specified</span>
+            </div></li>
+          <li class="static_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.Matcher.BuildMask.html" class="static_method">BuildMask</a></b> (<span class="main_basic_type"><span class="struct">int</span></span>[] indices)
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+        </ul>
+        <h3 class="main_title">Creation methods:</h3>
+        <ul class="navi_inline">
+          <li class="creation_method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Entitas.Matcher.Matcher.html" class="creation_method">Matcher</a></b> (<span class="main_type"><span class="class">Matcher</span></span>[] matchers = <span class="main_literal">null</span>)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">
+                <li>clone/merge 1 or more existing matchers</li></span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Methods:</h3>
+        <ul class="navi_inline">
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">bool</span></span> <b><a href="Entitas.Matcher.Matches.html" class="method">Matches</a></b> (<span class="main_type"><a href="Entitas.Entity.html" class="struct">Entity</a></span>* entity)
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Check if the entity matches this matcher</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.MergeIndices.html" class="method">MergeIndices</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Merge list of component indices</span>
+            </div></li>
+          <li class="method"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Entitas.Matcher.ToString.html" class="method">ToString</a></b> ()
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">toString representation of this matcher</span>
+            </div></li>
+        </ul>
+        <h3 class="main_title">Fields:</h3>
+        <ul class="navi_inline">
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">static</span> <span class="main_basic_type"><span class="struct">int</span></span> <b><a href="Entitas.Matcher.uniqueId.html" class="field">uniqueId</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">A unique sequential index number assigned to each match type number
+              </span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span> <b><a href="Entitas.Matcher.id.html" class="field">id</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">Get the matcher id type number</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.allOfIndices.html" class="field">allOfIndices</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">A unique sequential index number assigned to each entity at creation 
+                type number</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.Matcher.allOfMask.html" class="field">allOfMask</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.anyOfIndices.html" class="field">anyOfIndices</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">A unique sequential index number assigned to each entity at creation 
+                type number</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.Matcher.anyOfMask.html" class="field">anyOfMask</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.noneOfIndices.html" class="field">noneOfIndices</a></b>
+            </span>
+            <div class="leaf_brief_description"><span class="brief_description">A unique sequential index number assigned to each entity at creation 
+                type number</span>
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">uint64</span></span> <b><a href="Entitas.Matcher.noneOfMask.html" class="field">noneOfMask</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="struct">int</span></span>[] <b><a href="Entitas.Matcher.indices.html" class="field">indices</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+          <li class="field"><span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><span class="class">string</span></span> <b><a href="Entitas.Matcher.toStringCache.html" class="field">toStringCache</a></b>
+            </span>
+            <div class="leaf_brief_description">
+            </div></li>
+        </ul>
+      </div>
+    </div><br/>
+    <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+    </div>
+  </body>
+</html>
