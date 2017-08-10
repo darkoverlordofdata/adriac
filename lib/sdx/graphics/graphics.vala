@@ -19,6 +19,10 @@
  * 2D Sprites, Texts, and Images
  */
 namespace Sdx.Graphics { 
+
+	/**
+	 * Simple blit parameters
+	 */
 	public struct Blit {
 		SDL.Video.Rect source;
 		SDL.Video.Rect dest;

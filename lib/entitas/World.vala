@@ -111,8 +111,8 @@ namespace Entitas
 				
         /**
          * add System
-         * @param entitas.ISystem|Function
-         * @return entitas.ISystem
+         * @param system to add
+         * @return this world
          */
 		public World AddSystem(System system) 
 		{
@@ -144,9 +144,9 @@ namespace Entitas
 		}
 
         /**
-         * @param entitas.Entity entity
-         * @param number index
-         * @param entitas.IComponent component
+         * @param entity that was updated
+         * @param index of component
+         * @param component that was added or removed
          */
 		public void ComponentAddedOrRemoved(Entity* entity, int index, void* component) 
 		{
@@ -156,7 +156,7 @@ namespace Entitas
 
         /**
          * Destroy an entity
-         * @param entitas.Entity entity
+         * @param entity entity
          */
 		public void DeleteEntity(Entity* entity) 
 		{
@@ -180,8 +180,8 @@ namespace Entitas
 
         /**
          * Create a new entity
-         * @param string name
-         * @return entitas.Entity
+         * @param name of entity
+         * @return entity
          */
 		public Entity* CreateEntity(string name, int pool, bool active) 
 		{
@@ -197,8 +197,8 @@ namespace Entitas
        /**
          * Gets all of the entities that match
          *
-         * @param entias.IMatcher matcher
-         * @return entitas.Group
+         * @param matcher to select for
+         * @return the group
          */
  		public Group GetGroup(Matcher matcher) 
 		{

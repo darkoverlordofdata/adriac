@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/**
- * BitmapFont.gs
- *
- */
 using Sdx;
 using Sdx.Files;
 using Sdx.Utils;
-/**
- * Parse the *.fnt file
- * use angelcode.com format
- */
-namespace Sdx.Graphics {
+namespace Sdx.Graphics 
+{
 
+    /**
+     * Not finished, use SDL2_ttf {@link Sdx.Graphics.Sprite.TextSprite}
+     * 
+     * Parse the *.fnt file
+     * use angelcode.com format
+     * 
+     */
     public class BitmapFont : Object {
 
         public const int LOG2_PAGE_SIZE = 9;

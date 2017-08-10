@@ -40,7 +40,8 @@ namespace Sdx
 		 *  Render text for Sprite.fromRenderedText
 		 *
 		 * @param text to generate surface from
-		 * @param color foreground color of text
+		 * @param fg foreground color of text
+		 * @param bg background color of sprite
 		 * @return new Surface
 		 */
 		public SDL.Video.Surface Render(string text, SDL.Video.Color fg, SDL.Video.Color? bg = null) 

@@ -14,7 +14,7 @@ android/jni/libmikmod*
 android/jni/smpeg*
 
 
-web/shmupwarz.*
+web
 # Compiled source #
 ###################
 *.com

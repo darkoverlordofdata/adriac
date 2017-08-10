@@ -81,8 +81,8 @@ namespace  Sdx.Math
         // -------------------------------------------------------------------------
 
         /**
-         * Used as parameter in {link #repeat(int, float)} and
-         * {link #repeatYoyo(int, float)} methods.
+         * Used as parameter in {@link Repeat} and
+         * {@link RepeatYoyo} methods.
          */
         protected static int combinedAttrsLimit = 3;
         protected static int waypointsLimit = 0;
@@ -150,7 +150,7 @@ namespace  Sdx.Math
         public delegate Tweenbase TweenBuild();
         /**
          * Stops and resets the tween or timeline, and sends it to its pool, for
-         * later reuse. Note that if you use a {link TweenManager}, this method
+         * later reuse. Note that if you use a {@link TweenManager}, this method
          * is automatically called once the animation is finished.
          */
         public delegate void TweenFree();
@@ -189,7 +189,7 @@ namespace  Sdx.Math
                     /**
                      * Starts or restarts the object unmanaged. You will need to take care of
                      * its life-cycle. If you want the tween to be managed for you, use a
-                     * {link TweenManager}.
+                     * {@link TweenManager}.
                      *
                      * @return The current object, for chaining instructions.
                      */
@@ -218,7 +218,7 @@ namespace  Sdx.Math
         //          /**
         //           * Starts or restarts the object unmanaged. You will need to take care of
         //           * its life-cycle. If you want the tween to be managed for you, use a
-        //           * {link TweenManager}.
+        //           * {@link TweenManager}.
         //           *
         //           * @return The current object, for chaining instructions.
         //           */
@@ -314,7 +314,7 @@ namespace  Sdx.Math
         /**
          * Sets the callback. By default, it will be fired at the completion of the
          * tween or timeline (event COMPLETE). If you want to change this behavior
-         * and add more triggers, use the {link setCallbackTriggers()} method.
+         * and add more triggers, use the {@link SetCallbackTriggers} method.
          *
          * @see TweenCallback
          */
@@ -326,7 +326,7 @@ namespace  Sdx.Math
         
         /**
          * Changes the triggers of the callback. The available triggers, listed as
-         * members of the {link TweenCallback} interface, are:
+         * members of the {@link TweenCallback} interface, are:
          *
          *  * ''BEGIN'': right after the delay (if any)
          *  * ''START'': at each iteration beginning
@@ -468,7 +468,7 @@ namespace  Sdx.Math
         /**
          * Returns true if the tween is finished (i.e. if the tween has reached
          * its end or has been killed). If you don't use a TweenManager, you may
-         * want to call {link free()} to reuse the object later.
+         * want to call {@link Free} to reuse the object later.
          */
         public bool IsFinished() 
         {

@@ -48,7 +48,7 @@ namespace  Sdx.Math
      * based on code by  Aurelien Ribon 
      * @see Tween
      * @see TweenManager
-     * @see TweenCallback
+     * @see Tweenbase.TweenCallback
      */
     public class Timeline : Tweenbase
     {
@@ -133,7 +133,7 @@ namespace  Sdx.Math
 
         /**
          * Starts a nested timeline with a 'sequence' behavior. Don't forget to
-         * call {link end()} to close this nested timeline.
+         * call {@link End} to close this nested timeline.
          *
          * @return The current timeline, for chaining instructions.
          */
@@ -149,7 +149,7 @@ namespace  Sdx.Math
 
         /**
          * Starts a nested timeline with a 'parallel' behavior. Don't forget to
-         * call {link end()} to close this nested timeline.
+         * call {@link End} to close this nested timeline.
          *
          * @return The current timeline, for chaining instructions.
          */

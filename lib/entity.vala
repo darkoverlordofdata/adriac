@@ -83,8 +83,8 @@ namespace Entitas
         /**
          * HasAnyComponent
          *
-         * @param Array<number> indices
-         * @return boolean
+         * @param indices array of component indices to check
+         * @return true if any index is found
          */
 		public bool HasAnyComponent(int[] indices) 
 		{
@@ -96,8 +96,8 @@ namespace Entitas
          /**
           * HasComponent
           *
-          * @param number index
-          * @return boolean
+          * @param index of a component
+          * @return true if component is found
           */
 		public bool HasComponent(int index) 
 		{
@@ -107,8 +107,8 @@ namespace Entitas
         /**
          * HasComponents
          *
-         * @param Array<number> indices
-         * @return boolean
+         * @param indices array of component indices to check
+         * @return true if all indeces are found
          */
 		public bool HasComponents(int[] indices) 
 		{

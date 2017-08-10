@@ -17,11 +17,6 @@ using Sdx.Math;
 namespace Sdx.Graphics 
 {
 
-	public struct Scale 
-	{
-		float x;
-		float y;
-	}
 	/**
 	 * base Sprite
 	 */
@@ -133,7 +128,7 @@ namespace Sdx.Graphics
 			/**
 			 * AtlasSprite
 			 * 
-			 * @param path to LibGDX TexturePacker Atlas
+			 * @param region to load sprite from
 			 * 
 			 */
 			public AtlasSprite(AtlasRegion region) 
@@ -166,7 +161,9 @@ namespace Sdx.Graphics
 			 * CompositeSprite
 			 * 
 			 * @param path to custom atlas
-			 * @param function that returns a list of rectangles
+			 * @param builder factory delegate
+			 * @param x offset in pixels
+			 * @param y offset in pixels
 			 * 
 			 */
 			public CompositeSprite(string path, Compositor builder, int x = 0, int y = 0) 
@@ -202,8 +199,9 @@ namespace Sdx.Graphics
 			/**
 			 * CompositeSprite
 			 * 
-			 * @param path to custom atlas
-			 * @param function that returns a list of rectangles
+			 * @param patch 9slice object
+			 * @param width in pixels
+			 * @param height in pixels
 			 * 
 			 */
 			public NineSliceSprite(NinePatch patch, int width = 100, int height = 100) 
@@ -260,8 +258,12 @@ namespace Sdx.Graphics
 			/**
 			 * CompositeSprite
 			 * 
-			 * @param path to custom atlas
-			 * @param function that returns a list of rectangles
+			 * @param patch 9slice patch object
+			 * @param text to generate
+			 * @param font to use
+			 * @param color to use for foreground
+			 * @param width in pixels
+			 * @param height in pixels
 			 * 
 			 */
 			public UISprite(NinePatch patch, string text, Sdx.Font font, SDL.Video.Color color, int width = 50, int height = 20) 
@@ -342,7 +344,8 @@ namespace Sdx.Graphics
 			 * 
 			 * @param text string of text to generate
 			 * @param font used to generate text
-			 * @param color foregound text color (background transparent)
+			 * @param fg foregound text color 
+			 * @param bg background color, null = transparent
 			 * 
 			 */
 			public TextSprite(string text, Sdx.Font font, SDL.Video.Color fg, SDL.Video.Color? bg = null) 
@@ -358,7 +361,8 @@ namespace Sdx.Graphics
 			 *
 			 * @param text string of text to generate
 			 * @param font used to generate text
-			 * @param color foregound text color (background transparent)
+			 * @param fg foregound text color 
+			 * @param bg background color, null = transparent
 			 */
 			public void SetText(string text, Sdx.Font font, SDL.Video.Color fg, SDL.Video.Color? bg = null) 
 			{
@@ -375,7 +379,6 @@ namespace Sdx.Graphics
 		/**
 		 *  Render the sprite on the Video.Renderer context
 		 *
-		 * @param renderer video context
 		 * @param x display coordinate
 		 * @param y display coordinate
 		 * @param clip optional clipping rectangle

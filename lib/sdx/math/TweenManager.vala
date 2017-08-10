@@ -166,7 +166,7 @@ namespace  Sdx.Math
          * timeline. Note that a timeline only counts for 1 object, since it
          * manages its children itself.
          * 
-         * To get the count of running tweens, see {link #getRunningTweensCount()}.
+         * To get the count of running tweens, see {@link GetRunningTweensCount}.
          */
         public int Size() 
         {

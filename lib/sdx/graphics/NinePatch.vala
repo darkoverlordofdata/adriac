@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/**
- * NinePatch.gs
- *
- */
-namespace Sdx.Graphics {
+namespace Sdx.Graphics 
+{
     /**
-     *  load a 9patch image
+     * patch image
+     * 
      */
     public class NinePatch : Object {
  

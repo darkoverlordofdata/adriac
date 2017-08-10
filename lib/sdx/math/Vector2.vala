@@ -18,6 +18,19 @@ using SDL.Video;
  namespace  Sdx.Math 
 { 
 
+    /**
+     * Float (x,y) multiplier
+     */
+    [SimpleType]
+	public struct Scale 
+	{
+		public float x;
+		public float y;
+	}
+
+    /**
+     * int (x,y) position
+     */
     [SimpleType]
     public struct Point2 
     {
@@ -26,11 +39,22 @@ using SDL.Video;
     }
     
     
+    /**
+     * Ensures a value is within a range
+     * 
+     * @param value to check
+     * @param low lower range limit
+     * @param hi upper range limit
+     * @return value adjusted to range
+     */
     public inline float Clamp(float value, float low, float hi) 
     {
 	    return value < low ? low : value > hi ? hi : value;
     }
     
+    /**
+     * Float (x,y) Vector math
+     */
     public struct Vector2 
     {
 

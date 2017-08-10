@@ -16,7 +16,7 @@
 namespace Sdx 
 {
 	/** 
-	 * An {link InputProcessor} that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
+	 * An {@link InputProcessor} that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
 	 * processor returns true, which indicates that the event was handled.
 	 * based on code by  Nathan Sweet 
 	 */

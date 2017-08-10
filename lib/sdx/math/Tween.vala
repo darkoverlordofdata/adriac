@@ -56,27 +56,27 @@ namespace  Sdx.Math
      * }}}
      *
      * Tween life-cycles can be automatically managed for you, thanks to the
-     * {link TweenManager} class. If you choose to manage your tween when you start
+     * {@link TweenManager} class. If you choose to manage your tween when you start
      * it, then you don't need to care about it anymore. 
      * ''Tweens are //fire-and-forget//: don't think about them anymore once you started them (if they are managed of course).''
      *
      * You need to periodicaly update the tween engine, in order to compute the new
      * values. If your tweens are managed, only update the manager; else you need
-     * to call {link #update()} on your tweens periodically.
+     * to call {@link Tweenbase.Update} on your tweens periodically.
      *
      * == Example - setting up the engine ==
      *
      * The engine cannot directly change your objects attributes, since it doesn't
      * know them. Therefore, you need to tell him how to get and set the different
      * attributes of your objects: 
-     * ''you need to implement the {link TweenAccessor} interface for each object class you will animate''. 
+     * ''you need to implement the {@link TweenAccessor} interface for each object class you will animate''. 
      * Once done, don't forget to register these implementations, using the static method
-     * {link registerAccessor()}, when you start your application.
+     * {@link RegisterAccessor}, when you start your application.
      *
      * based on code by  Aurelien Ribon
      * @see TweenAccessor
      * @see TweenManager
-     * @see TweenEquation
+     * @see Interpolation
      * @see Timeline
      */
     public class Tween : Tweenbase
@@ -92,8 +92,8 @@ namespace  Sdx.Math
         }
 
         /**
-         * Used as parameter in {link #repeat(int, float)} and
-         * {link #repeatYoyo(int, float)} methods.
+         * Used as parameter in {@link Tweenbase.Repeat} and
+         * {@link Tweenbase.RepeatYoyo} methods.
          */
         public const int INFINITY = -1;
         /**
@@ -271,7 +271,7 @@ namespace  Sdx.Math
          * @param callback The callback that will be triggered on each iteration
          * start.
          * @return The generated Tween.
-         * @see TweenCallback
+         * @see Tweenbase.TweenCallback
          */
         public static Tween Call(TweenCallbackOnEvent callback)
         {
@@ -284,7 +284,7 @@ namespace  Sdx.Math
 
         /**
          * Convenience method to create an empty tween. Such object is only useful
-         * when placed inside animation sequences (see {link Timeline}), in which
+         * when placed inside animation sequences (see {@link Timeline}), in which
          * it may act as a beacon, so you can set a callback on it in order to
          * trigger some action at the right moment.
          *
@@ -328,8 +328,8 @@ namespace  Sdx.Math
         /**
          * Sets the easing equation of the tween. Existing equations are located in
          * //aurelienribon.tweenengine.equations// package, but you can of course
-         * implement your owns, see {link TweenEquation}. You can also use the
-         * {link TweenEquations} static instances to quickly access all the
+         * implement your owns, see {@link Interpolation}. You can also use the
+         * {@link Interpolation} static instances to quickly access all the
          * equations. Default equation is Interpolation.QuadInOut.
          *
          * ''Proposed equations are:''
@@ -347,8 +347,8 @@ namespace  Sdx.Math
          *  || Elastic.IN || OUT || INOUT ||
          *
          * @return The current tween, for chaining instructions.
-         * @see TweenEquation
-         * @see TweenEquations
+         * @see Interpolation
+         * @see Interpolation
          */
         public Tween Ease(Interpolation easeEquation)
         {

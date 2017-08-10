@@ -34,10 +34,8 @@ namespace Sdx
 		public ApplicationListenerCreate Create;
 		/** 
 		 * Called when the Application is resized. This can happen at any point during a non-paused state but will never happen
-		 * before a call to {@link ApplicationListener.Create()}.
+		 * before a call to {@link ApplicationListener.Create}.
 		 * 
-		 * @param width the new width in pixels
-		 * @param height the new height in pixels 
 		 */
 		public ApplicationListenerResize Resize;
 		/** 
@@ -54,7 +52,7 @@ namespace Sdx
 		 */
 		public ApplicationListenerResume Resume;
 		/** 
-		 * Called when the Application is destroyed. Preceded by a call to {link #pause()}. 
+		 * Called when the Application is destroyed. Preceded by a call to {@link Pause}. 
 		 */
 		public ApplicationListenerDispose Dispose;
 	}
@@ -65,7 +63,7 @@ namespace Sdx
 
 	/** 
 	 * Called when the Application is resized. This can happen at any point during a non-paused state but will never happen
-	 * before a call to {@link ApplicationListener.Create()}.
+	 * before a call to {@link ApplicationListener.Create}.
 	 * 
 	 * @param width the new width in pixels
 	 * @param height the new height in pixels 
@@ -89,7 +87,7 @@ namespace Sdx
 	public delegate void ApplicationListenerResume();
 
 	/** 
-	 * Called when the Application is destroyed. Preceded by a call to {link #pause()}. 
+	 * Called when the Application is destroyed. Preceded by a call to {@link ApplicationListener.Pause}. 
 	 */
 	public delegate void ApplicationListenerDispose();
 

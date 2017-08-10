@@ -1,0 +1,38 @@
+{
+  "name": "zerog",
+  "version": "0.1.0",
+  "description": "Lightweight replacement for Vala runtime GLib",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkoverlordofdata/zerog.git"
+  },
+  "keywords": [
+    "vala",
+    "emscripten",
+    "android",
+    "sdl2"
+  ],
+  "author": "darkoverlordofdata",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/darkoverlordofdata/zerog/issues"
+  },
+  "homepage": "https://github.com/darkoverlordofdata/zerog#readme",
+  "devDependencies": {
+    "entitas-cli": "^0.2.0",
+    "coffee-script": "1.12.4",
+    "gulp": "^3.9.0",
+    "gulp-gh-pages": "^0.5.2",
+    "gulp-shell": "^0.4.2",
+    "liquid.coffee": "^0.1.8"
+  },
+  "dependencies": {
+  }
+}

@@ -18,23 +18,44 @@ namespace Sdx
     /** 
      * Represents one of many application screens, such as a main menu, a settings menu, the game screen and so on.
 	 * 
-     * Note that {link #dispose()} is not called automatically.
-     * @see Game 
+     * Note that {@link Dispose} is not called automatically.
+     * @see AbstractGame 
 	 */
 	public struct Screen 
 	{ 
+		/** 
+		 * Called when this screen becomes the current screen for a {@link AbstractGame}. 
+		 */
 		public ScreenShow Show;
+		/** 
+		 * Called when the screen should render itself.
+		 */
 		public ScreenRender Render;
+		/** 
+		 * @see ApplicationListenerResize
+		 */
 		public ScreenResize Resize;
+		/** 
+		 * @see ApplicationListenerPause 
+		 */
 		public ScreenPause Pause;
+		/** 
+		 * @see ApplicationListenerResume 
+		 */
 		public ScreenResume Resume;
+		/** 
+		 * Called when this screen is no longer the current screen for a {@link AbstractGame}. 
+		 */
 		public ScreenHide Hide;
+		/** 
+		 * Called when this screen should release all resources. 
+		 */
 		public ScreenDispose Dispose;
 	}
 
 	
 	/** 
-	 * Called when this screen becomes the current screen for a {link Game}. 
+	 * Called when this screen becomes the current screen for a {@link AbstractGame}. 
 	 */
 	public delegate void ScreenShow();
 	
@@ -45,22 +66,22 @@ namespace Sdx
 	public delegate void ScreenRender(float delta);
 
 	/** 
-	 * @see ApplicationListener#resize()
+	 * @see ApplicationListenerResize
 	 */
 	public delegate void ScreenResize(int width, int height);
 
 	/** 
-	 * @see ApplicationListener#pause() 
+	 * @see ApplicationListenerPause
 	 */
 	public delegate void ScreenPause();
 
 	/** 
-	 * @see ApplicationListener#resume() 
+	 * @see ApplicationListenerResume
 	 */
 	public delegate void ScreenResume();
 
 	/** 
-	 * Called when this screen is no longer the current screen for a {link Game}. 
+	 * Called when this screen is no longer the current screen for a {@link AbstractGame}. 
 	 */
 	public delegate void ScreenHide();
 

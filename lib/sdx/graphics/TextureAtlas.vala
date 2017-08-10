@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/**
- * TextureAtlas.gs
- *
- */
 using Sdx.Files;
 using Sdx.Graphics;
 
-namespace Sdx.Graphics {
+namespace Sdx.Graphics 
+{
 
     /**
-     *  load a libgdx format atlas
+     * load a libgdx format atlas
      */
     public class TextureAtlas : Object {
         public List<AtlasRegion> regions = new List<AtlasRegion>();
         /**
-         * @param root location of resources
+         * @param packFile handle
+         * @param imageDir handle
+         * @param flip images?
          */
         public TextureAtlas(FileHandle packFile, FileHandle? imageDir=null, bool flip=false) {
             Load(new TextureAtlasData(packFile, imageDir == null ? packFile.GetParent() : imageDir, flip));
@@ -126,7 +125,7 @@ namespace Sdx.Graphics {
          * 
          * When sprites are packed, if the original file name ends with a number, it is stored as the index and is not considered as
          * part of the sprite's name. This is useful for keeping animation frames in order.
-         * @see TextureAtlas#findRegions(String) 
+         * @see TextureAtlas.FindRegion
          */
         public AtlasRegion(Surface.TextureSurface texture, int x, int y, int width, int height) {
             base(texture, x, y, width, height);

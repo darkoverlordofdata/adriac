@@ -24,7 +24,6 @@
 
 
 ## Vala Subset
-
 ZeroG supports a subset of Vala based on Compact classes. This limits oop functionality, and Genie is not well supported. It requires a different coding style, and to set it appart, I'm altering the syle guide. I call it Dark Vala.
 
 Dark Vala style guide:
@@ -54,14 +53,15 @@ Implemented:
     "A spoiled brat with a God complex."
                         Vala Mal Doran 
 
-Adriac is a Wrapper for valac, it performs an out of tree build using ZeroG
+Adriac is a wrapper for valac, it performs an out of tree build using ZeroG
+
 Additional pre and post processing steps:
 
 * pre processing 
     
     Reference counting code is injected into vala classes
 
-    All access modifierd are changed to 'public'
+    All access modifiers are changed to 'public'
 * post processing
     
     Forward references to injected code is added to resulting c code

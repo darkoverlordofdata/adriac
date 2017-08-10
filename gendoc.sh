@@ -1,4 +1,5 @@
-valadoc --directory=docs \
+rm -rf ./web
+valadoc --directory=web \
     --package-name=ZeroG \
     --vapidir=lib/vapis \
     --pkg=lua \
