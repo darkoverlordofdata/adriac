@@ -1,4 +1,4 @@
-# ZeroG
+# ZeroG-SDK
 
 
         __________                    ________ 
@@ -71,6 +71,19 @@ Additional pre and post processing steps:
 cd ~/Applications
 git clone https://github.com/darkoverlordofdata/zerog.git
 
+#### todo
+make an autovala install for adriac
+replace zerog.sh with zerog.js. 
+
+mkdir install
+cd install
+cmake -G "MSYS Makefiles" ..
+make
+make install
+cd ..
+npm install
+npm install . -g
+
 update ./bashrc
 
     export SDL2SDK=$HOME/Applications/SDL2-2.0.5/
@@ -80,6 +93,9 @@ update ./bashrc
     export PATH=$PATH:$ZEROG/bin
 
     export CPATH=$ZEROG/include/
+
+#### todo
+Windows 10 / MSys2 Environment:
 
 
 ## use
