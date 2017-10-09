@@ -48,6 +48,11 @@ namespace Sdx.Graphics
 		public int layer = 0;
 		public string path;
 
+		public int Width {
+			get { return width; }
+			set { width = value; }
+		} 
+
 		//  public Sprite()
 		//  {
 		//  	var h = (void*)this;

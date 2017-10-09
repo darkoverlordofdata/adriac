@@ -24,85 +24,38 @@ using SDLImage;
  */
 namespace Sdx 
 {
-
-
-	public class AbstractPlatform : Object 
-	{
-		public int width;
-		public int height;
-		public delegate void AbstractUpdate(int tick);
-		public delegate void AbstractDraw(int tick);
-		public AbstractUpdate Update = (tick) => {};
-		public AbstractDraw Draw = (tick) => {};
-		public AbstractPlatform() 
-		{
-			// forces the subclassed lambda context to be reference counted
-			var r = new AbstractReference();
-		}
-	}
-
-	/**
-	 * Base game klass
-	 */
-	public class AbstractGame : Object 
-	{
-		public int width;
-		public int height;
-		public delegate void AbstractUpdate();
-		public delegate void AbstractDraw();
-		public AbstractUpdate Update = () => {};
-		public AbstractDraw Draw = () => {};
-		public AbstractGame() 
-		{
-			// forces the subclassed lambda context to be reference counted
-			var r = new AbstractReference();
-		}
-		public void Start() 
-		{
-			Sdx.Start();
-		}
-	}
-
-	public class AbstractReference: Object {}
-
-	
-	/**
-	 * Global vars
-	 * 
-	 */
-	const double MS_PER_UPDATE = 1.0/60.0;
-
+	private const double MS_PER_UPDATE = 1.0/60.0;
 #if (DESKTOP)
+	private const int pixelFactor = 1;
 	FileType platform = FileType.Resource;
-	const int pixelFactor = 1;
 #elif (ANDROID)
-	const int pixelFactor = 2;
+	private const int pixelFactor = 2;
 	FileType platform = FileType.Asset;
 #else
-	const int pixelFactor = 1;
+	private const int pixelFactor = 1;
 	FileType platform = FileType.Relative;
 #endif
-	public Renderer renderer;
-	public Sdx.Font font;
-	public Sdx.Font smallFont;
-	public Sdx.Font largeFont;
-	public SDL.Video.Display display;
-	public SDL.Video.DisplayMode displayMode;
-	public SDL.Video.Color bgdColor;
-	public Sdx.Graphics.TextureAtlas atlas;
-	public float fps = 60f;
-	public float delta = 1.0f/60.0f;
-	public bool running;
-	public string resourceBase;
-	public double currentTime;
-	public double accumulator;
-	public double freq;
-	public int width;
-	public int height;
-	public Sdx.Ui.Window ui;
-	public Event evt;
-	public InputMultiplexer inputProcessor;
-	public Math.TweenManager? tweenManager;
+	private SDL.Event evt;
+	private SDL.Video.DisplayMode displayMode;
+	private SDL.Video.Renderer? renderer;
+	private SDL.Video.Display? display;
+	private SDL.Video.Color? bgdColor;
+	private Sdx.Font? font;
+	private Sdx.Font? smallFont;
+	private Sdx.Font? largeFont;
+	private Sdx.Graphics.TextureAtlas? atlas;
+	private Sdx.Ui.Window? ui;
+	private Sdx.InputMultiplexer? inputProcessor;
+	private Sdx.Math.TweenManager? tweenManager;
+	private float fps = 60f;
+	private float delta = 1.0f/60.0f;
+	private bool running;
+	private string resourceBase;
+	private double currentTime;
+	private double accumulator;
+	private double freq;
+	private int width;
+	private int height;
 
 	/**
 	 * Initialization
@@ -110,6 +63,7 @@ namespace Sdx
 	 */
 	public Window Initialize(int width, int height, string name) 
 	{
+		print("How did I get here? %s\n", name);
 		Sdx.height = height;
 		Sdx.width = width;
 
@@ -143,8 +97,8 @@ namespace Sdx
 		if (window == null)
 			throw new SdlException.OpenWindow(SDL.GetError());
 		
-		Sdx.renderer = Renderer.Create(window, -1, RendererFlags.ACCELERATED | RendererFlags.PRESENTVSYNC);
-		if (Sdx.renderer == null)
+		renderer = Renderer.Create(window, -1, RendererFlags.ACCELERATED | RendererFlags.PRESENTVSYNC);
+		if (renderer == null)
 			throw new SdlException.CreateRenderer(SDL.GetError());
 
 		freq = SDL.Timer.GetPerformanceFrequency();
@@ -155,6 +109,12 @@ namespace Sdx
 		return window;
 	}
 
+
+	public int Render(Video.Texture texture, Video.Rect? srcrect, Video.Rect? dstrect)
+	{
+		return renderer.Copy(texture, srcrect, dstrect);
+	}
+	
 	public double GetRandom() 
 	{
 		return MersenneTwister.GenrandReal2();
@@ -258,7 +218,6 @@ namespace Sdx
 				case SDL.EventType.MOUSEMOTION:
 					if (inputProcessor.MouseMoved != null)
 						inputProcessor.MouseMoved(evt.motion.x, evt.motion.y);
-
 					break;
 
 				case SDL.EventType.MOUSEBUTTONDOWN:
