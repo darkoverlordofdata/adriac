@@ -1,0 +1,6 @@
+{
+    // msys2 shell:
+    "terminal.integrated.shell.windows": "C:\\msys64\\usr\\bin\\bash.exe",
+    "terminal.integrated.shellArgs.windows": ["-lic", "cd $OLDPWD; exec bash"],
+    
+}
