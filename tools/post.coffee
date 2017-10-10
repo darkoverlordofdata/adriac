@@ -39,7 +39,7 @@ inject = (file, options) ->
     # if /typedef SDL_Point/.test(src)
     #     dst.push '#include <SDL2/SDL_video.h>'
 
-    flag = false
+    flag = true
     # flag = true
     for line in src.split('\n')
         #
@@ -47,7 +47,7 @@ inject = (file, options) ->
         #
         line.replace /\#define\s+\_([_a-z0-9]+)_release0/, ($0, $1) ->
             type = symtbl[$1]
-            # dst.push "// symtbl #{$1}"
+            dst.push "// symtbl.1 #{$1}"
             if type?
                 flag = true
                 dst.push "void #{$1}_release (#{type}* self);"
@@ -59,7 +59,7 @@ inject = (file, options) ->
         #
         line.replace /static\s+void\s+\_([_a-z0-9]+)_release0_/, ($0, $1) ->
             type = symtbl[$1]
-            # dst.push "// symtbl #{$1}"
+            dst.push "// symtbl.2 #{$1}"
             if type?
                 flag = true
                 dst.push "void #{$1}_release (#{type}* self);"
@@ -71,7 +71,7 @@ inject = (file, options) ->
         #
         line.replace /(\w+)\*\s+([_a-z0-9]+)_new/, ($0, $1, $2) ->
             type = symtbl[$2]
-            # dst.push "// symtbl #{$1} / #{$2}"
+            dst.push "// symtbl.3 #{$1} / #{$2}"
             if type?
                 if !(///#{type}*\s+#{$2}_retain\s+(#{type}*\s+self);///.test(src))
                     flag = true
@@ -156,6 +156,9 @@ for file in files.split(" ")
 
 for file in files.split(" ")
     if path.extname(file) is  '.c'
+        console.log "+++++++++++++++++++++++++++++++++++"
+        console.log file
+        console.log "+++++++++++++++++++++++++++++++++++"
         inject(file, options) 
                 
 

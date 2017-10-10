@@ -1,8 +1,3 @@
-# Project Dead
-
-The latest changes to valac totally break this, so that makes up my mind for me. Kotlin native, it is. Heck with Gnome.
-
-
 # ZeroG
 
 

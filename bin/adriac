@@ -222,6 +222,7 @@ class Adriac {
 		//  stdout.printf(cc.str);
 		//  stdout.printf("=============================\n");
 		var SDK = getEnv("ZEROG");
+
 		if (!spawn(@"cp -rfL src $(builddir)")) return 1;
 		if (!spawn(@"$(SDK)/tools/pre-vala.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/pre-gs.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
@@ -249,8 +250,8 @@ class Adriac {
 		vala_files = new StringBuilder();
 		c_files = new StringBuilder();
 
-		//  valac.append("-C ");
-		valac.append("--save-temps ");
+		valac.append("--ccode ");
+		// valac.append("--save-temps ");
 
 		if (quiet_mode) valac.append("--quiet ");
 		if (verbose_mode)  {

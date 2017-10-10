@@ -15,18 +15,18 @@
  ******************************************************************************/
 namespace Sdx {
 
-	errordomain IOException 
+	public errordomain IOException 
 	{
 		InvalidData
 	}
 
-	errordomain Exception 
+	public errordomain Exception 
 	{
 		IllegalArgumentException,
 		RuntimeException
 	}
 
-	errordomain SdlException 
+	public errordomain SdlException 
 	{
 		Initialization,
 		ImageInitialization,
