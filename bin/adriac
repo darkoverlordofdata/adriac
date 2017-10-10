@@ -249,7 +249,7 @@ class Adriac {
 		vala_files = new StringBuilder();
 		c_files = new StringBuilder();
 
-		valac.append("-C ");
+		//  valac.append("-C ");
 		valac.append("--save-temps ");
 
 		if (quiet_mode) valac.append("--quiet ");
