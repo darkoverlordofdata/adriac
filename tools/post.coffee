@@ -156,9 +156,6 @@ for file in files.split(" ")
 
 for file in files.split(" ")
     if path.extname(file) is  '.c'
-        console.log "+++++++++++++++++++++++++++++++++++"
-        console.log file
-        console.log "+++++++++++++++++++++++++++++++++++"
         inject(file, options) 
                 
 

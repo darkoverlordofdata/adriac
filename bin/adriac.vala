@@ -1,3 +1,4 @@
+#!/usr/bin/env vala
 /**
  * adriac - valac wrapper to compile Compact Vala
  * 
@@ -198,8 +199,7 @@ class Adriac {
 		}
 
 		if (version) {
-			var SDK = getEnv("ZEROG");
-			stdout.printf (@"adriac Beta 0.1.0 -- [$(SDK)]\n");
+			stdout.printf ("adriac Beta 0.0.2\n");
 			return 0;
 		}
 
@@ -222,6 +222,7 @@ class Adriac {
 		//  stdout.printf(cc.str);
 		//  stdout.printf("=============================\n");
 		var SDK = getEnv("ZEROG");
+
 		if (!spawn(@"cp -rfL src $(builddir)")) return 1;
 		if (!spawn(@"$(SDK)/tools/pre-vala.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
 		if (!spawn(@"$(SDK)/tools/pre-gs.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
@@ -250,8 +251,7 @@ class Adriac {
 		c_files = new StringBuilder();
 
 		valac.append("--ccode ");
-		//  valac.append("-C ");
-		//  valac.append("--save-temps ");
+		// valac.append("--save-temps ");
 
 		if (quiet_mode) valac.append("--quiet ");
 		if (verbose_mode)  {
@@ -529,13 +529,13 @@ class Adriac {
 	 * get Environment variable
 	 */
 	public static string getEnv(string name) {
-		string stdout_;
-		string stderr_;
+		string stdout;
+		string stderr;
 		int status;
 		string match = name+"=";
 		try {
-			Process.spawn_command_line_sync ("printenv", out stdout_, out stderr_, out status);
-			foreach (var v in stdout_.split("\n")) {
+			Process.spawn_command_line_sync ("printenv", out stdout, out stderr, out status);
+			foreach (var v in stdout.split("\n")) {
 				if (v.substring(0,match.length) == match) {
 					return v.substring(match.length);
 				}
