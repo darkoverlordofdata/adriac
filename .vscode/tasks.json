@@ -11,7 +11,15 @@
         {
             "isBuildCommand",
             "taskName": "build",
-            "args": ["./gendoc.sh"]
+            "args": ["cd install && make"]
+        },
+        {
+            "taskName": "clean",
+            "args": ["rm -r ${workspaceRoot}/install && mkdir ${workspaceRoot}/install"]
+        },
+        {
+            "taskName": "update",
+            "args": ["autovala refresh && sed -i -n '/*vala_check_package:/!p' ./${workspaceRootFolderName}.avprj && autovala cmake  && cd install && cmake .. "]
         }
     ]
 }

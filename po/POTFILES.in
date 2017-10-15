@@ -1,2 +1,4 @@
 src/adriac.vala
-src/zerogc.vala
+src/helpers.vala
+src/parser.gs
+src/utils/tokenizer.gs

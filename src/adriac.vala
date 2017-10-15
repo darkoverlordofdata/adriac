@@ -24,103 +24,101 @@
  * 2 preprocess vala
  * 3 run valac to generate c code
  * 4 preprocess c
- * 5 run emcc
+ * 5 run emcc / clang / ndk
  * 
- * preprocssing has to be done by a seprate script process
- * vala script does not include Gio, so no io...
- * besides, text processing is much easier in node.
  * 
  * Adds 1 new option:
  * --builddir=DIRECTORY
  * 		required location for out of tree build
- * 		no in tree builds allowed
+ * 		!no in tree builds allowed!
  * 
- * use case: emscripten
+ * Limitations - some stuff isn't fully supported, so it's been dropped:
+ * 	no genie support
+ *  no support for creating generic classes
  * 
+ * use case: emscripten, android
  * 
  * using the command line interface described in valacompiler.vala
  * @see https://github.com/GNOME/vala/blob/master/compiler/valacompiler.vala 
  */
 
 using GLib;
+/**
+ * Based on the coffeecript prototype. Main difference is pcre syntax.
+ */
 
 class Adriac {
 
-	static StringBuilder valac;
-	static StringBuilder cc;
-	static StringBuilder vala_files;
-	static StringBuilder c_files;
+	public static string plugin;
+	public static string builddir;
+	public static string basedir;
+	public static string directory;
+	public static bool version;
+	public static bool api_version;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] sources;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] vapi_directories;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] gir_directories;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] metadata_directories;
+	public static string vapi_filename;
+	public static string library;
+	public static string shared_library;
+	public static string gir;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] packages;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] fast_vapis;
+	public static string target_glib;
+	[CCode (array_length = false, array_null_terminated = true)]
+	public static string[] gresources;
 
-	static string plugin;
-	static string builddir;
-	static string basedir;
-	static string directory;
-	static bool version;
-	static bool api_version;
+	public static bool ccode_only;
+	public static string header_filename;
+	public static bool use_header;
+	public static string internal_header_filename;
+	public static string internal_vapi_filename;
+	public static string fast_vapi_filename;
+	public static bool vapi_comments;
+	public static string symbocmd_filename;
+	public static string includedir;
+	public static bool compile_only;
+	public static string output;
+	public static bool debug;
+	public static bool thread;
+	public static bool mem_profiler;
+	public static bool disable_assert;
+	public static bool enable_checking;
+	public static bool deprecated;
+	public static bool hide_internal;
+	public static bool experimental;
+	public static bool experimental_non_null;
+	public static bool gobject_tracing;
+	public static bool disable_since_check;
+	public static bool disable_warnings;
+	public static string cc_command;
 	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] sources;
+	public static string[] cc_options;
+	public static string pkg_config_command;
+	public static string dump_tree;
+	public static bool save_temps;
 	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] vapi_directories;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] gir_directories;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] metadata_directories;
-	static string vapi_filename;
-	static string library;
-	static string shared_library;
-	static string gir;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] packages;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] fast_vapis;
-	static string target_glib;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] gresources;
+	public static string[] defines;
+	public static bool quiet_mode;
+	public static bool verbose_mode;
+	public static string profile;
+	public static bool nostdpkg;
+	public static bool enable_version_header;
+	public static bool disable_version_header;
+	public static bool fatal_warnings;
+	public static bool disable_colored_output;
+	public static string dependencies;
 
-	static bool ccode_only;
-	static string header_filename;
-	static bool use_header;
-	static string internal_header_filename;
-	static string internal_vapi_filename;
-	static string fast_vapi_filename;
-	static bool vapi_comments;
-	static string symbocmd_filename;
-	static string includedir;
-	static bool compile_only;
-	static string output;
-	static bool debug;
-	static bool thread;
-	static bool mem_profiler;
-	static bool disable_assert;
-	static bool enable_checking;
-	static bool deprecated;
-	static bool hide_internal;
-	static bool experimental;
-	static bool experimental_non_null;
-	static bool gobject_tracing;
-	static bool disable_since_check;
-	static bool disable_warnings;
-	static string cc_command;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] cc_options;
-	static string pkg_config_command;
-	static string dump_tree;
-	static bool save_temps;
-	[CCode (array_length = false, array_null_terminated = true)]
-	static string[] defines;
-	static bool quiet_mode;
-	static bool verbose_mode;
-	static string profile;
-	static bool nostdpkg;
-	static bool enable_version_header;
-	static bool disable_version_header;
-	static bool fatal_warnings;
-	static bool disable_colored_output;
-	static string dependencies;
+	public static string entry_point;
 
-	static string entry_point;
-
-	static bool run_output;
+	public static bool run_output;
 
 	const OptionEntry[] options = {
 		{ "builddir", 0, 0, OptionArg.FILENAME, ref builddir, "Out of tree location for build", "DIRECTORY" },
@@ -186,6 +184,7 @@ class Adriac {
 
 	static int main (string[] args) {
 
+
 		try {
 			var opt_context = new OptionContext ("- adriac");
 			opt_context.set_help_enabled (true);
@@ -199,7 +198,7 @@ class Adriac {
 
 		if (version) {
 			var SDK = getEnv("ZEROG");
-			stdout.printf (@"adriac Beta 0.1.0 -- [$(SDK)]\n");
+			stdout.printf (@"adriac 0.2.0 -- [$(SDK)]\n");
 			return 0;
 		}
 
@@ -216,359 +215,272 @@ class Adriac {
 			stderr.printf("no compiler specified");
 			return 1;
 		}
-		build();
-		/** Call the back end to do the work  */
-		//  stdout.printf("=============================\n");
-		//  stdout.printf(cc.str);
-		//  stdout.printf("=============================\n");
-		var SDK = getEnv("ZEROG");
-		if (!spawn(@"cp -rfL src $(builddir)")) return 1;
-		if (!spawn(@"$(SDK)/tools/pre-vala.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(SDK)/tools/pre-gs.coffee $(builddir) \"$(encodeURIComponent(vala_files.str))\"")) return 1;
-		if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(valac.str))\"")) return 1;
-		if (!spawn(@"$(SDK)/tools/post.coffee $(builddir) \"$(encodeURIComponent(c_files.str))\"")) return 1;
-		if (cc_command != "jni")
-			if (!spawn(@"$(SDK)/tools/proc \"$(encodeURIComponent(cc.str))\"")) return 1;
 
+
+		var parser = build(new Parser(builddir, cc_command));
+		if (!parser.createBuildDir()) return 1;
+		if (!parser.preProcessVala()) return 1;
+		if (!parser.compileVala()) return 1;
+		if (!parser.preProcessC()) return 1;
+		if (cc_command != "jni") if (!parser.compileC()) return 1;
+		
 		stdout.printf("adriac complete.\n");
 		return 0;
 	}
 
 	/** 
-	 * create the build commands - valac && emcc
-	 * split out the corresponding parameters for each
+	 * Configures a parser using the command line parameters 
 	 */
-	static void build() {
-		valac = new StringBuilder("/usr/bin/valac ");
-		cc = new StringBuilder(@"$(cc_command) ");
+	public static Parser build(Parser parser) {
+		parser.addValacCommand("--ccode ");
 		if (cc_command == "clang" && output.index_of(".ll") != -1) {
-			cc.append("-S -emit-llvm ");	
+			parser.addCcCommand("-S -emit-llvm ");	
 		}
 
-
-		vala_files = new StringBuilder();
-		c_files = new StringBuilder();
-
-		valac.append("--ccode ");
-		//  valac.append("-C ");
-		//  valac.append("--save-temps ");
-
-		if (quiet_mode) valac.append("--quiet ");
+		if (quiet_mode) parser.addValacCommand("--quiet ");
 		if (verbose_mode)  {
-			valac.append("--verbose ");
-			cc.append("-v ");
+			parser.addValacCommand("--verbose ");
+			parser.addCcCommand("-v ");
 		}
-		if (vapi_comments) valac.append("--vapi-comments ");
-		if (compile_only) valac.append("--compile-only ");
-		if (api_version) valac.append("--api-version ");
-		if (use_header) valac.append("--use-header ");
-		if (debug) valac.append("--debug ");
-		if (thread) valac.append("--thread ");
-		if (mem_profiler) valac.append("--enable-mem-profiler ");
-		if (disable_assert) valac.append("--disable-assert ");
-		if (enable_checking) valac.append("--enable-checking ");
-		if (deprecated) valac.append("--enable-deprecated ");
-		if (hide_internal) valac.append("--hide-internal ");
-		if (experimental) valac.append("--enable-experimental ");
-		if (experimental_non_null) valac.append("--enable-experimental-non-null ");
-		if (gobject_tracing) valac.append("--enable-gobject-tracing ");
-		if (disable_since_check) valac.append("--disable-since-check ");
-		if (disable_warnings) valac.append("--disable-warnings ");
-		if (nostdpkg) valac.append("--nostdpkg ");
-		if (enable_version_header) valac.append("--enable-version-header ");
-		if (disable_version_header) valac.append("--disable-version-header ");
-		if (fatal_warnings) valac.append("--fatal-warnings ");
-		if (disable_colored_output) valac.append("--no-color ");
+		if (vapi_comments) parser.addValacCommand("--vapi-comments ");
+		if (compile_only) parser.addValacCommand("--compile-only ");
+		if (api_version) parser.addValacCommand("--api-version ");
+		if (use_header) parser.addValacCommand("--use-header ");
+		if (debug) parser.addValacCommand("--debug ");
+		if (thread) parser.addValacCommand("--thread ");
+		if (mem_profiler) parser.addValacCommand("--enable-mem-profiler ");
+		if (disable_assert) parser.addValacCommand("--disable-assert ");
+		if (enable_checking) parser.addValacCommand("--enable-checking ");
+		if (deprecated) parser.addValacCommand("--enable-deprecated ");
+		if (hide_internal) parser.addValacCommand("--hide-internal ");
+		if (experimental) parser.addValacCommand("--enable-experimental ");
+		if (experimental_non_null) parser.addValacCommand("--enable-experimental-non-null ");
+		if (gobject_tracing) parser.addValacCommand("--enable-gobject-tracing ");
+		if (disable_since_check) parser.addValacCommand("--disable-since-check ");
+		if (disable_warnings) parser.addValacCommand("--disable-warnings ");
+		if (nostdpkg) parser.addValacCommand("--nostdpkg ");
+		if (enable_version_header) parser.addValacCommand("--enable-version-header ");
+		if (disable_version_header) parser.addValacCommand("--disable-version-header ");
+		if (fatal_warnings) parser.addValacCommand("--fatal-warnings ");
+		if (disable_colored_output) parser.addValacCommand("--no-color ");
 
 		if (basedir != null) {
-			valac.append("--basedir ");
-			valac.append(basedir);
-			valac.append(" ");
+			parser.addValacCommand("--basedir ");
+			parser.addValacCommand(basedir);
+			parser.addValacCommand(" ");
 		}
 
 		if (directory != null) {
-			valac.append("--directory ");
-			valac.append(directory);
-			valac.append(" ");
+			parser.addValacCommand("--directory ");
+			parser.addValacCommand(directory);
+			parser.addValacCommand(" ");
 		}
 
 		if (vapi_directories != null) {
 			foreach (var v in vapi_directories) {
-				valac.append("--vapidir ");
-				valac.append(v);
-				valac.append(" ");
+				parser.addValacCommand("--vapidir ");
+				parser.addValacCommand(v);
+				parser.addValacCommand(" ");
 			}
 		} 
 		if (gir_directories != null) {
 			foreach (var g in gir_directories) {
-				valac.append("--girdir ");
-				valac.append(g);
-				valac.append(" ");
+				parser.addValacCommand("--girdir ");
+				parser.addValacCommand(g);
+				parser.addValacCommand(" ");
 			}
 		}
 		if (metadata_directories != null) {
 			foreach (var m in metadata_directories) {
-				valac.append("--metadatadir ");
-				valac.append(m);
-				valac.append(" ");
+				parser.addValacCommand("--metadatadir ");
+				parser.addValacCommand(m);
+				parser.addValacCommand(" ");
 			}
 		}
 		if (vapi_filename != null) {
-			valac.append("--vapi ");
-			valac.append(vapi_filename);
-			valac.append(" ");
+			parser.addValacCommand("--vapi ");
+			parser.addValacCommand(vapi_filename);
+			parser.addValacCommand(" ");
 		}
 
 		if (library != null) {
-			valac.append("--library ");
-			valac.append(library);
-			valac.append(" ");
+			parser.addValacCommand("--library ");
+			parser.addValacCommand(library);
+			parser.addValacCommand(" ");
 		}
 		if (shared_library != null) {
-			valac.append("--shared-library ");
-			valac.append(shared_library);
-			valac.append(" ");
+			parser.addValacCommand("--shared-library ");
+			parser.addValacCommand(shared_library);
+			parser.addValacCommand(" ");
 		}
 		if (gir != null) {
-			valac.append("--gir ");
-			valac.append(gir);
-			valac.append(" ");
+			parser.addValacCommand("--gir ");
+			parser.addValacCommand(gir);
+			parser.addValacCommand(" ");
 		}
 		if (fast_vapis != null) {
 			foreach (var f in fast_vapis) {
-				valac.append("--fast-vapi ");
-				valac.append(f);
-				valac.append(" ");
+				parser.addValacCommand("--fast-vapi ");
+				parser.addValacCommand(f);
+				parser.addValacCommand(" ");
 			}
 		}
 		if (target_glib != null) {
-			valac.append("--target-glib ");
-			valac.append(target_glib);
-			valac.append(" ");
+			parser.addValacCommand("--target-glib ");
+			parser.addValacCommand(target_glib);
+			parser.addValacCommand(" ");
 		}
 		if (gresources != null) {
 			foreach (var g in gresources) {
-				valac.append("--gresources ");
-				valac.append(g);
-				valac.append(" ");
+				parser.addValacCommand("--gresources ");
+				parser.addValacCommand(g);
+				parser.addValacCommand(" ");
 			}
 		}
 		if (header_filename != null) {
-			valac.append("--header-filename ");
-			valac.append(header_filename);
-			valac.append(" ");
+			parser.addValacCommand("--header-filename ");
+			parser.addValacCommand(header_filename);
+			parser.addValacCommand(" ");
 		}
 		if (internal_header_filename != null) {
-			valac.append("--internal-header ");
-			valac.append(internal_header_filename);
-			valac.append(" ");
+			parser.addValacCommand("--internal-header ");
+			parser.addValacCommand(internal_header_filename);
+			parser.addValacCommand(" ");
 		}
 		if (internal_vapi_filename != null) {
-			valac.append("--internal-vapi ");
-			valac.append(internal_vapi_filename);
-			valac.append(" ");
+			parser.addValacCommand("--internal-vapi ");
+			parser.addValacCommand(internal_vapi_filename);
+			parser.addValacCommand(" ");
 		}
 		if (fast_vapi_filename != null) {
-			valac.append("--fast-vapi ");
-			valac.append(fast_vapi_filename);
-			valac.append(" ");
+			parser.addValacCommand("--fast-vapi ");
+			parser.addValacCommand(fast_vapi_filename);
+			parser.addValacCommand(" ");
 		}
 		if (symbocmd_filename != null) {
-			valac.append("--symbols ");
-			valac.append(symbocmd_filename);
-			valac.append(" ");
+			parser.addValacCommand("--symbols ");
+			parser.addValacCommand(symbocmd_filename);
+			parser.addValacCommand(" ");
 		}
 		if (includedir != null) {
-			valac.append("--includedir ");
-			valac.append(includedir);
-			valac.append(" ");
+			parser.addValacCommand("--includedir ");
+			parser.addValacCommand(includedir);
+			parser.addValacCommand(" ");
 		}
 		if (pkg_config_command != null) {
-			valac.append("--pkg-config ");
-			valac.append(pkg_config_command);
-			valac.append(" ");
+			parser.addValacCommand("--pkg-config ");
+			parser.addValacCommand(pkg_config_command);
+			parser.addValacCommand(" ");
 		}
 		if (dump_tree != null) {
-			valac.append("--dump-tree ");
-			valac.append(dump_tree);
-			valac.append(" ");
+			parser.addValacCommand("--dump-tree ");
+			parser.addValacCommand(dump_tree);
+			parser.addValacCommand(" ");
 		}
 		if (defines != null) {
 			foreach (var d in defines) {
-				valac.append("--define ");
-				valac.append(d);
-				valac.append(" ");
+				parser.addValacCommand("--define ");
+				parser.addValacCommand(d);
+				parser.addValacCommand(" ");
 			}
 		}
 		if (profile != null) {
-			valac.append("--profile ");
-			valac.append(profile);
-			valac.append(" ");
+			parser.addValacCommand("--profile ");
+			parser.addValacCommand(profile);
+			parser.addValacCommand(" ");
 		}
 
 		if (packages != null) {
 			foreach (var p in packages) {
-				valac.append("--pkg ");
-				valac.append(p);
-				valac.append(" ");
+				parser.addValacCommand("--pkg ");
+				parser.addValacCommand(p);
+				parser.addValacCommand(" ");
 				switch (p) {
 
 					case "sdl2":
 						if (cc_command == "emcc") {
-							cc.append("-s USE_SDL=2 " );
+							parser.addCcCommand("-s USE_SDL=2 " );
 						}
 						break;
 
 					case "SDL2_image":
 						if (cc_command == "emcc") {
-							cc.append("-s USE_SDL_IMAGE=2 ");
-							cc.append("-s SDL2_IMAGE_FORMATS='[\"png\"]' ");
+							parser.addCcCommand("-s USE_SDL_IMAGE=2 ");
+							parser.addCcCommand("-s SDL2_IMAGE_FORMATS='[\"png\"]' ");
 						}
 						break;
 
 					case "SDL2_ttf":
 						if (cc_command == "emcc") {
-							cc.append("-s USE_SDL_TTF=2 ");
+							parser.addCcCommand("-s USE_SDL_TTF=2 ");
 						}
 						break;
 
                     case "emscripten":
 						if (cc_command == "emcc") {
-							//  cc.append("-s ALLOW_MEMORY_GROWTH=1 ");
-							//  cc.append("-s TOTAL_MEMORY=16777216 "); // 16mb
-							cc.append("-s TOTAL_MEMORY=33554432 "); // 32 mb
-							//  cc.append("-s TOTAL_MEMORY=268435456 "); // 256mb mobile max?
-							//  cc.append("-s TOTAL_MEMORY=536870912 "); // 512mb desktop max?
-							cc.append("-s WASM=1 ");
-							cc.append("-s ASSERTIONS=1 ");
-							cc.append("-s EXPORTED_FUNCTIONS='[\"_game\"]' ");
-							cc.append("--preload-file assets ");
+							//  parser.addCcCommand("-s ALLOW_MEMORY_GROWTH=1 ");
+							//  parser.addCcCommand("-s TOTAL_MEMORY=16777216 "); // 16mb
+							parser.addCcCommand("-s TOTAL_MEMORY=33554432 "); // 32 mb
+							//  parser.addCcCommand("-s TOTAL_MEMORY=268435456 "); // 256mb mobile max?
+							//  parser.addCcCommand("-s TOTAL_MEMORY=536870912 "); // 512mb desktop max?
+							parser.addCcCommand("-s WASM=1 ");
+							parser.addCcCommand("-s ASSERTIONS=1 ");
+							parser.addCcCommand("-s EXPORTED_FUNCTIONS='[\"_game\"]' ");
+							parser.addCcCommand("--preload-file assets ");
 						}
 						break;
 				}
 			}
 		}
 		if (output != null) {
-			cc.append("-o ");
-			cc.append(output);
-			cc.append(" ");
+			parser.addCcCommand("-o ");
+			parser.addCcCommand(output);
+			parser.addCcCommand(" ");
 		}
 		if (cc_options != null) {
 			foreach (var o in cc_options) {
-				cc.append(o);
-				cc.append(" ");
+				parser.addCcCommand(o);
+				parser.addCcCommand(" ");
 			}
 		}
 		foreach (var s in sources) {
-			valac.append(s);
-			valac.append(" ");
+			parser.addValacCommand(s);
+			parser.addValacCommand(" ");
 
-			vala_files.append(s);
-			vala_files.append(" ");
+			parser.addValaFile(s);
 
 			s = s.replace(".vala", ".c");
 			s = s.replace(".gs", ".c");
 
-			cc.append(s);
-			cc.append(" ");
+			parser.addCcCommand(s);
+			parser.addCcCommand(" ");
 
-			c_files.append(s);
-			c_files.append(" ");
+			parser.addCFile(s);
 			
 		}
+		return parser;
 
 	}
 
-	static bool spawn(string cmd) {
-		
-		bool result = false;
-
-		try {
-			string[] spawn_args = cmd.split(" "); 
-			string[] spawn_env = Environ.get();
-			string cmd_stdout;
-			string cmd_stderr;
-			int cmd_status;
-
-			Process.spawn_sync(null, 
-								spawn_args,
-								spawn_env,
-								SpawnFlags.SEARCH_PATH,
-								null,
-								out cmd_stdout,
-								out cmd_stderr,
-								out cmd_status);
-
-			if (cmd_status != 0)
-				stdout.puts(cmd_stderr);
-			stdout.puts(cmd_stdout);
-			result = cmd_status == 0;
-
-		} catch (SpawnError e) {
-			stdout.printf("Error: %s\n", e.message);
-		}
-		return result;
-		
-	}
-
-
-	/**
-	 * encodeURIComponent
-	 * 
-	 * prevents the cli from expanding flags, quotes and paths in parameter list
-	 */
-	static string encodeURIComponent(string str) {
-		//  Regex rx = new Regex("\\-");
-
-		var result = Uri.escape_string(str);
-		// we also need to process hyphens to prevent command line flag expansion
-		return (new Regex("\\-")).replace(result, result.length, 0, "%2D");
-	}
-
-	/**
-	 * get Environment variable
-	 */
+    /**
+     * get Environment variable
+     */
 	public static string getEnv(string name) {
-		string stdout_;
-		string stderr_;
-		int status;
-		string match = name+"=";
+		var stdout_ = "";
+		var stderr_ = "";
+		var status = 0;
+		var match = name+"=";
 		try {
-			Process.spawn_command_line_sync ("printenv", out stdout_, out stderr_, out status);
+			Process.spawn_command_line_sync("printenv", out stdout_, out stderr_, out status);
 			foreach (var v in stdout_.split("\n")) {
-				if (v.substring(0,match.length) == match) {
+				if (v.substring(0,match.length) == match)
 					return v.substring(match.length);
-				}
 			}
 			return "";
 		} catch (SpawnError e) {
+			stdout.printf("spawn error: %s\n", e.message);
 			return null;
-		}	
-	}	
-	//  public static string readFile(string name) {
-	//  	string stdout;
-	//  	string stderr;
-	//  	int status;
-	//  	string result;
-	//  	try {
-	//  		Process.spawn_command_line_sync (@"cat $(name)", 
-	//  			out stdout, out stderr, out status);
-	//  		return stdout;
-	//  	} catch (SpawnError e) {
-	//  		return null;
-	//  	}	
-	//  }	
-	//  public static bool writeFile(string name, string content) {
-	//  	string stdout;
-	//  	string stderr;
-	//  	int status;
-	//  	string result;
-	//  	try {
-	//  		Process.spawn_command_line_sync (@"$(plugin)/write $(name) \"$(encodeURIComponent(content))\""); 
-	//  			out stdout, out stderr, out status);
-	//  		return true;
-	//  	} catch (SpawnError e) {
-	//  		return false;
-	//  	}	
-	//  }	
+		}
+		
+	}
 }

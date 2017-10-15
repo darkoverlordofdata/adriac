@@ -161,6 +161,7 @@ for arg in args
             when 'class'
                 i++
                 klass = a[i]
+                console.log "#{namespace}, #{klass}"
                 if klass.indexOf('<') > 0
                     klass = klass[0..klass.indexOf('<')-1]
                 if namespace is '' and level > 0
@@ -175,6 +176,7 @@ for arg in args
                         type: type
                         pfx: pfx
                     }
+                    # console.log "1 ", classname, classes[classname]
 
                 else if namespace isnt '' and level > 1
                     # inner class
@@ -189,6 +191,7 @@ for arg in args
                         type: type
                         pfx: pfx
                     }
+                    # console.log "2 ", classname, classes[classname]
                 else
                     outerKlass = klass
                     if namespace is ''
@@ -202,6 +205,7 @@ for arg in args
                             type: type
                             pfx: pfx
                         }
+                        # console.log "3 ", classname, classes[classname]
                     else 
                         classname = namespace + '.' + klass
                         pfx = namespace.toLowerCase().replace(/\./g, '_')+'_'+snakeCase(lcfirst(klass)) 
@@ -213,14 +217,16 @@ for arg in args
                             type: type
                             pfx: pfx
                         }
+                        # console.log "4 ", classname, classes[classname]
 
         i++
 
     for name, opts of classes
         t = path.extname(arg)
         if t is '.vala' 
-            sym[opts.pfx] = opts.type 
-            template(arg, name, opts)
+            sym[opts.pfx] = opts.type
+            # console.log(name, arg)
+            # template(arg, name, opts)
 
 
 fs.writeFileSync("#{buildDir}/adriac.json", JSON.stringify(sym, null, 2))

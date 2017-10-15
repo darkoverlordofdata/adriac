@@ -32,7 +32,8 @@ snakeCase = (str) ->  str.replace(/([A-Z])/g, ($0) -> "_"+$0.toLowerCase())
 ## inject missing forward references
 ## for automatic reference counting
 ##
-inject = (file, options) ->
+inject = (file) ->
+    return
     src = fs.readFileSync(file, 'utf8')
     dst = ['/** updated by adriac */']
 
@@ -82,45 +83,10 @@ inject = (file, options) ->
                     flag = true
                     dst.push "void #{$2}_release (#{type}* self);"
 
-        # #
-        # #   check for headers 
-        # #
-        # line.replace /using SDL.Video;/, ($0) ->
-        #     flag = true
-        #         dst.push "#{type}* #{$2}_retain (#{type}* self);"
-            
-
-        # line.replace /\void\s+([_a-z0-9]+)_release\s+\((\w+)* self\)/, ($0, $1, $2) ->
-        #     type = symtbl[$1]
-        #     dst.push "// symtbl #{$1} #{$2}"
-        #     if type?
-        #         flag = true
-        #         dst.push "void #{$1}_release (#{$2}* self);"
-        #         dst.push "#{$2}* #{$1}_retain (#{$2}* self);"
-
-        # line.replace /void\s+([_a-z0-9]+)_free\s+\((\w+)* self\)/, ($0, $1, $2) ->
-        #     type = symtbl[$1]
-        #     dst.push "// symtbl #{$1}"
-        #     if type?
-        #         flag = true
-        #         dst.push "void #{$1}_release (#{$2}* self);"
-        #         dst.push "#{$2}* #{$1}_retain (#{$2}* self);"
 
         dst.push line 
     if flag then fs.writeFileSync(file, dst.join('\n'))
 
-        # for mangled, name of options
-        #     if line.indexOf("#define _#{mangled}_release0") is 0
-        #         flag = true
-        #         dst.push "void #{mangled}_release (#{name}* self);"
-        #         dst.push "void #{mangled}_free (#{name}* self);"
-        #         dst.push "#{name}* #{mangled}_retain (#{name}* self);"
-        #     else if line.indexOf("void #{mangled}_free (#{name}* self);") is 0
-        #         flag = true
-        #         dst.push "void #{mangled}_release (#{name}* self);"
-        #         dst.push "#{name}* #{mangled}_retain (#{name}* self);"
-        #    dst.push line 
-        # if flag then fs.writeFileSync(file, dst.join('\n'))
 
 merge = (a, b) ->
     c = {}
@@ -136,26 +102,11 @@ merge = (a, b) ->
 ##
 buildDir = process.argv[2]
 symtbl = merge("./adriac.json", "#{buildDir}/adriac.json")
-# symtbl = merge(
-#     JSON.parse(fs.readFileSync("./adriac.json", 'utf8')), 
-#     JSON.parse(fs.readFileSync("#{buildDir}/adriac.json", 'utf8')))
 files = decodeURIComponent(process.argv[3])
 files = files[1...-1] if files[0] is '"' 
-for file in files.split(" ")
-    if path.extname(file) is  '.c'
-        klass = path.basename(file, '.c')
-        if klass[0] >='A' && klass[0] <= 'Z'
-            name = klass.toLowerCase()
-            namespace = path.dirname(file).substring(10)
-            fixed = snakeCase(lcfirst(klass))
-            ns = namespace.replace(/\//g, "_")
-            mangled = if ns is "" then fixed else "#{ns}_#{fixed}"
-            mangled = mangled.replace(/\//g, "_")
-            options[mangled] = (ns+klass).replace(/\_/g, "")
-
 
 for file in files.split(" ")
     if path.extname(file) is  '.c'
-        inject(file, options) 
+        inject(file) 
                 
 

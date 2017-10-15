@@ -3,4 +3,4 @@
 
 include (Translations)
 add_translations_directory("adriac")
-add_translations_catalog("adriac" ../src )
+add_translations_catalog("adriac" ../src ../src/utils )

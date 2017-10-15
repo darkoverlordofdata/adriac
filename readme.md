@@ -24,7 +24,7 @@
 
 
 ## Vala Subset
-ZeroG supports a subset of Vala based on Compact classes. This limits oop functionality, and Genie is not well supported. It requires a different coding style, and to set it appart, I'm altering the syle guide. I call it Dark Vala.
+ZeroG supports a subset of Vala based on Compact classes. This limits oop functionality, and Genie is not supported. It requires a different coding style, and to set it appart, I'm altering the syle guide. I call it Dark Vala.
 
 Dark Vala style guide:
 [Based on msn](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions)
