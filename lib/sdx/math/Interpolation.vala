@@ -345,7 +345,7 @@ namespace  Sdx.Math
                     }
                     a = 1 - a;
                     a *= 2;
-                    return 1 - (float)GLib.Math.pow(value, power * (a - 1)) * GLib.Math.sinf((a) * bounces) * scale / 2;
+                    return 1 - (float)GLib.Math.pow(value, power * (a - 1)) * GLib.Math.sinf(a * bounces) * scale / 2;
                 };
             }
         }
@@ -573,7 +573,7 @@ namespace  Sdx.Math
                 { 
                     if ((a*=2) < 1) return 0.5f*a*a;
                     a = a-1;
-                    return -0.5f * ((a)*(a-2) - 1);
+                    return -0.5f * (a*(a-2) - 1);
                 };
             }
         }
