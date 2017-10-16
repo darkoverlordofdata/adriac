@@ -25,10 +25,10 @@ namespace Sdx.Files
 		private string path;
 		private FileType type;
 
-		protected FileHandle(string path, FileType type) 
+		public FileHandle(string path, FileType type) 
 		{
-			this.path = path;
 			this.type = type;
+			this.path = path;
 			this.file = new Utils.File(path);
 		}
 
@@ -42,7 +42,11 @@ namespace Sdx.Files
 #if (ANDROID || EMSCRIPTEN || NOGOBJECT)
 				throw new SdlException.InvalidForPlatform("Resource not available");
 #else
-                var bytes = GLib.ResourcesLookupData(Sdx.resourceBase+"/"+GetPath(), 0);
+				var path = GetPath().Replace("\\", "/");
+
+                if (path[path.length-1] == (char)13)
+                    path = path.SubString(0, path.length-1);
+				var bytes = GLib.ResourcesLookupData(Sdx.resourceBase + "/" + path, 0);
                 var raw = new SDL.RWops.FromMem((void*)bytes.GetData(), (int)bytes.GetSize());
                 if (raw == null)
 					throw new SdlException.UnableToLoadResource(GetPath());
@@ -66,7 +70,11 @@ namespace Sdx.Files
 #if (ANDROID || EMSCRIPTEN || NOGOBJECT)
 				throw new SdlException.InvalidForPlatform("Resource not available");
 #else
-                var st =  GLib.ResourcesOpenStream(Sdx.resourceBase+"/"+GetPath(), 0);
+				var path = GetPath().Replace("\\", "/");
+
+                if (path[path.length-1] == (char)13)
+                    path = path.SubString(0, path.length-1);
+                var st =  GLib.ResourcesOpenStream(Sdx.resourceBase + "/" + path, 0);
 				var sb = new StringBuilder();
 				var ready = true;
 				var buffer = new uint8[100];

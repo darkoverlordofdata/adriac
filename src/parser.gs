@@ -21,14 +21,18 @@ class Parser
     vala_files: array of string         /* all the vala files */
     c_files:    array of string         /* all the c files */
     symtbl:     dict of string, string  /* symbol table to track forward references */
+    windoz:     bool                    /* os flag */
 
     construct(builddir: string, cc_command: string)
+        windoz = GLib.Environment.get_current_dir()[0] != '/'
         this.builddir = builddir
-        valac = new StringBuilder("/usr/bin/valac ")
+        valac = new StringBuilder(windoz ? "/c/msys64/mingw64/bin/valac " : "/usr/bin/valac ")
         cc = new StringBuilder(@"$(cc_command) ")
         vala_files = new array of string[0]
         c_files = new array of string[0]
         symtbl = new dict of string, string
+            
+
 
     /**
      * Add cc command
@@ -200,19 +204,19 @@ class Parser
      * initialize the out of tree build location
      */
     def createBuildDir():bool 
-        return spawn(@"cp -rfL src $(builddir)")
+        return true //spawn(windoz ? @"xcopy /y /s src $(builddir)\\src" : @"cp -rfL src $(builddir)")
     
     /**
      * Compile the vala code to c
      */
     def compileVala():bool
-        return spawn(valac.str)
+        return spawn(windoz ? @"C:\\msys64\\usr\\bin\\bash.exe -c \"$(valac.str)\"" : valac.str)
     
     /**
      * Compile the c code
      */
     def compileC():bool
-        return spawn(cc.str)
+        return spawn(windoz ? @"C:\\msys64\\usr\\bin\\bash.exe -c \"$(cc.str)\"" : cc.str)
     
     
     /**
@@ -236,6 +240,7 @@ class Parser
 
         except e: SpawnError 
             print "Spawn Error: %s", e.message
+            print cmd
         
         return result
         
