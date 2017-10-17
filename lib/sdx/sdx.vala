@@ -26,13 +26,13 @@ namespace Sdx
 {
 	private const double MS_PER_UPDATE = 1.0/60.0;
 #if (DESKTOP)
-	private const int pixelFactor = 1;
+	public const int pixelFactor = 1;
 	FileType platform = FileType.Resource;
 #elif (ANDROID)
-	private const int pixelFactor = 2;
+	public const int pixelFactor = 2;
 	FileType platform = FileType.Asset;
 #else
-	private const int pixelFactor = 1;
+	public const int pixelFactor = 1;
 	FileType platform = FileType.Relative;
 #endif
 	private SDL.Event evt;
@@ -50,7 +50,7 @@ namespace Sdx
 	private float fps = 60f;
 	private float delta = 1.0f/60.0f;
 	private bool running;
-	private string resourceBase;
+	internal string resourceBase;
 	private double currentTime;
 	private double accumulator;
 	private double freq;
