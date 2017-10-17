@@ -1,17 +1,32 @@
 # todo
 
-this is version 0.1
+rename zerog to dark
+rename adriac to darkc
 
-ideas for version 0.2
+lib/ should be expanded into a package manager, mamed dark.
 
-## 1 - headers
+dark init myproject
+cd myproject
 
-Is putting everything into a header and making it all static inline the best way to do this? probably not. I should revert to a *.c/*.h modular structure. This will help the next item:
+dark get entitas
+dark get goop
+dark get mt19937
+dark get sdx
+dark get lua
 
-## 2 - malloc
+puts copy of package code into src/<package-name>
 
-My version of gmem and glice are just wrappers for the builtin malloc/free. I'm not too comfortable with the original glib version, I prefer Doug Lea's malloc. And I really need to restructure the code as in item 1 to merge it in.
+packages can be vala or c
 
-## 3 - vapis
+code is in the /src folder of a git repo
 
-I want to support snake/notSnake, so to_string and ToString should both work. This will make code more portable with std vala.
+home/user/.dark/bin/dark
+home/user/.dark/lib/*.dll
+home/user/.dark/include/**.h
+
+home/user/.dark/src/entitas/**.vala
+home/user/.dark/src/goop/**.vala
+home/user/.dark/src/mt19937/**.c
+home/user/.dark/src/sdx/**.vala
+home/user/.dark/src/lua/**.c
+
