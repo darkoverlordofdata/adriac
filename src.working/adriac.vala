@@ -223,7 +223,11 @@ class Adriac {
 		if (!parser.createBuildDir()) return 1;
 		if (!parser.preProcessVala()) return 1;
 		if (!parser.compileVala()) return 1;
-		if (!parser.preProcessC()) return 1;
+		/**
+		 * when using clang,
+		 * preProcessC step not required
+		 */
+		//  if (!parser.preProcessC()) return 1;
 
 		/**
 		 * handled in cmake

@@ -1,0 +1,70 @@
+{
+  "variant": {
+    "label": "Debug",
+    "keywordSettings": {
+      "buildType": "debug"
+    },
+    "description": "Emit debug information without performing optimizations"
+  },
+  "activeEnvironments": [],
+  "codeModel": {
+    "configurations": [
+      {
+        "name": "Debug",
+        "projects": [
+          {
+            "buildDirectory": "C:/Users/darko/Documents/GitHub/zerog/build",
+            "name": "adriac",
+            "sourceDirectory": "C:/Users/darko/Documents/GitHub/zerog",
+            "targets": [
+              {
+                "artifacts": [
+                  "C:/Users/darko/Documents/GitHub/zerog/build/adriac.exe",
+                  "C:/Users/darko/Documents/GitHub/zerog/build/libadriac.dll.a",
+                  "C:/Users/darko/Documents/GitHub/zerog/build/adriac.pdb"
+                ],
+                "buildDirectory": "C:/Users/darko/Documents/GitHub/zerog/build",
+                "fileGroups": [
+                  {
+                    "isGenerated": true,
+                    "sources": [
+                      "build/build/src/Config.c.rule",
+                      "build/adriac_valac.stamp.rule"
+                    ]
+                  },
+                  {
+                    "compileFlags": " -w -g   -pthread -mms-bitfields -IC:/msys64/mingw64/include/gee-0.8 -IC:/msys64/mingw64/include/glib-2.0 -IC:/msys64/mingw64/lib/glib-2.0/include -IC:/msys64/mingw64/include",
+                    "includePath": [
+                      {
+                        "path": "C:/Users/darko/Documents/GitHub/zerog/build"
+                      }
+                    ],
+                    "isGenerated": true,
+                    "language": "C",
+                    "sources": [
+                      "build/build/src/Config.c",
+                      "build/src/adriac.c",
+                      "build/src/helpers.c",
+                      "build/src/parser.c",
+                      "build/src/tokenizer.c"
+                    ]
+                  }
+                ],
+                "fullName": "adriac.exe",
+                "linkLanguageFlags": "-w -g",
+                "linkLibraries": "-lgio-2.0 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -lintl -lm -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+                "linkerLanguage": "C",
+                "name": "adriac",
+                "sourceDirectory": "C:/Users/darko/Documents/GitHub/zerog",
+                "type": "EXECUTABLE"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "cookie": "0.34863718844698277",
+    "inReplyTo": "codemodel",
+    "type": "reply"
+  }
+}

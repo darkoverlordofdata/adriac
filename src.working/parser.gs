@@ -15,9 +15,6 @@ struct ClassInfo
  */
 class Parser 
 
-    const C_MARKER: string = "/** updated by adriac */\n"
-
-
     valac:      StringBuilder           /* vala compiler command */
     cc:         StringBuilder           /* c compiler command */
     builddir:   string                  /* out of tree build location */
@@ -81,11 +78,11 @@ class Parser
         var scope = options.scope
         var pfx = options.pfx
         var src = readTextFile(file)
-        var VALA_MARKER = @"[Adriac:$(options.scope):$(options.outer):$(options.klass):$(options.type):$(options.pfx)]"
-        if src.index_of(VALA_MARKER) != -1 do return  
+        if src.index_of("[Adriac]") >= 0 do return  
+
         src = forcePublicAccess(src)
         src = injectRefCount(options.klass, options.pfx, src)
-        writeTextFile(file, @"//$(VALA_MARKER)\n$(src)")
+        writeTextFile(file, @"//[Adriac]\n$(src)")
         return
 
     /**
@@ -94,14 +91,11 @@ class Parser
      * @param string file
      */
     def injectC(file:string)
-
-        if file.index_of(".vapi") != -1 do return
         var src = readTextFile(file)
-        if src.index_of(C_MARKER) != -1 do return
         var dst = new StringBuilder()
-        dst.append(C_MARKER)
         var flag = true
 
+        dst.append("/** updated by adriac */\n")
         for line in src.split("\n")
             if generateMacroDependency(line, symtbl, dst)     do flag = true
             if generateFunctionDependency(line, symtbl, dst)  do flag = true
@@ -194,13 +188,15 @@ class Parser
 
         return true
 
+
+    
     /**
      * pre-process the c code
      * Injects forward references to the identifiers tracked during pre-processing
      */
     def preProcessC():bool
         for var file in c_files
-            injectC(file.replace("/.lib/", "/build/.lib/").replace("/build/src/", "/build/build/src/"))
+            injectC(file)
         return true
     
 

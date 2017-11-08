@@ -54,10 +54,10 @@ public string forcePublicAccess(string s) {
 public string injectRefCount(string klass, string pfx, string s) {
 	//  var lines = s.split("\n");
 
-	var rxObject = new Regex(@"(\\s*)\\bpublic\\s+class\\s+$(klass)\\s*:\\s*Object\\s*{");
+	var rxObject = new Regex(@"(\\s*)\\bpublic\\s+class\\s+$(klass)\\s*:\\sObject\\s*{");
 	var rxCompact = new Regex(@"(\\s*)\\bpublic\\s+class\\s+$(klass)\\s*:\\s*\\w+\\s*{");
 
-	if (rxObject.match(s)) {
+	while (rxObject.match(s)) {
 		/**
 		 * If it extends Object, then it's a base Compact class
 		 * and we inject the reference counting implementation
@@ -82,7 +82,8 @@ public string injectRefCount(string klass, string pfx, string s) {
 			return true;
 		});
 	
-	} else {
+	} 
+	while (rxCompact.match(s)) {
 		/**
 		 * The superclass is a base Compact class,
 		 * we just need to mark it with the Compact attribute.
@@ -98,6 +99,9 @@ public string injectRefCount(string klass, string pfx, string s) {
 			return true;
 		});
 	}
+	return s;
+
+
 }
 
 /**

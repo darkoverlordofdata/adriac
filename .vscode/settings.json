@@ -1,6 +1,19 @@
 {
-    // msys2 shell:
-    "terminal.integrated.shell.windows": "C:\\msys64\\usr\\bin\\bash.exe",
-    "terminal.integrated.shellArgs.windows": ["-lic", "cd $OLDPWD; exec bash"],
-    
+    // MSys2
+    // Build for windows using cmake
+    // "terminal.integrated.shell.windows": "C:\\msys64\\usr\\bin\\bash.exe",
+    // "terminal.integrated.shellArgs.windows": ["-lic", "cd $OLDPWD; exec bash"],
+
+    // Bash on Ubuntu (on Windows)
+    // Update the autovala
+    // "terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"
+    "files.associations": {
+        "*.lzz": "cpp",
+        "adriac": "vala",
+        "Cakefile": "coffeescript",
+        "doran": "coffeescript",
+        "gatomic.h": "c",
+        "tttypes.h": "c",
+        "hb-buffer.h": "c"
+    }
 }

@@ -1,25 +1,31 @@
 {
     "version": "0.1.0",
-    "command": "/bin/sh",
     "cwd": "${workspaceRoot}",
     "isShellCommand": true,
-    "args": ["-c"],
     "showOutput": "always",
     "echoCommand": true,
     "suppressTaskName": true,
-    "tasks": [
-        {
-            "isBuildCommand",
-            "taskName": "build",
-            "args": ["cd install && make"]
-        },
-        {
-            "taskName": "clean",
-            "args": ["rm -r ${workspaceRoot}/install && mkdir ${workspaceRoot}/install"]
-        },
-        {
-            "taskName": "update",
-            "args": ["autovala refresh && sed -i -n '/*vala_check_package:/!p' ./${workspaceRootFolderName}.avprj && autovala cmake  && cd install && cmake .. "]
-        }
-    ]
+    "isBackground": true,
+    "windows": {
+        "command": "C:\\msys64\\usr\\bin\\bash.exe",
+        "args": ["-lic"],
+        "tasks": [
+            {
+                "isBuildCommand": true,
+                "taskName": "build",
+                "args": ["cd $OLDPWD/install; make"]
+            }
+        ]
+    },
+    "linux": {
+        "command": "/bin/sh",
+        "args": [""],
+        "tasks": [
+            {
+                "isBuildCommand": true,
+                "taskName": "build",
+                "args": ["cd install && make"]
+            }
+        ]
+    },
 }
