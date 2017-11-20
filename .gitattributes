@@ -1,3 +1,2 @@
 *.vala linguist-language=Vala
 *.gs linguist-language=Genie
-*.c linguist-language=C

@@ -1,8 +1,6 @@
 /**
  * adriac - valac wrapper to compile Compact Vala
  * 
- * adriac is a reference to Adria, daughter of Vala Mal Doran (SG-1).
- *
  * Copyright (C) 2017  bruce davidson
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -224,6 +222,7 @@ class Adriac {
 		if (!parser.preProcessVala()) return 1;
 		if (!parser.compileVala()) return 1;
 		if (!parser.preProcessC()) return 1;
+		if (!parser.compileC()) return 1;
 
 		/**
 		 * handled in cmake

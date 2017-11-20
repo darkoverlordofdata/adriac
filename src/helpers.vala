@@ -66,7 +66,7 @@ public string injectRefCount(string klass, string pfx, string s) {
 			var t = "";
 			var w = info.fetch(1);
 			for (var i=0; i<w.length; i++) {
-				if (w[i] == '\t') t += "\t"; else t = "";
+				if (w[i] == '\t') t += "\t";
 			}
 			res.append("\n"+t+@"[Compact, CCode (ref_function = \"$(pfx)_retain\", unref_function = \"$(pfx)_release\")]\n");
 			res.append(t+@"public class $(klass) {\n");

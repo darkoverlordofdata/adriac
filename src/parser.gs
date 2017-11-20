@@ -123,6 +123,8 @@ class Parser
     def preProcessVala():bool 
         for var file in vala_files
             if file == "" do continue
+            if file.index_of(".vapi") != -1 do continue
+            
             var scope = ""
             var pfx = ""
             var klass = ""
@@ -220,7 +222,10 @@ class Parser
      * Compile the c code
      */
     def compileC():bool
-        return spawn(windoz ? @"'C:\\msys64\\usr\\bin\\bash.exe' -c \"$(cc.str)\"" : cc.str)
+    
+        // return spawn(windoz ? @"'C:\\msys64\\usr\\bin\\bash.exe' -c \"$(cc.str)\"" : cc.str)
+        print "%s", windoz ? @"'C:\\msys64\\usr\\bin\\bash.exe' -c \"$(cc.str)\"" : cc.str
+        return true;
     
     
     /**

@@ -9,3 +9,7 @@
     move to doran+cmake
     works in cmake
 
+0.2.0 -- 11/9/2017
+
+    extract c library to doran-zerog
+    rename project to adria
