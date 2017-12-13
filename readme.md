@@ -10,3 +10,6 @@
         
 
 Vala Compact Object preprocessor
+
+zerog library has been split out and moved to doran-zerog
+naming conventions moved to doran-mal
