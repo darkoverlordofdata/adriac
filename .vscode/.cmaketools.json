@@ -13,17 +13,15 @@
         "name": "Debug",
         "projects": [
           {
-            "buildDirectory": "C:/Users/darko/Documents/GitHub/zerog/build",
+            "buildDirectory": "/home/bruce/Documents/GitHub/zerog/build",
             "name": "adriac",
-            "sourceDirectory": "C:/Users/darko/Documents/GitHub/zerog",
+            "sourceDirectory": "/home/bruce/Documents/GitHub/zerog",
             "targets": [
               {
                 "artifacts": [
-                  "C:/Users/darko/Documents/GitHub/zerog/build/adriac.exe",
-                  "C:/Users/darko/Documents/GitHub/zerog/build/libadriac.dll.a",
-                  "C:/Users/darko/Documents/GitHub/zerog/build/adriac.pdb"
+                  "/home/bruce/Documents/GitHub/zerog/build/adriac"
                 ],
-                "buildDirectory": "C:/Users/darko/Documents/GitHub/zerog/build",
+                "buildDirectory": "/home/bruce/Documents/GitHub/zerog/build",
                 "fileGroups": [
                   {
                     "isGenerated": true,
@@ -33,10 +31,10 @@
                     ]
                   },
                   {
-                    "compileFlags": " -w -g   -pthread -mms-bitfields -IC:/msys64/mingw64/include/gee-0.8 -IC:/msys64/mingw64/include/glib-2.0 -IC:/msys64/mingw64/lib/glib-2.0/include -IC:/msys64/mingw64/include",
+                    "compileFlags": " -w -std=c99 -O3 -g   -pthread -I/usr/include/gee-0.8 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include",
                     "includePath": [
                       {
-                        "path": "C:/Users/darko/Documents/GitHub/zerog/build"
+                        "path": "/home/bruce/Documents/GitHub/zerog/build"
                       }
                     ],
                     "isGenerated": true,
@@ -50,12 +48,13 @@
                     ]
                   }
                 ],
-                "fullName": "adriac.exe",
-                "linkLanguageFlags": "-w -g",
-                "linkLibraries": "-lgio-2.0 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -lintl -lm -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+                "fullName": "adriac",
+                "linkFlags": "-rdynamic",
+                "linkLanguageFlags": "-w -std=c99 -O3 -g",
+                "linkLibraries": "-lgio-2.0 -lgee-0.8 -lgobject-2.0 -lglib-2.0 -lm",
                 "linkerLanguage": "C",
                 "name": "adriac",
-                "sourceDirectory": "C:/Users/darko/Documents/GitHub/zerog",
+                "sourceDirectory": "/home/bruce/Documents/GitHub/zerog",
                 "type": "EXECUTABLE"
               }
             ]
@@ -63,7 +62,7 @@
         ]
       }
     ],
-    "cookie": "0.5122577965602393",
+    "cookie": "0.49630527367864885",
     "inReplyTo": "codemodel",
     "type": "reply"
   }

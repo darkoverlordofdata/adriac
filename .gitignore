@@ -1,3 +1,4 @@
+.vscode/.cmaketools.json
 node_modules
 build/
 install/

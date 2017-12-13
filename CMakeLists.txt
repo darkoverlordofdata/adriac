@@ -17,7 +17,7 @@ find_package (Vala REQUIRED)
 #
 #   libraries - sources & packages
 #
-if (EXISTS ${CMAKE_SOURCE_DIR}/data )
+if (EXISTS ${CMAKE_SOURCE_DIR}/data AND NOT DEFINED ZEROG )
     add_subdirectory (data)
     list ( APPEND RESOURCES ${resources_gresource_xml_C_FILE} )
 endif ()
@@ -40,7 +40,7 @@ list ( APPEND VALA_SOURCES src/helpers.vala )
 list ( APPEND VALA_SOURCES src/parser.gs )
 list ( APPEND VALA_SOURCES src/tokenizer.gs )
 #
-#   dependencies
+#   pkg-config dependencies
 #
 list ( APPEND PACKAGES gio-2.0 )
 list ( APPEND PACKAGES gee-0.8 )
@@ -55,11 +55,13 @@ link_directories ( ${DEPS_LIBRARY_DIRS} )
 #
 #   compiler options
 #
-list ( APPEND VALAC_OPTIONS --disable-warnings)
+list ( APPEND VALAC_OPTIONS --disable-warnings --enable-experimental )
 list ( APPEND VALAC_OPTIONS --vapidir=${CMAKE_SOURCE_DIR}/src/vapis)
 
-
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w" )
+if (WIN32)  
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mwindows" )
+endif ()
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -std=c99 -O3" )
 
 include_directories(AFTER ${INCLUDES})
 #
@@ -84,7 +86,28 @@ vala_precompile (
 #
 add_executable ( ${PROJECT_NAME} ${VALA_C} ${C_SOURCES} ${RESOURCES} )
 target_link_libraries ( ${PROJECT_NAME} m )
-install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin )
 
+if (EXISTS ${CMAKE_SOURCE_DIR}/data AND DEFINED ZEROG)
+    install ( DIRECTORY ${CMAKE_SOURCE_DIR}/data/assets DESTINATION . )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} 
+            -E 
+            copy_directory
+            ${CMAKE_SOURCE_DIR}/data/assets 
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets 
+    )    
+elseif (EXISTS ${CMAKE_SOURCE_DIR}/assets)
+    install ( DIRECTORY ${CMAKE_SOURCE_DIR}/assets DESTINATION . )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} 
+            -E 
+            copy_directory
+            ${CMAKE_SOURCE_DIR}/assets 
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets 
+    )    
+endif ()
+
+include (CPack)
 
 # (generated from template: default. Do not modify. )
